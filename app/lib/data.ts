@@ -95,20 +95,13 @@ export async function searchGames(
       "Content-Type": "text/plain",
     },
     body: `
-      ${search ? `search "${search}";` : ""}
+      ${search ? `search "${search}";` : "sort rating desc;"}
       fields id,cover.image_id,name;
       ${whereClause}
       limit 36;
     `,
   });
-  console.log(
-    `
-      ${search ? `search "${search}";` : ""}
-      fields id,cover.image_id,name;
-      ${whereClause}
-      limit 36;
-    `
-  );
+
   if (!gamesResponse.ok) {
     const errorText = await gamesResponse.text();
     throw new Error(`Failed to fetch game search results: ${errorText}`);
