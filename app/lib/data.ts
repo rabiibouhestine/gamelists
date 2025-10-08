@@ -5,17 +5,6 @@ type Popularity = {
   value: number;
 };
 
-type TrendingCover = {
-  id: number;
-  image_id: string;
-};
-
-type TrendingGame = {
-  id: number;
-  cover: TrendingCover;
-  name: string;
-};
-
 const clientId = process.env.IGDB_CLIENT_ID;
 const accessToken = process.env.IGDB_ACCESS_TOKEN;
 
