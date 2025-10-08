@@ -5,9 +5,9 @@ import TrendingGames from "@/app/ui/TrendingGames";
 import { TrendingGamesSkeleton } from "@/app/ui/TrendingGames";
 import { Suspense } from "react";
 
-export default function Home() {
+export default function Page() {
   return (
-    <div className="min-h-screen mb-20">
+    <>
       <h1 className="text-6xl font-bold mt-20 mb-24">
         Track games you’ve played.
         <br />
@@ -31,6 +31,6 @@ export default function Home() {
           <GameListCard key={list.id} gamelist={list} />
         ))}
       </div>
-    </div>
+    </>
   );
 }

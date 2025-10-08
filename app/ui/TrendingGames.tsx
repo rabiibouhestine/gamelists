@@ -2,15 +2,19 @@ import GameCover from "@/app/ui/GameCover";
 import { fetchTrendingGames } from "@/app/lib/data";
 import { GameCoverSkeleton } from "@/app/ui/GameCover";
 
-import type { TrendingGame } from "@/app/lib/definitions";
+import type { GameCoverType } from "@/app/lib/definitions";
 
 export default async function TrendingGames() {
   const trendingGames = await fetchTrendingGames();
 
   return (
     <div className="grid grid-cols-6 gap-2 mt-6">
-      {trendingGames.map((game: TrendingGame) => (
-        <GameCover key={game.id} src={game.cover} alt={game.name} />
+      {trendingGames.map((game: GameCoverType) => (
+        <GameCover
+          key={game.id}
+          cover_id={game.cover?.image_id}
+          alt={game.name}
+        />
       ))}
     </div>
   );

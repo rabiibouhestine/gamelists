@@ -3,15 +3,15 @@ import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type GameCoverProps = {
-  src: string;
+  cover_id: string;
   alt: string;
 };
 
-export default function GameCover({ src, alt }: GameCoverProps) {
+export default function GameCover({ cover_id, alt }: GameCoverProps) {
   return (
     <Link href="/">
       <Image
-        src={src}
+        src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${cover_id}.jpg`}
         alt={alt}
         width={246}
         height={352}

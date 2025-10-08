@@ -16,10 +16,10 @@ type TrendingGame = {
   name: string;
 };
 
-export async function fetchTrendingGames() {
-  const clientId = process.env.IGDB_CLIENT_ID;
-  const accessToken = process.env.IGDB_ACCESS_TOKEN;
+const clientId = process.env.IGDB_CLIENT_ID;
+const accessToken = process.env.IGDB_ACCESS_TOKEN;
 
+export async function fetchTrendingGames() {
   if (!clientId || !accessToken) {
     throw new Error("Missing IGDB credentials in environment variables.");
   }
@@ -76,13 +76,34 @@ export async function fetchTrendingGames() {
 
   const gamesData = await gamesResponse.json();
 
-  const formattedGames = gamesData.map((game: TrendingGame) => ({
-    id: game.id,
-    name: game.name,
-    cover: game.cover
-      ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`
-      : null,
-  }));
+  return gamesData;
+}
 
-  return formattedGames;
+export async function searchGames(search: string) {
+  if (!clientId || !accessToken) {
+    throw new Error("Missing IGDB credentials in environment variables.");
+  }
+
+  const gamesResponse = await fetch("https://api.igdb.com/v4/games", {
+    method: "POST",
+    headers: {
+      "Client-ID": clientId,
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "text/plain",
+    },
+    body: `
+      ${search ? `search "${search}";` : ""}
+      fields id,cover.image_id,name;
+      limit 36;
+    `,
+  });
+
+  if (!gamesResponse.ok) {
+    const errorText = await gamesResponse.text();
+    throw new Error(`Failed to fetch game details: ${errorText}`);
+  }
+
+  const gamesData = await gamesResponse.json();
+
+  return gamesData;
 }
