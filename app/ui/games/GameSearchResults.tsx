@@ -17,7 +17,7 @@ export default async function GameSearchResults({
   const search = searchParams?.search || "";
   const genre = searchParams?.genre || "";
   const platform = Number(searchParams?.platform) || 0;
-  const currentPage = Number(searchParams?.page) || 1;
+  // const currentPage = Number(searchParams?.page) || 1;
 
   const games = await searchGames(search, genre, platform);
 

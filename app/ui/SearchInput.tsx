@@ -2,13 +2,12 @@
 
 import { Input } from "@/components/ui/input";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function SearchInput({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const router = useRouter();
 
   const [term, setTerm] = useState(
     searchParams.get("search")?.toString() ?? ""
@@ -24,7 +23,7 @@ export default function SearchInput({ placeholder }: { placeholder: string }) {
       params.delete("search");
     }
 
-    router.replace(`${pathname}?${params.toString()}`);
+    window.location.href = `${pathname}?${params.toString()}`;
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
