@@ -35,7 +35,7 @@ export default function SearchInput({ placeholder }: { placeholder: string }) {
   };
 
   return (
-    <div className="relative w-80">
+    <div className="relative w-full">
       <Input
         type="text"
         placeholder={placeholder}

@@ -29,6 +29,7 @@ type ComboboxProps = {
   initialValue?: string;
   select_placeholder?: string;
   search_placeholder?: string;
+  width?: number;
 };
 
 export function Combobox({
@@ -37,6 +38,7 @@ export function Combobox({
   initialValue,
   select_placeholder,
   search_placeholder,
+  width,
 }: ComboboxProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(initialValue ?? options[0].value);
@@ -50,7 +52,7 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-fit justify-between"
+          className={cn(width ? `w-${width}` : "w-60", "justify-between")}
         >
           {value
             ? options.find((option) => option.value === value)?.label
@@ -58,7 +60,7 @@ export function Combobox({
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit p-0">
+      <PopoverContent className={cn(width ? `w-${width}` : "w-60", "p-0")}>
         <Command>
           <CommandInput placeholder={search_placeholder_text} className="h-9" />
           <CommandList>
