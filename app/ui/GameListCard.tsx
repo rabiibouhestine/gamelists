@@ -24,7 +24,7 @@ type GameListProps = {
   gamelist: GameListCard;
 };
 
-export default function GameList({ gamelist }: GameListProps) {
+export default function GameListCard({ gamelist }: GameListProps) {
   return (
     <div className="mt-6">
       <h3 className="font-bold text-2xl">{gamelist.title}</h3>

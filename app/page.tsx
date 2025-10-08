@@ -1,7 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
-import { games, gameLists } from "./lib/data";
-import GameList from "./ui/GameList";
+import { gameLists } from "@/app/lib/placeholder-data";
+import GameListCard from "@/app/ui/GameListCard";
+import TrendingGames from "@/app/ui/TrendingGames";
+import { TrendingGamesSkeleton } from "@/app/ui/TrendingGames";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -17,26 +19,16 @@ export default function Home() {
         <h2 className="text-3xl font-semibold">Trending Games</h2>
         <Link href="/">See More</Link>
       </div>
-      <div className="grid grid-cols-6 gap-2 mt-6">
-        {games.map((game) => (
-          <Link key={game.id} href="/">
-            <Image
-              src={game.img}
-              alt={game.name}
-              width={246}
-              height={352}
-              className="rounded-md"
-            />
-          </Link>
-        ))}
-      </div>
+      <Suspense fallback={<TrendingGamesSkeleton />}>
+        <TrendingGames />
+      </Suspense>
       <div className="flex justify-between items-center border-b py-2 mt-20">
         <h2 className="text-3xl font-semibold">Recent Lists</h2>
         <Link href="/">See More</Link>
       </div>
       <div className="flex flex-col gap-6">
         {gameLists.map((list) => (
-          <GameList key={list.id} gamelist={list} />
+          <GameListCard key={list.id} gamelist={list} />
         ))}
       </div>
     </div>
