@@ -70,7 +70,7 @@ export async function fetchTrendingGames() {
 
 export async function searchGames(
   search?: string,
-  genre?: string,
+  genre?: number,
   platform?: number
 ) {
   if (!clientId || !accessToken) {
@@ -80,9 +80,9 @@ export async function searchGames(
   let whereClause = "";
 
   if (genre && platform) {
-    whereClause = `where genres.slug = ("${genre}") & platforms.platform_family = (${platform});`;
+    whereClause = `where genres = (${genre}) & platforms.platform_family = (${platform});`;
   } else if (genre) {
-    whereClause = `where genres.slug = ("${genre}");`;
+    whereClause = `where genres = (${genre});`;
   } else if (platform) {
     whereClause = `where platforms.platform_family = (${platform});`;
   }
@@ -125,44 +125,96 @@ export const gameGenres = [
     label: "All Genres",
   },
   {
-    value: "point-and-click",
+    value: "2",
     label: "Point-and-click",
   },
   {
-    value: "fighting",
+    value: "4",
     label: "Fighting",
   },
   {
-    value: "shooter",
+    value: "5",
     label: "Shooter",
   },
   {
-    value: "music",
+    value: "7",
     label: "Music",
   },
   {
-    value: "platform",
+    value: "8",
     label: "Platform",
   },
   {
-    value: "puzzle",
+    value: "9",
     label: "Puzzle",
   },
   {
-    value: "racing",
+    value: "10",
     label: "Racing",
   },
   {
-    value: "real-time-strategy-rts",
+    value: "11",
     label: "Real Time Strategy (RTS)",
   },
   {
-    value: "role-playing-rpg",
+    value: "12",
     label: "Role-playing (RPG)",
   },
   {
-    value: "simulator",
+    value: "13",
     label: "Simulator",
+  },
+  {
+    value: "14",
+    label: "Sport",
+  },
+  {
+    value: "15",
+    label: "Strategy",
+  },
+  {
+    value: "16",
+    label: "Turn-based strategy (TBS)",
+  },
+  {
+    value: "24",
+    label: "Tactical",
+  },
+  {
+    value: "25",
+    label: "Hack and slash/Beat 'em up",
+  },
+  {
+    value: "26",
+    label: "Quiz/Trivia",
+  },
+  {
+    value: "30",
+    label: "Pinball",
+  },
+  {
+    value: "31",
+    label: "Adventure",
+  },
+  {
+    value: "32",
+    label: "Indie",
+  },
+  {
+    value: "33",
+    label: "Arcade",
+  },
+  {
+    value: "34",
+    label: "Visual Novel",
+  },
+  {
+    value: "35",
+    label: "Card & Board Game",
+  },
+  {
+    value: "36",
+    label: "MOBA",
   },
 ];
 
