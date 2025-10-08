@@ -79,7 +79,7 @@ export async function fetchTrendingGames() {
   return gamesData;
 }
 
-export async function searchGames(search: string) {
+export async function searchGames(search?: string, genre?: string) {
   if (!clientId || !accessToken) {
     throw new Error("Missing IGDB credentials in environment variables.");
   }
@@ -94,6 +94,7 @@ export async function searchGames(search: string) {
     body: `
       ${search ? `search "${search}";` : ""}
       fields id,cover.image_id,name;
+      ${genre ? `where genres.slug = ("${genre}");` : ""}
       limit 36;
     `,
   });
@@ -107,3 +108,50 @@ export async function searchGames(search: string) {
 
   return gamesData;
 }
+
+export const gameGenres = [
+  {
+    value: "",
+    label: "All Genres",
+  },
+  {
+    value: "point-and-click",
+    label: "Point-and-click",
+  },
+  {
+    value: "fighting",
+    label: "Fighting",
+  },
+  {
+    value: "shooter",
+    label: "Shooter",
+  },
+  {
+    value: "music",
+    label: "Music",
+  },
+  {
+    value: "platform",
+    label: "Platform",
+  },
+  {
+    value: "puzzle",
+    label: "Puzzle",
+  },
+  {
+    value: "racing",
+    label: "Racing",
+  },
+  {
+    value: "real-time-strategy-rts",
+    label: "Real Time Strategy (RTS)",
+  },
+  {
+    value: "role-playing-rpg",
+    label: "Role-playing (RPG)",
+  },
+  {
+    value: "simulator",
+    label: "Simulator",
+  },
+];

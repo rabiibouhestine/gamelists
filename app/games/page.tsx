@@ -1,7 +1,8 @@
-import GameSearchResults from "@/app/ui/GameSearchResults";
+import GameSearchResults from "@/app/ui/games/GameSearchResults";
 import SearchInput from "@/app/ui/SearchInput";
 import { Suspense } from "react";
-import { GameSearchResultsSkeleton } from "@/app/ui/GameSearchResults";
+import { GameSearchResultsSkeleton } from "@/app/ui/games/GameSearchResults";
+import SelectGenreInput from "@/app/ui/games/SelectGenreInput";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -15,7 +16,7 @@ export default async function Page(props: {
       <h1 className="text-3xl font-bold mb-4">Browse Games</h1>
       <div className="flex justify-between items-center border-b py-2">
         <SearchInput placeholder="Search Game" />
-        <p>Filters</p>
+        <SelectGenreInput />
       </div>
       <Suspense fallback={<GameSearchResultsSkeleton />}>
         <GameSearchResults searchParams={searchParams} />
