@@ -1,5 +1,7 @@
 import GameSearchResults from "@/app/ui/GameSearchResults";
 import SearchInput from "@/app/ui/SearchInput";
+import { Suspense } from "react";
+import { GameSearchResultsSkeleton } from "@/app/ui/GameSearchResults";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -15,7 +17,9 @@ export default async function Page(props: {
         <SearchInput placeholder="Search Game" />
         <p>Filters</p>
       </div>
-      <GameSearchResults searchParams={searchParams} />
+      <Suspense fallback={<GameSearchResultsSkeleton />}>
+        <GameSearchResults searchParams={searchParams} />
+      </Suspense>
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { searchGames } from "@/app/lib/data";
 import GameCover from "@/app/ui/GameCover";
+import { GameCoverSkeleton } from "@/app/ui/GameCover";
 
 import type { GameCoverType } from "@/app/lib/definitions";
 
@@ -24,6 +25,16 @@ export default async function GameSearchResults({
           cover_id={game.cover?.image_id}
           alt={game.name}
         />
+      ))}
+    </div>
+  );
+}
+
+export function GameSearchResultsSkeleton() {
+  return (
+    <div className="grid grid-cols-6 gap-2 mt-6">
+      {Array.from({ length: 36 }).map((_, index) => (
+        <GameCoverSkeleton key={index} />
       ))}
     </div>
   );

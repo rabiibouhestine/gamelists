@@ -8,7 +8,8 @@ import { useState } from "react";
 export default function SearchInput({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
+
   const [term, setTerm] = useState(
     searchParams.get("search")?.toString() ?? ""
   );
@@ -16,12 +17,14 @@ export default function SearchInput({ placeholder }: { placeholder: string }) {
   const handleSearch = (term: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", "1");
+
     if (term) {
       params.set("search", term);
     } else {
       params.delete("search");
     }
-    replace(`${pathname}?${params.toString()}`);
+
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
