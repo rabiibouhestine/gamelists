@@ -18,7 +18,7 @@ export default async function Page(props: {
         <GameInfoCard slug={slug} />
       </Suspense>
       <div className="flex gap-2 justify-between items-center border-b py-3 mt-6">
-        <h2 className="text-3xl font-semibold">Lists containing this game</h2>
+        <h2 className="text-3xl font-semibold">Related Lists</h2>
         <div className="flex gap-2">
           <SearchInput placeholder="Search List" />
           <SelectPlatformInput />

@@ -1,4 +1,4 @@
-import { searchGames } from "@/lib/data";
+import { searchGames } from "@/lib/igdb";
 import GameCover from "@/components/page/GameCover";
 import { GameCoverSkeleton } from "@/components/page/GameCover";
 

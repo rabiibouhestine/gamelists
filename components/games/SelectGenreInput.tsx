@@ -1,7 +1,7 @@
 "use client";
 
 import { Combobox } from "@/components/ui/combobox";
-import { gameGenres } from "@/lib/data";
+import { gameGenres } from "@/lib/igdb";
 
 import { useSearchParams, usePathname } from "next/navigation";
 

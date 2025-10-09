@@ -4,8 +4,11 @@ import GameListCard from "@/components/page/GameListCard";
 import TrendingGames from "@/components/page/TrendingGames";
 import { TrendingGamesSkeleton } from "@/components/page/TrendingGames";
 import { Suspense } from "react";
+import { getRecentGameLists } from "@/lib/data";
 
-export default function Page() {
+export default async function Page() {
+  const game_lists = await getRecentGameLists();
+  console.log(game_lists);
   return (
     <>
       <h1 className="text-6xl font-bold mt-20 mb-24">

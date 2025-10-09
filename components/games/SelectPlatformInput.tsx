@@ -1,7 +1,7 @@
 "use client";
 
 import { Combobox } from "@/components/ui/combobox";
-import { platform_families } from "@/lib/data";
+import { platform_families } from "@/lib/igdb";
 
 import { useSearchParams, usePathname } from "next/navigation";
 
