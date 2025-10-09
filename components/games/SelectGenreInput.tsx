@@ -1,11 +1,11 @@
 "use client";
 
 import { Combobox } from "@/components/ui/combobox";
-import { platform_families } from "@/app/lib/data";
+import { gameGenres } from "@/lib/data";
 
 import { useSearchParams, usePathname } from "next/navigation";
 
-export default function SelectPlatformInput() {
+export default function SelectGenreInput() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
@@ -14,9 +14,9 @@ export default function SelectPlatformInput() {
     params.set("page", "1");
 
     if (value) {
-      params.set("platform", value);
+      params.set("genre", value);
     } else {
-      params.delete("platform");
+      params.delete("genre");
     }
 
     window.location.href = `${pathname}?${params.toString()}`;
@@ -24,11 +24,11 @@ export default function SelectPlatformInput() {
 
   return (
     <Combobox
-      options={platform_families}
+      options={gameGenres}
       onSelect={handleSelect}
-      select_placeholder="All platforms"
-      search_placeholder="Search platforms"
-      initialValue={searchParams.get("platform")?.toString() ?? ""}
+      select_placeholder="All genres"
+      search_placeholder="Search genres"
+      initialValue={searchParams.get("genre")?.toString() ?? ""}
     />
   );
 }

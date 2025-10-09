@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { fetchGameInfo } from "@/app/lib/data";
+import { fetchGameInfo } from "@/lib/data";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import type { InvolvedCompany } from "@/app/lib/definitions";
+import type { InvolvedCompany } from "@/lib/definitions";
 
 export default async function GameInfoCard({ slug }: { slug: string }) {
   const gameInfo = await fetchGameInfo(slug);

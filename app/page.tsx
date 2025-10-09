@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { gameLists } from "@/app/lib/placeholder-data";
-import GameListCard from "@/app/ui/GameListCard";
-import TrendingGames from "@/app/ui/TrendingGames";
-import { TrendingGamesSkeleton } from "@/app/ui/TrendingGames";
+import { gameLists } from "@/lib/placeholder-data";
+import GameListCard from "@/components/page/GameListCard";
+import TrendingGames from "@/components/page/TrendingGames";
+import { TrendingGamesSkeleton } from "@/components/page/TrendingGames";
 import { Suspense } from "react";
 
 export default function Page() {
@@ -24,7 +24,7 @@ export default function Page() {
       </Suspense>
       <div className="flex justify-between items-center border-b py-2 mt-20">
         <h2 className="text-3xl font-semibold">Recent Lists</h2>
-        <Link href="/">See More</Link>
+        <Link href="/lists">See More</Link>
       </div>
       <div className="flex flex-col gap-6">
         {gameLists.map((list) => (

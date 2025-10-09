@@ -1,8 +1,8 @@
-import { searchGames } from "@/app/lib/data";
-import GameCover from "@/app/ui/GameCover";
-import { GameCoverSkeleton } from "@/app/ui/GameCover";
+import { searchGames } from "@/lib/data";
+import GameCover from "@/components/page/GameCover";
+import { GameCoverSkeleton } from "@/components/page/GameCover";
 
-import type { GameCoverType } from "@/app/lib/definitions";
+import type { GameCoverType } from "@/lib/definitions";
 
 export default async function GameSearchResults({
   searchParams,

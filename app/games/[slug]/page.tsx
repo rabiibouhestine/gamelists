@@ -1,11 +1,10 @@
-import GameListCard from "@/app/ui/GameListCard";
-import GameInfoCard from "@/app/ui/games/GameInfoCard";
-import { GameInfoCardSkeleton } from "@/app/ui/games/GameInfoCard";
-import { gameLists } from "@/app/lib/placeholder-data";
+import GameListCard from "@/components/page/GameListCard";
+import GameInfoCard from "@/components/games/GameInfoCard";
+import { GameInfoCardSkeleton } from "@/components/games/GameInfoCard";
+import { gameLists } from "@/lib/placeholder-data";
 import { Suspense } from "react";
-import SearchInput from "@/app/ui/SearchInput";
-import SelectGenreInput from "@/app/ui/games/SelectGenreInput";
-import SelectPlatformInput from "@/app/ui/games/SelectPlatformInput";
+import SearchInput from "@/components/page/SearchInput";
+import SelectPlatformInput from "@/components/games/SelectPlatformInput";
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>;

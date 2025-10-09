@@ -6,7 +6,7 @@ export default function Header() {
       <Link href="/">Game Lists</Link>
       <nav className="flex gap-3">
         <Link href="/games">Games</Link>
-        <Link href="/">Lists</Link>
+        <Link href="/lists">Lists</Link>
         <Link href="/">Profile</Link>
       </nav>
     </header>

@@ -17,7 +17,7 @@ export default async function Page(props: {
   const searchParams = await props.searchParams;
   return (
     <>
-      <h1 className="text-3xl font-bold mb-4">Browse Games</h1>
+      <h1 className="text-3xl font-bold mb-4">Browse Lists</h1>
       <div className="flex gap-2 justify-between items-center border-b py-3">
         <SearchInput placeholder="Search Game" />
         <div className="flex gap-2">
