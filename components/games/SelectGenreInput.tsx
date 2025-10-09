@@ -3,11 +3,12 @@
 import { Combobox } from "@/components/ui/combobox";
 import { gameGenres } from "@/lib/igdb";
 
-import { useSearchParams, usePathname } from "next/navigation";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export default function SelectGenreInput() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleSelect = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -19,7 +20,7 @@ export default function SelectGenreInput() {
       params.delete("genre");
     }
 
-    window.location.href = `${pathname}?${params.toString()}`;
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (
