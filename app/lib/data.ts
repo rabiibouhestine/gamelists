@@ -53,7 +53,7 @@ export async function fetchTrendingGames() {
       "Content-Type": "text/plain",
     },
     body: `
-      fields id, name, cover.image_id;
+      fields id,name,slug,cover.image_id;
       where id = (${gameIds.join(",")});
     `,
   });
@@ -99,7 +99,7 @@ export async function searchGames(
     },
     body: `
       ${search ? `search "${search}";` : "sort rating desc;"}
-      fields id,cover.image_id,name;
+      fields id,cover.image_id,name,slug;
       ${whereClause}
       limit 36;
       offset ${offset};
@@ -114,6 +114,34 @@ export async function searchGames(
   const gamesData = await gamesResponse.json();
 
   return gamesData;
+}
+
+export async function fetchGameInfo(slug: string) {
+  if (!clientId || !accessToken) {
+    throw new Error("Missing IGDB credentials in environment variables.");
+  }
+
+  const gameResponse = await fetch("https://api.igdb.com/v4/games", {
+    method: "POST",
+    headers: {
+      "Client-ID": clientId,
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "text/plain",
+    },
+    body: `
+      fields id,cover.image_id,name,first_release_date,involved_companies.company.name,involved_companies.developer,summary,genres.name,platforms.name,url;
+      where slug="${slug}";
+    `,
+  });
+
+  if (!gameResponse.ok) {
+    const errorText = await gameResponse.text();
+    throw new Error(`Failed to fetch game info: ${errorText}`);
+  }
+
+  const gameData = await gameResponse.json();
+
+  return gameData[0];
 }
 
 export const gameGenres = [

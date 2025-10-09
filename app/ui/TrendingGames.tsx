@@ -14,6 +14,7 @@ export default async function TrendingGames() {
           key={game.id}
           cover_id={game.cover?.image_id}
           alt={game.name}
+          slug={game.slug}
         />
       ))}
     </div>
