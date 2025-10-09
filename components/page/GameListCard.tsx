@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { GameListType } from "@/lib/definitions";
 type GameListProps = {
   gamelist: GameListType;
@@ -7,8 +8,11 @@ type GameListProps = {
 export default function GameListCard({ gamelist }: GameListProps) {
   return (
     <div className="mt-6">
-      <h3 className="font-bold text-2xl">{gamelist.title}</h3>
-      <div className="flex items-center gap-2">
+      <Link href={`/lists/${gamelist.list_id}`}>
+        <h3 className="font-bold text-2xl">{gamelist.title}</h3>
+      </Link>
+      <p className="line-clamp-2">{gamelist.description}</p>
+      <div className="flex items-center gap-2 my-3">
         <div className="flex items-center gap-1">
           <Image
             src={gamelist.creator_profile_img}
@@ -23,8 +27,10 @@ export default function GameListCard({ gamelist }: GameListProps) {
         <span>{gamelist.nb_likes} Likes</span>
         <span>{gamelist.nb_comments} Comments</span>
       </div>
-      <p className="mt-2 line-clamp-2">{gamelist.description}</p>
-      <div className="w-full bg-card rounded-md mt-3 flex">
+      <Link
+        href={`/lists/${gamelist.list_id}`}
+        className="w-full bg-card rounded-md mt-3 flex"
+      >
         {gamelist.games.map((game, index) => (
           <Image
             key={game.id}
@@ -36,7 +42,7 @@ export default function GameListCard({ gamelist }: GameListProps) {
             style={{ zIndex: 8 - index }}
           />
         ))}
-      </div>
+      </Link>
     </div>
   );
 }

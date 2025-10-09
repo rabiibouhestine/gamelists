@@ -35,3 +35,12 @@ export type GameListType = {
     img: string;
   }[];
 };
+
+export type GameListGameType = {
+  game_id: number;
+  igdb_id: number;
+  name: string;
+  slug: string;
+  image_id: string;
+  position: number;
+};
