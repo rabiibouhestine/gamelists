@@ -18,3 +18,19 @@ export type InvolvedCompany = {
     name?: string;
   };
 };
+
+export type GameListType = {
+  list_id: number;
+  title: string;
+  description: string;
+  creator_id: number;
+  creator_username: string;
+  creator_profile_img: string;
+  nb_likes: number;
+  nb_comments: number;
+  games: {
+    id: number;
+    name: string;
+    img: string;
+  }[];
+};

@@ -1,8 +1,8 @@
 import SearchInput from "@/components/page/SearchInput";
-import { gameLists } from "@/lib/placeholder-data";
 import GameListCard from "@/components/page/GameListCard";
 import SelectGenreInput from "@/components/games/SelectGenreInput";
 import Pagination from "@/components/games/Pagination";
+import { getRecentGameLists } from "@/lib/data";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -13,6 +13,7 @@ export default async function Page(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
+  const gameLists = await getRecentGameLists();
   return (
     <>
       <h1 className="text-3xl font-bold mb-4">Browse Lists</h1>
@@ -22,7 +23,7 @@ export default async function Page(props: {
       </div>
       <div className="flex flex-col gap-6">
         {gameLists.map((list) => (
-          <GameListCard key={list.id} gamelist={list} />
+          <GameListCard key={list.list_id} gamelist={list} />
         ))}
       </div>
       <Pagination />

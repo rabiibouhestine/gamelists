@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { gameLists } from "@/lib/placeholder-data";
 import GameListCard from "@/components/page/GameListCard";
 import TrendingGames from "@/components/page/TrendingGames";
 import { TrendingGamesSkeleton } from "@/components/page/TrendingGames";
@@ -7,8 +6,8 @@ import { Suspense } from "react";
 import { getRecentGameLists } from "@/lib/data";
 
 export default async function Page() {
-  const game_lists = await getRecentGameLists();
-  console.log(game_lists);
+  const gameLists = await getRecentGameLists();
+
   return (
     <>
       <h1 className="text-6xl font-bold mt-20 mb-24">
@@ -31,7 +30,7 @@ export default async function Page() {
       </div>
       <div className="flex flex-col gap-6">
         {gameLists.map((list) => (
-          <GameListCard key={list.id} gamelist={list} />
+          <GameListCard key={list.list_id} gamelist={list} />
         ))}
       </div>
     </>

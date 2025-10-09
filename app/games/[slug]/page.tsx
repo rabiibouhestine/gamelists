@@ -1,16 +1,18 @@
 import GameListCard from "@/components/page/GameListCard";
 import GameInfoCard from "@/components/games/GameInfoCard";
 import { GameInfoCardSkeleton } from "@/components/games/GameInfoCard";
-import { gameLists } from "@/lib/placeholder-data";
 import { Suspense } from "react";
 import SearchInput from "@/components/page/SearchInput";
 import SelectPlatformInput from "@/components/games/SelectPlatformInput";
+import { getRecentGameLists } from "@/lib/data";
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
   const slug = params.slug;
+
+  const gameLists = await getRecentGameLists();
 
   return (
     <>
@@ -26,7 +28,7 @@ export default async function Page(props: {
       </div>
       <div className="flex flex-col gap-6">
         {gameLists.map((list) => (
-          <GameListCard key={list.id} gamelist={list} />
+          <GameListCard key={list.list_id} gamelist={list} />
         ))}
       </div>
     </>

@@ -1,27 +1,7 @@
 import Image from "next/image";
-
-type GameList = {
-  id: number;
-  name: string;
-  img: string;
-};
-
-type GameListCard = {
-  id: number;
-  title: string;
-  description: string;
-  nb_likes: number;
-  nb_comments: number;
-  creator: {
-    user_id: number;
-    username: string;
-    profile_img: string;
-  };
-  list: GameList[];
-};
-
+import type { GameListType } from "@/lib/definitions";
 type GameListProps = {
-  gamelist: GameListCard;
+  gamelist: GameListType;
 };
 
 export default function GameListCard({ gamelist }: GameListProps) {
@@ -31,24 +11,24 @@ export default function GameListCard({ gamelist }: GameListProps) {
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-1">
           <Image
-            src={gamelist.creator.profile_img}
-            alt={gamelist.creator.username}
+            src={gamelist.creator_profile_img}
+            alt={gamelist.creator_username}
             width={20}
             height={20}
             className="rounded-full w-4 h-4"
           />
-          <span className="font-bold">{gamelist.creator.username}</span>
+          <span className="font-bold">{gamelist.creator_username}</span>
         </div>
-        <span>{gamelist.list.length} Games</span>
+        <span>{gamelist.games.length} Games</span>
         <span>{gamelist.nb_likes}</span>
         <span>{gamelist.nb_comments}</span>
       </div>
       <p className="mt-2 line-clamp-2">{gamelist.description}</p>
       <div className="w-full bg-card rounded-md mt-3 flex">
-        {gamelist.list.slice(0, 8).map((game, index) => (
+        {gamelist.games.map((game, index) => (
           <Image
             key={game.id}
-            src={game.img}
+            src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.img}.jpg`}
             alt={game.name}
             width={246}
             height={352}
