@@ -19,9 +19,9 @@ export default function GameListCard({ gamelist }: GameListProps) {
           />
           <span className="font-bold">{gamelist.creator_username}</span>
         </div>
-        <span>{gamelist.games.length} Games</span>
-        <span>{gamelist.nb_likes}</span>
-        <span>{gamelist.nb_comments}</span>
+        <span>{gamelist.total_games_count} Games</span>
+        <span>{gamelist.nb_likes} Likes</span>
+        <span>{gamelist.nb_comments} Comments</span>
       </div>
       <p className="mt-2 line-clamp-2">{gamelist.description}</p>
       <div className="w-full bg-card rounded-md mt-3 flex">

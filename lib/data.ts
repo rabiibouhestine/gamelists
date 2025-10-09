@@ -12,6 +12,7 @@ export async function getRecentGameLists() {
       u.profile_image AS creator_profile_img,
       COALESCE(likes_count.count, 0) AS nb_likes,
       COALESCE(comments_count.count, 0) AS nb_comments,
+      COALESCE(total_games.total_count, 0) AS total_games_count,
       json_agg(
         json_build_object(
           'id', glg.id,
@@ -31,8 +32,21 @@ export async function getRecentGameLists() {
       FROM comments
       GROUP BY game_list_id
     ) AS comments_count ON comments_count.game_list_id = gl.id
-    LEFT JOIN game_list_games glg ON glg.game_list_id = gl.id
-    GROUP BY gl.id, u.id, likes_count.count, comments_count.count
+    LEFT JOIN (
+      SELECT *
+      FROM (
+        SELECT *,
+              ROW_NUMBER() OVER (PARTITION BY game_list_id ORDER BY position) AS rn
+        FROM game_list_games
+      ) glg_sub
+      WHERE rn <= 7
+    ) glg ON glg.game_list_id = gl.id
+    LEFT JOIN (
+      SELECT game_list_id, COUNT(*) AS total_count
+      FROM game_list_games
+      GROUP BY game_list_id
+    ) total_games ON total_games.game_list_id = gl.id
+    GROUP BY gl.id, u.id, likes_count.count, comments_count.count, total_games.total_count
     ORDER BY gl.created_at DESC
     LIMIT 10;
   `;

@@ -28,6 +28,7 @@ export type GameListType = {
   creator_profile_img: string;
   nb_likes: number;
   nb_comments: number;
+  total_games_count: number;
   games: {
     id: number;
     name: string;
