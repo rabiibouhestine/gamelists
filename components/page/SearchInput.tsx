@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useSearchParams, usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function SearchInput({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
@@ -12,6 +12,11 @@ export default function SearchInput({ placeholder }: { placeholder: string }) {
   const [term, setTerm] = useState(
     searchParams.get("search")?.toString() ?? ""
   );
+
+  useEffect(() => {
+    const currentSearch = searchParams.get("search") ?? "";
+    setTerm(currentSearch);
+  }, [searchParams]);
 
   const handleSearch = (term: string) => {
     const params = new URLSearchParams(searchParams);
