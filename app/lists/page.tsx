@@ -1,9 +1,7 @@
-import GameSearchResults from "@/components/games/GameSearchResults";
 import SearchInput from "@/components/page/SearchInput";
-import { Suspense } from "react";
-import { GameSearchResultsSkeleton } from "@/components/games/GameSearchResults";
+import { gameLists } from "@/lib/placeholder-data";
+import GameListCard from "@/components/page/GameListCard";
 import SelectGenreInput from "@/components/games/SelectGenreInput";
-import SelectPlatformInput from "@/components/games/SelectPlatformInput";
 import Pagination from "@/components/games/Pagination";
 
 export default async function Page(props: {
@@ -19,15 +17,14 @@ export default async function Page(props: {
     <>
       <h1 className="text-3xl font-bold mb-4">Browse Lists</h1>
       <div className="flex gap-2 justify-between items-center border-b py-3">
-        <SearchInput placeholder="Search Game" />
-        <div className="flex gap-2">
-          <SelectGenreInput />
-          <SelectPlatformInput />
-        </div>
+        <SearchInput placeholder="Search List" />
+        <SelectGenreInput />
       </div>
-      <Suspense fallback={<GameSearchResultsSkeleton />}>
-        <GameSearchResults searchParams={searchParams} />
-      </Suspense>
+      <div className="flex flex-col gap-6">
+        {gameLists.map((list) => (
+          <GameListCard key={list.id} gamelist={list} />
+        ))}
+      </div>
       <Pagination />
     </>
   );
