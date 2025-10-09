@@ -71,7 +71,8 @@ export async function fetchTrendingGames() {
 export async function searchGames(
   search?: string,
   genre?: number,
-  platform?: number
+  platform?: number,
+  page?: number
 ) {
   if (!clientId || !accessToken) {
     throw new Error("Missing IGDB credentials in environment variables.");
@@ -87,6 +88,8 @@ export async function searchGames(
     whereClause = `where platforms.platform_family = (${platform});`;
   }
 
+  const offset = page ? (page - 1) * 36 : 0;
+
   const gamesResponse = await fetch("https://api.igdb.com/v4/games", {
     method: "POST",
     headers: {
@@ -99,6 +102,7 @@ export async function searchGames(
       fields id,cover.image_id,name;
       ${whereClause}
       limit 36;
+      offset ${offset};
     `,
   });
 

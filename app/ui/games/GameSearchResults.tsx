@@ -17,9 +17,9 @@ export default async function GameSearchResults({
   const search = searchParams?.search || "";
   const genre = Number(searchParams?.genre) || 0;
   const platform = Number(searchParams?.platform) || 0;
-  // const currentPage = Number(searchParams?.page) || 1;
+  const currentPage = Number(searchParams?.page) || 1;
 
-  const games = await searchGames(search, genre, platform);
+  const games = await searchGames(search, genre, platform, currentPage);
 
   return (
     <div className="grid grid-cols-6 gap-2 mt-6">
