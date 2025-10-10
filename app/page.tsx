@@ -18,7 +18,7 @@ export default async function Page() {
         Tell your friends what’s good.
       </h1>
       <div className="flex justify-between items-center border-b py-2">
-        <h2 className="text-3xl font-semibold">Trending Games</h2>
+        <h2 className="text-3xl font-semibold">Recent Hits</h2>
         <Link href="/games">See More</Link>
       </div>
       <Suspense fallback={<TrendingGamesSkeleton />}>
