@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import { GameSearchResultsSkeleton } from "@/components/games/GameSearchResults";
 import SelectGenreInput from "@/components/games/SelectGenreInput";
 import SelectPlatformInput from "@/components/games/SelectPlatformInput";
-import Pagination from "@/components/games/Pagination";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -28,7 +27,6 @@ export default async function Page(props: {
       <Suspense fallback={<GameSearchResultsSkeleton />}>
         <GameSearchResults searchParams={searchParams} />
       </Suspense>
-      <Pagination />
     </>
   );
 }

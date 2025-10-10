@@ -1,6 +1,7 @@
 import { searchGames } from "@/lib/igdb";
 import GameCover from "@/components/page/GameCover";
 import { GameCoverSkeleton } from "@/components/page/GameCover";
+import Pagination from "@/components/games/Pagination";
 
 import type { GameCoverType } from "@/lib/definitions";
 
@@ -22,16 +23,19 @@ export default async function GameSearchResults({
   const games = await searchGames(search, genre, platform, currentPage);
 
   return (
-    <div className="grid grid-cols-6 gap-2 mt-6">
-      {games.map((game: GameCoverType) => (
-        <GameCover
-          key={game.id}
-          cover_id={game.cover?.image_id}
-          alt={game.name}
-          slug={game.slug}
-        />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-6 gap-2 mt-6">
+        {games.map((game: GameCoverType) => (
+          <GameCover
+            key={game.id}
+            cover_id={game.cover?.image_id}
+            alt={game.name}
+            slug={game.slug}
+          />
+        ))}
+      </div>
+      <Pagination limit={36} resultsCount={games.length} />
+    </>
   );
 }
 
