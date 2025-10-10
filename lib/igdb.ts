@@ -1,10 +1,3 @@
-type Popularity = {
-  id: number;
-  game_id: number;
-  popularity_type: number;
-  value: number;
-};
-
 const clientId = process.env.IGDB_CLIENT_ID;
 const accessToken = process.env.IGDB_ACCESS_TOKEN;
 
