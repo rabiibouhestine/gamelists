@@ -1,14 +1,27 @@
 import GameCover from "@/components/GameCover";
 import { fetchGameListGames, fetchGameListInfo } from "@/lib/data";
 import { GameListGameType } from "@/lib/definitions";
+import Pagination from "@/components/searchParamsInputs/Pagination";
 import Image from "next/image";
 
-export default async function Page(props: { params: Promise<{ id: string }> }) {
+export default async function Page(props: {
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ page?: string }>;
+}) {
+  const limit = 36;
+
+  const searchParams = await props.searchParams;
+  const page = searchParams?.page;
+
   const params = await props.params;
   const list_id = params.id;
 
   const gameList = await fetchGameListInfo(Number(list_id));
-  const gameListGames = await fetchGameListGames(Number(list_id));
+  const gameListGames = await fetchGameListGames(
+    Number(list_id),
+    Number(page),
+    limit
+  );
 
   return (
     <>
@@ -32,7 +45,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         <span>{gameList.total_games_count} Games</span>
       </div>
       <div className="grid grid-cols-6 gap-2 mt-6">
-        {gameListGames.map((game: GameListGameType) => (
+        {gameListGames.games.map((game: GameListGameType) => (
           <GameCover
             key={game.game_id}
             cover_id={game.image_id}
@@ -41,6 +54,11 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           />
         ))}
       </div>
+      <Pagination
+        limit={limit}
+        total={gameListGames.total}
+        resultsCount={gameListGames.games.length}
+      />
     </>
   );
 }
