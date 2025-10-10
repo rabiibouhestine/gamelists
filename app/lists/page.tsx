@@ -1,9 +1,8 @@
 import SearchInput from "@/components/searchParamsInputs/SearchInput";
 import GameListCard from "@/components/GameListCard";
-import SelectSortInput from "@/components/searchParamsInputs/SelectSortInput";
-import SelectSortOrderInput from "@/components/searchParamsInputs/SelectSortOrderInput";
 import Pagination from "@/components/searchParamsInputs/Pagination";
-import { getGameLists } from "@/lib/data";
+import SelectInput from "@/components/searchParamsInputs/SelectInput";
+import { sortOptions, orderOptions, getGameLists } from "@/lib/data";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -29,8 +28,8 @@ export default async function Page(props: {
       <h1 className="text-3xl font-bold mb-4">Browse Lists</h1>
       <div className="flex gap-2 justify-between items-center border-b py-3">
         <SearchInput placeholder="Search List" />
-        <SelectSortInput />
-        <SelectSortOrderInput />
+        <SelectInput param="sort" options={sortOptions} />
+        <SelectInput param="order" options={orderOptions} />
       </div>
       <div className="flex flex-col gap-6">
         {gameLists.results.map((list) => (

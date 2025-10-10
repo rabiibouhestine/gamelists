@@ -11,7 +11,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 type SelectInputProps = {
-  className: string;
+  className?: string;
   param: string;
   options: {
     value: string;
@@ -54,7 +54,7 @@ export default function SelectInput({
 
   return (
     <Select onValueChange={handleSelect} value={paramValue}>
-      <SelectTrigger className={className}>
+      <SelectTrigger className={className ? className : ""}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
