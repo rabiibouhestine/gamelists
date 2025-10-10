@@ -82,14 +82,14 @@ export async function getGameLists({
     ? sql`gl.name ILIKE ${"%" + searchTerm + "%"}`
     : sql`TRUE`;
 
-  // 👇 Count total number of results
+  // Count total number of results
   const [{ count: total }] = await sql`
     SELECT COUNT(*)::int AS count
     FROM game_lists gl
     WHERE ${whereClause};
   `;
 
-  // 👇 Main paginated query
+  // Main paginated query
   const results = await sql<GameListType[]>`
     WITH likes_count AS (
       SELECT game_list_id, COUNT(*) AS count
