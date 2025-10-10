@@ -1,14 +1,30 @@
 "use client";
 
-import { Combobox } from "@/components/ui/combobox";
 import { platform_families } from "@/lib/igdb";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function SelectPlatformInput() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+
+  const [platformValue, setPlatformValue] = useState(
+    searchParams.get("platform")?.toString() ?? platform_families[0].value
+  );
+
+  useEffect(() => {
+    const currentSort =
+      searchParams.get("platform")?.toString() ?? platform_families[0].value;
+    setPlatformValue(currentSort);
+  }, [searchParams]);
 
   const handleSelect = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -24,12 +40,17 @@ export default function SelectPlatformInput() {
   };
 
   return (
-    <Combobox
-      options={platform_families}
-      onSelect={handleSelect}
-      select_placeholder="All platforms"
-      search_placeholder="Search platforms"
-      initialValue={searchParams.get("platform")?.toString() ?? ""}
-    />
+    <Select onValueChange={handleSelect} value={platformValue}>
+      <SelectTrigger className="w-60">
+        <SelectValue placeholder="Select Platform" />
+      </SelectTrigger>
+      <SelectContent>
+        {platform_families.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

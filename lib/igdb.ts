@@ -116,7 +116,7 @@ export async function fetchGameInfo(slug: string) {
 
 export const gameGenres = [
   {
-    value: "",
+    value: "0",
     label: "All Genres",
   },
   {
@@ -216,7 +216,7 @@ export const gameGenres = [
 export const platform_families = [
   {
     label: "All Platforms",
-    value: "",
+    value: "0",
   },
   {
     label: "Nintendo",
