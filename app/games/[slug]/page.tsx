@@ -2,17 +2,36 @@ import GameListCard from "@/components/GameListCard";
 import GameInfoCard from "@/components/GameInfoCard";
 import { GameInfoCardSkeleton } from "@/components/GameInfoCard";
 import { Suspense } from "react";
-import { getRecentGameLists } from "@/lib/data";
 import SelectInput from "@/components/searchParamsInputs/SelectInput";
 import { sortOptions, orderOptions } from "@/lib/data";
+import { getGameSlugLists } from "@/lib/data";
+import Pagination from "@/components/searchParamsInputs/Pagination";
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{
+    sort?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";
+    order?: "ASC" | "DESC";
+    page?: string;
+  }>;
 }) {
+  const limit = 10;
+
   const params = await props.params;
   const slug = params.slug;
 
-  const gameLists = await getRecentGameLists();
+  const searchParams = await props.searchParams;
+  const page = searchParams?.page;
+  const sortColumn = searchParams?.sort;
+  const orderDirection = searchParams?.order;
+
+  const gameLists = await getGameSlugLists({
+    page: Number(page),
+    limit: limit,
+    sortColumn: sortColumn,
+    orderDirection: orderDirection,
+    gameSlug: slug,
+  });
 
   return (
     <>
@@ -27,10 +46,15 @@ export default async function Page(props: {
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        {gameLists.map((list) => (
+        {gameLists.results.map((list) => (
           <GameListCard key={list.list_id} gamelist={list} />
         ))}
       </div>
+      <Pagination
+        limit={limit}
+        total={gameLists.total}
+        resultsCount={gameLists.results.length}
+      />
     </>
   );
 }
