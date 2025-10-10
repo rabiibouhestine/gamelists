@@ -33,11 +33,11 @@ export default async function Page(props: {
         <SelectSortOrderInput />
       </div>
       <div className="flex flex-col gap-6">
-        {gameLists.map((list) => (
+        {gameLists.results.map((list) => (
           <GameListCard key={list.list_id} gamelist={list} />
         ))}
       </div>
-      <Pagination />
+      <Pagination limit={10} total={gameLists.total} />
     </>
   );
 }
