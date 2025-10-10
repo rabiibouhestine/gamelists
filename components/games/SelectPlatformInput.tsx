@@ -41,7 +41,7 @@ export default function SelectPlatformInput() {
 
   return (
     <Select onValueChange={handleSelect} value={platformValue}>
-      <SelectTrigger className="w-60">
+      <SelectTrigger className="w-40">
         <SelectValue placeholder="Select Platform" />
       </SelectTrigger>
       <SelectContent>
