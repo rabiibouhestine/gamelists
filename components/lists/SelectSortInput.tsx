@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import {
   Select,
@@ -33,7 +34,17 @@ export default function SelectSortInput() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [sortValue, setSortValue] = useState(
+    searchParams.get("sort")?.toString() ?? "created_at"
+  );
+
+  useEffect(() => {
+    const currentSort = searchParams.get("sort")?.toString() ?? "created_at";
+    setSortValue(currentSort);
+  }, [searchParams]);
+
   const handleSelect = (value: string) => {
+    setSortValue(value);
     const params = new URLSearchParams(searchParams);
     params.set("page", "1");
 
@@ -47,10 +58,7 @@ export default function SelectSortInput() {
   };
 
   return (
-    <Select
-      onValueChange={handleSelect}
-      defaultValue={searchParams.get("sort")?.toString() ?? "created_at"}
-    >
+    <Select onValueChange={handleSelect} value={sortValue}>
       <SelectTrigger className="w-60">
         <SelectValue placeholder="Sort Lists..." />
       </SelectTrigger>
