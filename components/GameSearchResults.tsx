@@ -1,7 +1,7 @@
 import { searchGames } from "@/lib/igdb";
-import GameCover from "@/components/page/GameCover";
-import { GameCoverSkeleton } from "@/components/page/GameCover";
-import Pagination from "@/components/games/Pagination";
+import GameCover from "@/components/GameCover";
+import { GameCoverSkeleton } from "@/components/GameCover";
+import Pagination from "@/components/searchParamsInputs/Pagination";
 
 import type { GameCoverType } from "@/lib/definitions";
 

@@ -1,8 +1,8 @@
-import SearchInput from "@/components/page/SearchInput";
-import GameListCard from "@/components/page/GameListCard";
-import SelectSortInput from "@/components/lists/SelectSortInput";
-import SelectSortOrderInput from "@/components/lists/SelectSortOrderInput";
-import Pagination from "@/components/games/Pagination";
+import SearchInput from "@/components/searchParamsInputs/SearchInput";
+import GameListCard from "@/components/GameListCard";
+import SelectSortInput from "@/components/searchParamsInputs/SelectSortInput";
+import SelectSortOrderInput from "@/components/searchParamsInputs/SelectSortOrderInput";
+import Pagination from "@/components/searchParamsInputs/Pagination";
 import { getGameLists } from "@/lib/data";
 
 export default async function Page(props: {

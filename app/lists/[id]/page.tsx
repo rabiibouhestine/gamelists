@@ -1,4 +1,4 @@
-import GameCover from "@/components/page/GameCover";
+import GameCover from "@/components/GameCover";
 import { fetchGameListGames, fetchGameListInfo } from "@/lib/data";
 import { GameListGameType } from "@/lib/definitions";
 import Image from "next/image";

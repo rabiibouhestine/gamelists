@@ -1,9 +1,9 @@
-import GameListCard from "@/components/page/GameListCard";
-import GameInfoCard from "@/components/games/GameInfoCard";
-import { GameInfoCardSkeleton } from "@/components/games/GameInfoCard";
+import GameListCard from "@/components/GameListCard";
+import GameInfoCard from "@/components/GameInfoCard";
+import { GameInfoCardSkeleton } from "@/components/GameInfoCard";
 import { Suspense } from "react";
-import SearchInput from "@/components/page/SearchInput";
-import SelectPlatformInput from "@/components/games/SelectPlatformInput";
+import SearchInput from "@/components/searchParamsInputs/SearchInput";
+import SelectPlatformInput from "@/components/searchParamsInputs/SelectPlatformInput";
 import { getRecentGameLists } from "@/lib/data";
 
 export default async function Page(props: {

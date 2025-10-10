@@ -1,7 +1,7 @@
 import Link from "next/link";
-import GameListCard from "@/components/page/GameListCard";
-import TrendingGames from "@/components/page/TrendingGames";
-import { TrendingGamesSkeleton } from "@/components/page/TrendingGames";
+import GameListCard from "@/components/GameListCard";
+import TrendingGames from "@/components/TrendingGames";
+import { TrendingGamesSkeleton } from "@/components/TrendingGames";
 import { Suspense } from "react";
 import { getRecentGameLists } from "@/lib/data";
 
