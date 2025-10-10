@@ -1,25 +1,36 @@
 import SearchInput from "@/components/page/SearchInput";
 import GameListCard from "@/components/page/GameListCard";
-import SelectGenreInput from "@/components/games/SelectGenreInput";
+import SelectSortInput from "@/components/lists/SelectSortInput";
+import SelectSortOrderInput from "@/components/lists/SelectSortOrderInput";
 import Pagination from "@/components/games/Pagination";
-import { getRecentGameLists } from "@/lib/data";
+import { getGameLists } from "@/lib/data";
 
 export default async function Page(props: {
   searchParams?: Promise<{
-    genre?: string;
-    platform?: string;
     search?: string;
+    sort?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";
+    order?: "ASC" | "DESC";
     page?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const gameLists = await getRecentGameLists();
+  const currentPage = Number(searchParams?.page) || 1;
+  const searchTerm = searchParams?.search || "";
+  const sort = searchParams?.sort || "created_at";
+  const order = searchParams?.order || "DESC";
+  const gameLists = await getGameLists({
+    page: currentPage,
+    searchTerm: searchTerm,
+    sortColumn: sort,
+    orderDirection: order,
+  });
   return (
     <>
       <h1 className="text-3xl font-bold mb-4">Browse Lists</h1>
       <div className="flex gap-2 justify-between items-center border-b py-3">
         <SearchInput placeholder="Search List" />
-        <SelectGenreInput />
+        <SelectSortInput />
+        <SelectSortOrderInput />
       </div>
       <div className="flex flex-col gap-6">
         {gameLists.map((list) => (
