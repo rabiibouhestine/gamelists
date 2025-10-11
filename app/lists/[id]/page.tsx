@@ -3,6 +3,7 @@ import { fetchGameListGames, fetchGameListInfo } from "@/lib/data";
 import { GameListGameType } from "@/lib/definitions";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Page(props: {
   params: Promise<{ id: string }>;
@@ -37,7 +38,12 @@ export default async function Page(props: {
               height={20}
               className="rounded-full w-4 h-4"
             />
-            <span className="font-bold">{gameList.creator_username}</span>
+            <Link
+              href={`/users/${gameList.creator_username}`}
+              className="font-bold"
+            >
+              {gameList.creator_username}
+            </Link>
           </div>
           <span>{gameList.nb_likes} Likes</span>
           <span>{gameList.nb_comments} Comments</span>

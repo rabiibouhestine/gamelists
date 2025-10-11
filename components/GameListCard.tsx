@@ -21,7 +21,12 @@ export default function GameListCard({ gamelist }: GameListProps) {
             height={20}
             className="rounded-full w-4 h-4"
           />
-          <span className="font-bold">{gamelist.creator_username}</span>
+          <Link
+            href={`/users/${gamelist.creator_username}`}
+            className="font-bold"
+          >
+            {gamelist.creator_username}
+          </Link>
         </div>
         <span>{gamelist.total_games_count} Games</span>
         <span>{gamelist.nb_likes} Likes</span>
