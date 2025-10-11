@@ -18,7 +18,7 @@ export default async function GameInfoCard({ slug }: { slug: string }) {
   });
 
   return (
-    <div className="bg-card border rounded-md p-4 flex gap-6">
+    <div className="bg-card border rounded-md p-6 flex gap-6">
       <div className="flex flex-col gap-3 min-w-50">
         <Image
           src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover?.image_id}.jpg`}
