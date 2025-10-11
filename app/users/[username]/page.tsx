@@ -1,9 +1,9 @@
 import GameListCard from "@/components/GameListCard";
+import UserInfoCard from "@/components/UserInfoCard";
 import SelectInput from "@/components/searchParamsInputs/SelectInput";
+import Pagination from "@/components/searchParamsInputs/Pagination";
 import { sortOptions, orderOptions } from "@/lib/data";
 import { getUsernameLists, fetchUserInfo } from "@/lib/data";
-import Pagination from "@/components/searchParamsInputs/Pagination";
-import Image from "next/image";
 
 export default async function Page(props: {
   params: Promise<{ username: string }>;
@@ -24,14 +24,6 @@ export default async function Page(props: {
   const orderDirection = searchParams?.order;
 
   const userInfo = await fetchUserInfo(username);
-  const formattedUserInfoCreatedAt = new Date(
-    userInfo.created_at
-  ).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
   const gameLists = await getUsernameLists({
     page: Number(page),
     limit: limit,
@@ -42,49 +34,7 @@ export default async function Page(props: {
 
   return (
     <>
-      <div className="bg-card border rounded-md p-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Image
-            src={userInfo.profile_image}
-            alt={userInfo.username}
-            width={80}
-            height={80}
-            className="rounded-full w-20 h-20"
-          />
-          <div>
-            <h1 className="text-3xl font-bold">{userInfo.username}</h1>
-            <span className="text-muted-foreground">
-              Member since {formattedUserInfoCreatedAt}
-            </span>
-          </div>
-        </div>
-        <div className="flex items-center divide-x-2">
-          <div className="flex flex-col items-center py-1 px-4">
-            <span className="text-2xl font-bold">{userInfo.nb_likes_made}</span>
-            <span className="text-muted-foreground text-sm">Likes</span>
-          </div>
-          <div className="flex flex-col items-center py-1 px-4">
-            <span className="text-2xl font-bold">
-              {userInfo.nb_comments_made}
-            </span>
-            <span className="text-muted-foreground text-sm">Comments</span>
-          </div>
-          <div className="flex flex-col items-center py-1 px-4">
-            <span className="text-2xl font-bold">
-              {userInfo.nb_lists_created}
-            </span>
-            <span className="text-muted-foreground text-sm">Lists</span>
-          </div>
-          <div className="flex flex-col items-center py-1 px-4">
-            <span className="text-2xl font-bold">{userInfo.nb_following}</span>
-            <span className="text-muted-foreground text-sm">Following</span>
-          </div>
-          <div className="flex flex-col items-center py-1 px-4">
-            <span className="text-2xl font-bold">{userInfo.nb_followers}</span>
-            <span className="text-muted-foreground text-sm">Followers</span>
-          </div>
-        </div>
-      </div>
+      <UserInfoCard userInfo={userInfo} />
       <div className="flex gap-2 justify-between items-center border-b py-3 mt-6">
         <h2 className="text-3xl font-semibold">Lists</h2>
         <div className="flex gap-2">
