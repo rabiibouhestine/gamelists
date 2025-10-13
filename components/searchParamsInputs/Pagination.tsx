@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { useSearchParams, usePathname } from "next/navigation";
+import { useRouter } from "@bprogress/next/app";
 
 export default function Pagination({
   limit,
@@ -13,15 +13,17 @@ export default function Pagination({
   total?: number;
   resultsCount?: number; // number of results in the current page
 }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  const createPageURL = (pageNumber: number | string) => {
+  function handlePaginate(pageNumber: number) {
     const params = new URLSearchParams(searchParams);
     params.set("page", pageNumber.toString());
-    return `${pathname}?${params.toString()}`;
-  };
+
+    router.replace(`${pathname}?${params.toString()}`);
+  }
 
   // Compute lastPage when total is available
   const lastPage = limit && total ? Math.ceil(total / limit) : undefined;
@@ -41,20 +43,19 @@ export default function Pagination({
 
   return (
     <div className="mt-8 flex justify-between">
-      <Button asChild={!isFirstPage} variant="outline" disabled={isFirstPage}>
-        {isFirstPage ? (
-          <>Previous Page</>
-        ) : (
-          <Link href={createPageURL(currentPage - 1)}>Previous Page</Link>
-        )}
+      <Button
+        variant="outline"
+        disabled={isFirstPage}
+        onClick={() => handlePaginate(currentPage - 1)}
+      >
+        Previous Page
       </Button>
-
-      <Button asChild={!isLastPage} variant="outline" disabled={isLastPage}>
-        {isLastPage ? (
-          <>Next Page</>
-        ) : (
-          <Link href={createPageURL(currentPage + 1)}>Next Page</Link>
-        )}
+      <Button
+        variant="outline"
+        disabled={isLastPage}
+        onClick={() => handlePaginate(currentPage + 1)}
+      >
+        Next Page
       </Button>
     </div>
   );

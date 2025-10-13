@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Progress from "@/providers/progressProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -29,11 +30,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <div className="max-w-5xl mx-auto p-6 min-h-screen mb-20">
-          {children}
-        </div>
-        <Footer />
+        <Progress>
+          <Header />
+          <div className="max-w-5xl mx-auto p-6 min-h-screen mb-20">
+            {children}
+          </div>
+          <Footer />
+        </Progress>
       </body>
     </html>
   );

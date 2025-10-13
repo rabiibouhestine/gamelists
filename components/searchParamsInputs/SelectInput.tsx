@@ -7,7 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
+import { useRouter } from "@bprogress/next/app";
 import { useState, useEffect } from "react";
 
 type SelectInputProps = {
@@ -24,9 +25,9 @@ export default function SelectInput({
   param,
   options,
 }: SelectInputProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const router = useRouter();
 
   const [paramValue, setParamValue] = useState(
     searchParams.get(param)?.toString() ?? options[0].value
