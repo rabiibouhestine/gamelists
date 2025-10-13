@@ -40,8 +40,7 @@ export default async function Header() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline">Account</Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="start">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuContent className="w-40" align="start">
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                   <Link href={`/users/${username}`}>
