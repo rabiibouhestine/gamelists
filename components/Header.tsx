@@ -4,7 +4,7 @@ import { signout } from "@/lib/actions";
 
 export default async function Header() {
   const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
 
   return (
     <header className="flex justify-between max-w-5xl mx-auto p-6">
