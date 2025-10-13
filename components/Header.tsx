@@ -1,8 +1,19 @@
 import Link from "next/link";
+import sql from "@/lib/db";
 import { createClient } from "@/utils/supabase/server";
 import { signout } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
-import sql from "@/lib/db";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { LogOut, Settings, User } from "lucide-react";
 
 export default async function Header() {
   const supabase = await createClient();
@@ -25,14 +36,50 @@ export default async function Header() {
         <Link href="/games">Games</Link>
         <Link href="/lists">Lists</Link>
         {data.user ? (
-          <>
-            <Link href={`/users/${username}`}>Profile</Link>
-            <form>
-              <Button asChild variant={"outline"}>
-                <button formAction={signout}>Signout</button>
-              </Button>
-            </form>
-          </>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <User />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="start">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link href={`/users/${username}`}>
+                    <div className="flex items-center justify-between w-full">
+                      <span>Profile</span>
+                      <DropdownMenuShortcut>
+                        <User />
+                      </DropdownMenuShortcut>
+                    </div>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={`/users/${username}/settings`}>
+                    <div className="flex items-center justify-between w-full">
+                      <span>Settings</span>
+                      <DropdownMenuShortcut>
+                        <Settings />
+                      </DropdownMenuShortcut>
+                    </div>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <form>
+                  <button
+                    formAction={signout}
+                    className="flex items-center justify-between w-full"
+                  >
+                    <span>Sign out</span>
+                    <DropdownMenuShortcut>
+                      <LogOut />
+                    </DropdownMenuShortcut>
+                  </button>
+                </form>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           <>
             <Button asChild variant={"outline"}>
