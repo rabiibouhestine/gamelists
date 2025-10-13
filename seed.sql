@@ -173,9 +173,6 @@ INSERT INTO seed_games (igdb_id, name, slug, image_id) VALUES
 (156296, 'DCS World: Flaming Cliffs 3', 'dcs-world-flaming-cliffs-3', 'co7lt6'),
 (103877, 'Gnumz: Arcane Power', 'gnumz-arcane-power', 'coafez');
 
--- (Insert 100 game entries as before, omitted here for brevity)
--- ... INSERT INTO seed_games (...)
-
 -- Seeding logic
 DO $$
 DECLARE
