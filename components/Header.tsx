@@ -38,7 +38,7 @@ export default async function Header() {
         {data.user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <User />
+              <Button variant="outline">Account</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="start">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
