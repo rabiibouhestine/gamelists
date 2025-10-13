@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { signout } from "@/lib/actions";
+import { Button } from "@/components/ui/button";
 
 export default async function Header() {
   const supabase = await createClient();
@@ -16,13 +17,19 @@ export default async function Header() {
           <>
             <Link href="/profile">Profile</Link>
             <form>
-              <button formAction={signout}>Signout</button>
+              <Button asChild variant={"outline"}>
+                <button formAction={signout}>Signout</button>
+              </Button>
             </form>
           </>
         ) : (
           <>
-            <Link href="/login">Login</Link>
-            <Link href="/signup">Sign Up</Link>
+            <Button asChild variant={"outline"}>
+              <Link href="/login">Login</Link>
+            </Button>
+            <Button asChild variant={"outline"}>
+              <Link href="/signup">Sign Up</Link>
+            </Button>
           </>
         )}
       </nav>
