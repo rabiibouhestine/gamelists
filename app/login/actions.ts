@@ -42,10 +42,9 @@ export async function signup(formData: FormData) {
     redirect("/error");
   }
 
-  // add new profile
+  // add user profile defaults
   const userId = authData.user?.id;
   if (!userId) throw new Error("User ID not available");
-
   const username = generateUsername();
   await sql`
     INSERT INTO users (id, username, profile_image)
