@@ -5,7 +5,7 @@ import SelectInput from "@/components/searchParamsInputs/SelectInput";
 import { gameGenres, platform_families } from "@/lib/igdb";
 import { Suspense } from "react";
 
-export default async function Page(props: {
+export default async function GamesPage(props: {
   searchParams?: Promise<{
     genre?: string;
     platform?: string;

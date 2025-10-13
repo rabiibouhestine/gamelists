@@ -4,7 +4,7 @@ import Pagination from "@/components/searchParamsInputs/Pagination";
 import SelectInput from "@/components/searchParamsInputs/SelectInput";
 import { sortOptions, orderOptions, getGameLists } from "@/lib/data";
 
-export default async function Page(props: {
+export default async function ListsPage(props: {
   searchParams?: Promise<{
     search?: string;
     sort?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";

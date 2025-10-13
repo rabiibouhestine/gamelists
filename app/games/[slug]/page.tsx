@@ -7,7 +7,7 @@ import { sortOptions, orderOptions } from "@/lib/data";
 import { getGameSlugLists } from "@/lib/data";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 
-export default async function Page(props: {
+export default async function GamePage(props: {
   params: Promise<{ slug: string }>;
   searchParams?: Promise<{
     sort?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";

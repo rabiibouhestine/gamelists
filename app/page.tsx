@@ -5,7 +5,7 @@ import { TrendingGamesSkeleton } from "@/components/TrendingGames";
 import { Suspense } from "react";
 import { getRecentGameLists } from "@/lib/data";
 
-export default async function Page() {
+export default async function HomePage() {
   const gameLists = await getRecentGameLists();
 
   return (
