@@ -11,6 +11,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut, Settings, User } from "lucide-react";
 
 export default async function Header() {
@@ -18,13 +19,15 @@ export default async function Header() {
   const { data } = await supabase.auth.getUser();
 
   let username = "";
+  let profile_image = "";
   if (data.user) {
     const { data: profile } = await supabase
       .from("users")
-      .select("username")
+      .select("username, profile_image")
       .eq("id", data.user.id)
       .single();
     username = profile?.username;
+    profile_image = profile?.profile_image;
   }
 
   return (
@@ -36,7 +39,12 @@ export default async function Header() {
         {data.user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">Account</Button>
+              <Avatar className="hover:cursor-pointer hover:ring-2 hover:ring-accent-foreground">
+                <AvatarImage src={profile_image} />
+                <AvatarFallback>
+                  {username.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40" align="start">
               <DropdownMenuGroup>
