@@ -1,5 +1,4 @@
 import Link from "next/link";
-import sql from "@/lib/db";
 import { createClient } from "@/utils/supabase/server";
 import { signout } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
@@ -20,12 +19,12 @@ export default async function Header() {
 
   let username = "";
   if (data.user) {
-    const results = await sql<{ username: string }[]>`
-    SELECT username
-    FROM users
-    WHERE id = ${data.user.id}
-    `;
-    username = results[0].username;
+    const { data: profile } = await supabase
+      .from("users")
+      .select("username")
+      .eq("id", data.user.id)
+      .single();
+    username = profile?.username;
   }
 
   return (
