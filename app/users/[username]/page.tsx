@@ -5,7 +5,7 @@ import Pagination from "@/components/searchParamsInputs/Pagination";
 import { sortOptions, orderOptions } from "@/lib/data";
 import { getUsernameLists, fetchUserInfo } from "@/lib/data";
 
-export default async function Page(props: {
+export default async function UserPage(props: {
   params: Promise<{ username: string }>;
   searchParams?: Promise<{
     sort?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";

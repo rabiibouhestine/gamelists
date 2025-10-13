@@ -5,7 +5,7 @@ import Pagination from "@/components/searchParamsInputs/Pagination";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Page(props: {
+export default async function ListPage(props: {
   params: Promise<{ id: string }>;
   searchParams?: Promise<{ page?: string }>;
 }) {
