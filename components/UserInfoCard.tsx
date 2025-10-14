@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 type UserInfoType = {
-  id: number;
+  id: string;
   username: string;
   profile_image: string;
   created_at: string;

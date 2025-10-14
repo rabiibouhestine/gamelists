@@ -414,7 +414,7 @@ export async function fetchGameListGames(
 export async function fetchUserInfo(username: string) {
   const userInfo = await sql<
     {
-      id: number;
+      id: string;
       username: string;
       profile_image: string;
       created_at: string;

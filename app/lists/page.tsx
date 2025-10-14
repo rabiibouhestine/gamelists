@@ -3,6 +3,10 @@ import GameListCard from "@/components/GameListCard";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 import SelectInput from "@/components/searchParamsInputs/SelectInput";
 import { sortOptions, orderOptions, getGameLists } from "@/lib/data";
+import { createClient } from "@/utils/supabase/server";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 
 export default async function ListsPage(props: {
   searchParams?: Promise<{
@@ -23,6 +27,10 @@ export default async function ListsPage(props: {
     sortColumn: sort,
     orderDirection: order,
   });
+
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
+
   return (
     <>
       <h1 className="text-3xl font-bold mb-4">Browse Lists</h1>
@@ -30,6 +38,13 @@ export default async function ListsPage(props: {
         <SearchInput placeholder="Search List" />
         <SelectInput param="sort" options={sortOptions} />
         <SelectInput param="order" options={orderOptions} />
+        {data.user && (
+          <Button asChild>
+            <Link href="/lists/create">
+              <Plus /> New List
+            </Link>
+          </Button>
+        )}
       </div>
       <div className="flex flex-col gap-6">
         {gameLists.results.map((list) => (

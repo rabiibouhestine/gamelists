@@ -4,6 +4,10 @@ import SelectInput from "@/components/searchParamsInputs/SelectInput";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 import { sortOptions, orderOptions } from "@/lib/data";
 import { getUsernameLists, fetchUserInfo } from "@/lib/data";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import Link from "next/link";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function UserPage(props: {
   params: Promise<{ username: string }>;
@@ -24,6 +28,7 @@ export default async function UserPage(props: {
   const orderDirection = searchParams?.order;
 
   const userInfo = await fetchUserInfo(username);
+
   const gameLists = await getUsernameLists({
     page: Number(page),
     limit: limit,
@@ -31,6 +36,9 @@ export default async function UserPage(props: {
     orderDirection: orderDirection,
     username: username,
   });
+
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
 
   return (
     <>
@@ -40,6 +48,13 @@ export default async function UserPage(props: {
         <div className="flex gap-2">
           <SelectInput param="sort" options={sortOptions} />
           <SelectInput param="order" options={orderOptions} />
+          {data.user?.id === userInfo.id && (
+            <Button asChild>
+              <Link href="/lists/create">
+                <Plus /> New List
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-6">
