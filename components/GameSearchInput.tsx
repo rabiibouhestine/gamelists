@@ -106,15 +106,15 @@ export default function GameSearchInput({
         )}
       </div>
       {showDropdown && (
-        <div className="absolute top-10 w-full bg-card border rounded-md max-h-80 overflow-auto">
+        <div className="absolute top-10 w-full bg-card border rounded-md max-h-60 overflow-auto">
           {searchResults.map((game) => (
             <div
               key={game.slug}
-              className="flex items-center gap-4 p-4 hover:bg-muted-foreground/20 hover:cursor-pointer"
+              className="flex items-center gap-4 px-4 py-2 hover:bg-muted-foreground/20 hover:cursor-pointer"
               onClick={() => handleGameClick(game)}
             >
               <Image
-                className="w-14 rounded-sm"
+                className="w-10 rounded-sm"
                 src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.cover?.image_id}.jpg`}
                 alt={game.name}
                 width={90}
