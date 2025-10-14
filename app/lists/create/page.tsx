@@ -161,7 +161,7 @@ export default function CreateListPage() {
                 setGames((prev) => prev.filter((g) => g.id !== game.id))
               }
             >
-              <Trash size={32} />
+              <Trash size={24} />
             </button>
           </div>
         ))}
