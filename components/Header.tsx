@@ -37,7 +37,7 @@ export default async function Header() {
         <Link href="/games">Games</Link>
         <Link href="/lists">Lists</Link>
         {data.user ? (
-          <DropdownMenu>
+          <DropdownMenu dir="rtl">
             <DropdownMenuTrigger asChild>
               <Avatar className="hover:cursor-pointer hover:ring-2 hover:ring-accent-foreground">
                 <AvatarImage src={profile_image} />
@@ -51,20 +51,20 @@ export default async function Header() {
                 <DropdownMenuItem asChild>
                   <Link href={`/users/${username}`}>
                     <div className="flex items-center justify-between w-full">
-                      <span>Profile</span>
                       <DropdownMenuShortcut>
                         <User />
                       </DropdownMenuShortcut>
+                      <span>Profile</span>
                     </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href={`/users/${username}/settings`}>
                     <div className="flex items-center justify-between w-full">
-                      <span>Settings</span>
                       <DropdownMenuShortcut>
                         <Settings />
                       </DropdownMenuShortcut>
+                      <span>Settings</span>
                     </div>
                   </Link>
                 </DropdownMenuItem>
@@ -76,10 +76,10 @@ export default async function Header() {
                     formAction={signout}
                     className="flex items-center justify-between w-full"
                   >
-                    <span>Sign out</span>
                     <DropdownMenuShortcut>
                       <LogOut />
                     </DropdownMenuShortcut>
+                    <span>Sign out</span>
                   </button>
                 </form>
               </DropdownMenuItem>
