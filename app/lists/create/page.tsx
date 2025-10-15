@@ -68,7 +68,7 @@ export default function CreateListPage() {
       <div className="flex items-center justify-between border-b py-2 mb-6">
         <h1 className="text-3xl font-bold">Create List</h1>
         <div className="flex items-center gap-2">
-          <Button asChild>
+          <Button variant={"outline"} asChild>
             <Link href="/lists">Cancel</Link>
           </Button>
           <Button formAction={CreateList}>Save</Button>
