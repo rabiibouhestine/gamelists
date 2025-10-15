@@ -348,6 +348,8 @@ export async function fetchGameListInfo(id: number) {
       gl.id AS list_id,
       gl.name AS title,
       gl.description,
+      gl.is_public,
+      gl.is_ranked,
       u.id AS creator_id,
       u.username AS creator_username,
       u.profile_image AS creator_profile_img,

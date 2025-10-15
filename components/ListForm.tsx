@@ -95,8 +95,10 @@ export default function ListForm({
   gameListGames,
 }: ListFormProps) {
   const [state, formAction, pending] = useActionState(action, initialState);
-
   const [games, setGames] = useState<GameType[]>(gameListGames || []);
+
+  const is_public_default = gameList ? gameList.is_public.toString() : "true";
+  const is_ranked_default = gameList ? gameList.is_ranked.toString() : "false";
 
   function onGameSelect(game: IGDBGameType) {
     const newGame = {
@@ -156,7 +158,7 @@ export default function ListForm({
             <Label className="mb-2" htmlFor="is_public">
               Visibility
             </Label>
-            <Select defaultValue={"true"} name="is_public">
+            <Select defaultValue={is_public_default} name="is_public">
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
@@ -170,7 +172,7 @@ export default function ListForm({
             <Label className="mb-2" htmlFor="is_ranked">
               Type
             </Label>
-            <Select defaultValue="false" name="is_ranked">
+            <Select defaultValue={is_ranked_default} name="is_ranked">
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
@@ -189,6 +191,7 @@ export default function ListForm({
             className="min-h-46 resize-none"
             name="description"
             placeholder="A list of all the awesome games I played recently..."
+            defaultValue={gameList?.description}
           />
         </div>
       </div>

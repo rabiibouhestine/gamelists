@@ -29,6 +29,8 @@ export type GameListType = {
   nb_likes: number;
   nb_comments: number;
   total_games_count: number;
+  is_public: boolean;
+  is_ranked: boolean;
   games: {
     id: number;
     name: string;
