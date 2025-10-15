@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { Button } from "@/components/ui/button";
-import { Pen, Trash } from "lucide-react";
+import { Heart, MessageCircle, Pen, Trash } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -46,7 +46,7 @@ export default async function ListPage(props: {
       <h1 className="text-3xl font-bold ">{gameList.title}</h1>
       <p>{gameList.description}</p>
       <div className="flex gap-2 justify-between items-center border-b py-3 mt-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
             <Image
               src={gameList.creator_profile_img}
@@ -63,8 +63,12 @@ export default async function ListPage(props: {
             </Link>
           </div>
           <span>{gameList.total_games_count} Games</span>
-          <span>{gameList.nb_likes} Likes</span>
-          <span>{gameList.nb_comments} Comments</span>
+          <span className="flex items-center gap-1">
+            {gameList.nb_likes} <Heart size={18} />
+          </span>
+          <span className="flex items-center gap-1">
+            {gameList.nb_comments} <MessageCircle size={18} />
+          </span>
         </div>
         {data.user?.id === gameList.creator_id && (
           <div className="flex items-center gap-2">

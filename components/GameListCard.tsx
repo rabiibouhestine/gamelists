@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { GameListType } from "@/lib/definitions";
+import { Heart, MessageCircle } from "lucide-react";
 type GameListProps = {
   gamelist: GameListType;
 };
@@ -11,7 +12,7 @@ export default function GameListCard({ gamelist }: GameListProps) {
       <Link href={`/lists/${gamelist.list_id}`} className="hover:underline">
         <h3 className="font-bold text-2xl">{gamelist.title}</h3>
       </Link>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <div className="flex items-center gap-1">
           <Image
             src={gamelist.creator_profile_img}
@@ -28,8 +29,12 @@ export default function GameListCard({ gamelist }: GameListProps) {
           </Link>
         </div>
         <span>{gamelist.total_games_count} Games</span>
-        <span>{gamelist.nb_likes} Likes</span>
-        <span>{gamelist.nb_comments} Comments</span>
+        <span className="flex items-center gap-1">
+          {gamelist.nb_likes} <Heart size={18} />
+        </span>
+        <span className="flex items-center gap-1">
+          {gamelist.nb_comments} <MessageCircle size={18} />
+        </span>
       </div>
       <Link
         href={`/lists/${gamelist.list_id}`}
