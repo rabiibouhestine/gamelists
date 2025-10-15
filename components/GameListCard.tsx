@@ -12,7 +12,7 @@ export default function GameListCard({ gamelist }: GameListProps) {
       <Link href={`/lists/${gamelist.list_id}`} className="hover:underline">
         <h3 className="font-bold text-2xl">{gamelist.title}</h3>
       </Link>
-      <div className="flex items-center gap-3">
+      <div className="mt-1 flex items-center gap-3 text-sm text-muted-foreground font-light">
         <div className="flex items-center gap-1">
           <Image
             src={gamelist.creator_profile_img}
