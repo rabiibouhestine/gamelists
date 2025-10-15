@@ -3,10 +3,10 @@ import GameListCard from "@/components/GameListCard";
 import TrendingGames from "@/components/TrendingGames";
 import { TrendingGamesSkeleton } from "@/components/TrendingGames";
 import { Suspense } from "react";
-import { getRecentGameLists } from "@/lib/data";
+import { getPopularGameLists } from "@/lib/data";
 
 export default async function HomePage() {
-  const gameLists = await getRecentGameLists();
+  const gameLists = await getPopularGameLists();
 
   return (
     <>
@@ -25,7 +25,7 @@ export default async function HomePage() {
         <TrendingGames />
       </Suspense>
       <div className="flex justify-between items-center border-b py-2 mt-20">
-        <h2 className="text-3xl font-semibold">Recent Lists</h2>
+        <h2 className="text-3xl font-semibold">Popular Lists</h2>
         <Link href="/lists">See More</Link>
       </div>
       <div className="flex flex-col gap-6">

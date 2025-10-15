@@ -1,7 +1,7 @@
 import sql from "@/lib/db";
 import type { GameListGameType, GameListType } from "@/lib/definitions";
 
-export async function getRecentGameLists() {
+export async function getPopularGameLists() {
   const lists = await sql<GameListType[]>`
     SELECT
       gl.id AS list_id,
@@ -36,7 +36,7 @@ export async function getRecentGameLists() {
       SELECT *
       FROM (
         SELECT *,
-              ROW_NUMBER() OVER (PARTITION BY game_list_id ORDER BY position) AS rn
+               ROW_NUMBER() OVER (PARTITION BY game_list_id ORDER BY position) AS rn
         FROM game_list_games
       ) glg_sub
       WHERE rn <= 7
@@ -47,7 +47,7 @@ export async function getRecentGameLists() {
       GROUP BY game_list_id
     ) total_games ON total_games.game_list_id = gl.id
     GROUP BY gl.id, u.id, likes_count.count, comments_count.count, total_games.total_count
-    ORDER BY gl.created_at DESC
+    ORDER BY nb_likes DESC, gl.created_at DESC
     LIMIT 10;
   `;
 
