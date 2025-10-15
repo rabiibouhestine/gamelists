@@ -4,6 +4,9 @@ import { GameListGameType } from "@/lib/definitions";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 import Image from "next/image";
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/server";
+import { Button } from "@/components/ui/button";
+import { Pen, Trash } from "lucide-react";
 
 export default async function ListPage(props: {
   params: Promise<{ id: string }>;
@@ -23,6 +26,9 @@ export default async function ListPage(props: {
     Number(page),
     limit
   );
+
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
 
   return (
     <>
@@ -45,10 +51,24 @@ export default async function ListPage(props: {
               {gameList.creator_username}
             </Link>
           </div>
+          <span>{gameList.total_games_count} Games</span>
           <span>{gameList.nb_likes} Likes</span>
           <span>{gameList.nb_comments} Comments</span>
         </div>
-        <span>{gameList.total_games_count} Games</span>
+        {data.user?.id === gameList.creator_id && (
+          <div className="flex items-center gap-2">
+            <Button asChild variant={"outline"}>
+              <Link href="/lists/create">
+                <Trash /> Delete List
+              </Link>
+            </Button>
+            <Button asChild variant={"outline"}>
+              <Link href={`/lists/${list_id}/edit`}>
+                <Pen /> Edit List
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-6 gap-2 mt-6">
         {gameListGames.games.map((game: GameListGameType) => (

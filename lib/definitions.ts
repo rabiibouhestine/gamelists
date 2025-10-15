@@ -23,7 +23,7 @@ export type GameListType = {
   list_id: number;
   title: string;
   description: string;
-  creator_id: number;
+  creator_id: string;
   creator_username: string;
   creator_profile_img: string;
   nb_likes: number;
