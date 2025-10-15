@@ -41,7 +41,7 @@ export default function GameSearchInput({
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState<GameType[]>([]);
   const [loading, setLoading] = useState(false);
-  console.log(searchResults);
+
   const showDropdown = searchResults.length > 0;
 
   const debouncedSearch = useDebouncedCallback(async (query: string) => {
@@ -56,7 +56,7 @@ export default function GameSearchInput({
       if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
 
       const data = await res.json();
-      console.log("data:", data);
+
       setSearchResults(data);
     } catch (err) {
       console.error("Error searching game:", err);

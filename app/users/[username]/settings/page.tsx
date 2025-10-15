@@ -8,6 +8,6 @@ export default async function ProfileSettingsPage() {
   if (error || !data?.user) {
     redirect("/login");
   }
-  console.log(data);
+
   return <p>Hello {data.user.email}</p>;
 }

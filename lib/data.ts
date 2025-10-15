@@ -411,6 +411,23 @@ export async function fetchGameListGames(
   return { total, games };
 }
 
+export async function fetchGameListAllGames(id: number) {
+  const games = await sql<GameListGameType[]>`
+    SELECT
+      id AS game_id,
+      igdb_id,
+      name,
+      slug,
+      image_id,
+      position
+    FROM game_list_games
+    WHERE game_list_id = ${id}
+    ORDER BY position;
+  `;
+
+  return { games };
+}
+
 export async function fetchUserInfo(username: string) {
   const userInfo = await sql<
     {
