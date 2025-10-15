@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useActionState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,8 +43,16 @@ type GameType = {
   }[];
 };
 
+const initialState = {
+  validationErrors: {
+    errors: [],
+    properties: undefined,
+  },
+};
+
 export default function CreateListPage() {
   const [games, setGames] = useState<GameType[]>([]);
+  const [state, formAction, pending] = useActionState(CreateList, initialState);
 
   function onGameSelect(game: GameType) {
     setGames((prev: GameType[]) => {
@@ -64,14 +72,16 @@ export default function CreateListPage() {
   }
 
   return (
-    <form>
+    <form action={formAction}>
       <div className="flex items-center justify-between border-b py-2 mb-6">
         <h1 className="text-3xl font-bold">Create List</h1>
         <div className="flex items-center gap-2">
           <Button variant={"outline"} asChild>
             <Link href="/lists">Cancel</Link>
           </Button>
-          <Button formAction={CreateList}>Save</Button>
+          <Button type="submit" disabled={pending}>
+            Save
+          </Button>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-6 mb-6">
@@ -79,6 +89,9 @@ export default function CreateListPage() {
           <div>
             <Label className="mb-2" htmlFor="name">
               Name
+              <span aria-live="polite" className="text-destructive">
+                {state?.validationErrors.properties?.name?.errors}
+              </span>
             </Label>
             <Input type="text" name="name" placeholder="My awesome List!" />
           </div>
@@ -86,7 +99,7 @@ export default function CreateListPage() {
             <Label className="mb-2" htmlFor="is_public">
               Visibility
             </Label>
-            <Select value={"true"} name="is_public">
+            <Select defaultValue={"true"} name="is_public">
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
@@ -100,7 +113,7 @@ export default function CreateListPage() {
             <Label className="mb-2" htmlFor="is_ranked">
               Type
             </Label>
-            <Select value={"false"} name="is_ranked">
+            <Select defaultValue="false" name="is_ranked">
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
@@ -124,6 +137,12 @@ export default function CreateListPage() {
       </div>
       <GameSearchInput onGameSelect={onGameSelect} />
       <input type="hidden" name="games" value={JSON.stringify(games)} />
+      <p
+        aria-live="polite"
+        className="text-destructive mt-3 text-sm leading-none font-medium"
+      >
+        {state?.validationErrors.properties?.games?.errors}
+      </p>
       <div className="mt-4 flex flex-col gap-2">
         {games.map((game) => (
           <div

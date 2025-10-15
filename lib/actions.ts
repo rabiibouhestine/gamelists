@@ -2,9 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import sql from "@/lib/db";
-
 import { createClient } from "@/utils/supabase/server";
+import { CreateListSchema } from "@/lib/schemas";
+import sql from "@/lib/db";
+import { z } from "zod";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -112,10 +113,42 @@ export async function signout() {
   redirect("/");
 }
 
-export async function CreateList(formData: FormData) {
+type ValidationErrorsState = {
+  validationErrors: {
+    errors: string[];
+    properties?: {
+      name?: { errors: string[] };
+      is_public?: { errors: string[] };
+      is_ranked?: { errors: string[] };
+      games?: {
+        errors: string[];
+        items?: {
+          errors: string[];
+          properties?: {
+            id?: { errors: string[] };
+            name?: { errors: string[] };
+            slug?: { errors: string[] };
+            cover?:
+              | { errors: string[] }
+              | {
+                  errors: string[];
+                  properties?: { image_id?: { errors: string[] } };
+                };
+          };
+        }[];
+      };
+      description?: { errors: string[] };
+    };
+  };
+};
+
+export async function CreateList(
+  initialState: ValidationErrorsState,
+  formData: FormData
+) {
   const supabase = await createClient();
 
-  // Get the current authenticated user
+  // Authenticate
   const {
     data: { user },
     error: authError,
@@ -125,21 +158,32 @@ export async function CreateList(formData: FormData) {
     redirect("/error");
   }
 
-  // Parse form data
-  const name = formData.get("name") as string;
-  const description = formData.get("description") as string;
-  const is_public = (formData.get("is_public") as string) === "true";
-  const is_ranked = (formData.get("is_ranked") as string) === "true";
-  const gamesJson = formData.get("games") as string;
+  // Extract and validate
+  const rawData = {
+    name: formData.get("name"),
+    description: formData.get("description"),
+    is_public: formData.get("is_public"),
+    is_ranked: formData.get("is_ranked"),
+    games: (() => {
+      const json = formData.get("games");
+      try {
+        return json ? JSON.parse(json as string) : [];
+      } catch {
+        return [];
+      }
+    })(),
+  };
 
-  const games = JSON.parse(gamesJson) as {
-    id: number;
-    name: string;
-    slug: string;
-    cover?: { image_id: string };
-  }[];
+  const parseResult = CreateListSchema.safeParse(rawData);
 
-  // Insert the new game list
+  if (!parseResult.success) {
+    const treeErrors = z.treeifyError(parseResult.error);
+    return { validationErrors: treeErrors };
+  }
+
+  const { name, description, is_public, is_ranked, games } = parseResult.data;
+
+  // Insert new list
   const { data: listData, error: listError } = await supabase
     .from("game_lists")
     .insert({
@@ -150,7 +194,7 @@ export async function CreateList(formData: FormData) {
       is_ranked,
     })
     .select("id")
-    .single(); // get the inserted id
+    .single();
 
   if (listError || !listData) {
     console.error("Failed to create list:", listError);
@@ -159,27 +203,24 @@ export async function CreateList(formData: FormData) {
 
   const list_id = listData.id;
 
-  // Insert all games in a single bulk insert
-  if (games.length > 0) {
-    const rows = games.map((game, i) => ({
-      game_list_id: list_id,
-      igdb_id: game.id,
-      name: game.name,
-      slug: game.slug,
-      image_id: game.cover?.image_id ?? null,
-      position: i,
-    }));
+  // Insert games
+  const rows = games.map((game, i) => ({
+    game_list_id: list_id,
+    igdb_id: game.id,
+    name: game.name,
+    slug: game.slug,
+    image_id: game.cover?.image_id ?? null,
+    position: i,
+  }));
 
-    const { error: gamesError } = await supabase
-      .from("game_list_games")
-      .insert(rows);
+  const { error: gamesError } = await supabase
+    .from("game_list_games")
+    .insert(rows);
 
-    if (gamesError) {
-      console.error("Failed to insert games:", gamesError);
-      redirect("/error");
-    }
+  if (gamesError) {
+    console.error("Failed to insert games:", gamesError);
+    redirect("/error");
   }
 
-  // Redirect
   redirect(`/lists/${list_id}`);
 }
