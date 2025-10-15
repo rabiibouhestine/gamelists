@@ -85,7 +85,7 @@ export default async function ListPage(props: {
                 <DialogFooter>
                   <DialogClose asChild>
                     <Button type="button" variant="outline">
-                      Close
+                      Cancel
                     </Button>
                   </DialogClose>
                   <form action={DeleteList}>
