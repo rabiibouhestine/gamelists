@@ -231,23 +231,19 @@ export async function EditList(
   initialState: ValidationErrorsState,
   formData: FormData
 ) {
-  console.log("Create Supabase Client");
   const supabase = await createClient();
 
   // Authenticate
-  console.log("Authenticate");
   const {
     data: { user },
     error: authError,
   } = await supabase.auth.getUser();
 
-  console.log("Check Auth");
   if (authError || !user) {
     redirect("/error");
   }
 
   // Extract and validate
-  console.log("Extract Form Data");
   const rawData = {
     id: formData.get("id"),
     name: formData.get("name"),
@@ -263,37 +259,24 @@ export async function EditList(
       }
     })(),
   };
-  console.log("Extracted games: ", rawData.games);
 
   // Ensure we have an ID
-  console.log("Check List Id");
   const list_id = Number(rawData.id);
   if (!list_id || Number.isNaN(list_id)) {
     console.error("Invalid list ID");
     redirect("/error");
   }
 
-  console.log("Parse Form Data");
   const parseResult = CreateListSchema.safeParse(rawData);
 
-  console.log("Validate Form Data");
   if (!parseResult.success) {
-    console.log("Errors Validating");
     const treeErrors = z.treeifyError(parseResult.error);
-    console.log(
-      "Errors: ",
-      treeErrors.properties?.games?.items
-        ? treeErrors.properties?.games?.items[0].properties
-        : ""
-    );
     return { validationErrors: treeErrors };
   }
 
-  console.log("Get Form Data");
   const { name, description, is_public, is_ranked, games } = parseResult.data;
 
   // Update list metadata
-  console.log("Update List Info");
   const { error: updateError } = await supabase
     .from("game_lists")
     .update({
@@ -312,7 +295,6 @@ export async function EditList(
   }
 
   // Clear existing games
-  console.log("Clear Existing Games");
   const { error: deleteError } = await supabase
     .from("game_list_games")
     .delete()
@@ -324,7 +306,6 @@ export async function EditList(
   }
 
   // Insert updated games
-  console.log("Insert Updated Games");
   const rows = games.map((game, i) => ({
     game_list_id: list_id,
     igdb_id: game.igdb_id,
@@ -345,6 +326,5 @@ export async function EditList(
       redirect("/error");
     }
   }
-  console.log("Redirect");
   redirect(`/lists/${list_id}`);
 }

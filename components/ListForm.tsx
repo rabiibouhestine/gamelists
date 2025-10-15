@@ -96,6 +96,10 @@ export default function ListForm({
 }: ListFormProps) {
   const [state, formAction, pending] = useActionState(action, initialState);
   const [games, setGames] = useState<GameType[]>(gameListGames || []);
+  const [name, setName] = useState<string>(gameList?.title || "");
+  const [description, setDescription] = useState<string>(
+    gameList?.description || ""
+  );
 
   const is_public_default = gameList ? gameList.is_public.toString() : "true";
   const is_ranked_default = gameList ? gameList.is_ranked.toString() : "false";
@@ -151,7 +155,10 @@ export default function ListForm({
               type="text"
               name="name"
               placeholder="My awesome List!"
-              defaultValue={gameList?.title}
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
             />
           </div>
           <div>
@@ -191,7 +198,10 @@ export default function ListForm({
             className="min-h-46 resize-none"
             name="description"
             placeholder="A list of all the awesome games I played recently..."
-            defaultValue={gameList?.description}
+            value={description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
           />
         </div>
       </div>
