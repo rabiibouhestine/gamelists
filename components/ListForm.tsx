@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import type { GameListType, InvolvedCompany } from "@/lib/definitions";
+import type { GameListType } from "@/lib/definitions";
 import { Grip, Trash } from "lucide-react";
 import Link from "next/link";
 
@@ -28,18 +28,6 @@ type GameType = {
   name: string;
   slug: string;
   first_release_date: number;
-  involved_companies: {
-    id: number;
-    developer: boolean;
-    company: {
-      id: number;
-      name: string;
-    };
-  }[];
-  platforms: {
-    id: number;
-    name: string;
-  }[];
 };
 
 const initialState = {
@@ -209,14 +197,6 @@ export default function ListForm({ action, gameList }: ListFormProps) {
                 <span>Released on </span>
                 <span className="font-semibold">
                   {formatDate(game.first_release_date)}
-                </span>
-                <span> by </span>
-                <span className="font-semibold">
-                  {game.involved_companies &&
-                    game.involved_companies
-                      .filter((c: InvolvedCompany) => c.developer)
-                      .map((c: InvolvedCompany) => c.company?.name)
-                      .join(", ")}
                 </span>
               </div>
             </div>

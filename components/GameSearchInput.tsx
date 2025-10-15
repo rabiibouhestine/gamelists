@@ -6,8 +6,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
-import type { InvolvedCompany } from "@/lib/definitions";
-
 type GameType = {
   id: number;
   cover: {
@@ -17,18 +15,6 @@ type GameType = {
   name: string;
   slug: string;
   first_release_date: number;
-  involved_companies: {
-    id: number;
-    developer: boolean;
-    company: {
-      id: number;
-      name: string;
-    };
-  }[];
-  platforms: {
-    id: number;
-    name: string;
-  }[];
 };
 
 type GameSearchInputProps = {
@@ -123,12 +109,7 @@ export default function GameSearchInput({
               <div className="flex flex-col gap-1">
                 <span className="font-bold">{game.name}</span>
                 <span className="text-muted-foreground">
-                  Released on {formatDate(game.first_release_date)} by{" "}
-                  {game.involved_companies &&
-                    game.involved_companies
-                      .filter((c: InvolvedCompany) => c.developer)
-                      .map((c: InvolvedCompany) => c.company?.name)
-                      .join(", ")}
+                  Released on {formatDate(game.first_release_date)}
                 </span>
               </div>
             </div>

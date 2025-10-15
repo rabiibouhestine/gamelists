@@ -24,7 +24,7 @@ export async function GET(req: Request) {
     },
     body: `
       search "${search}";
-      fields id,cover.image_id,name,slug,first_release_date,involved_companies.company.name,involved_companies.developer,platforms.name;
+      fields id,cover.image_id,name,slug,first_release_date;
       limit 12;
     `,
   });
