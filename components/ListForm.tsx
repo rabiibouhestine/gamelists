@@ -20,6 +20,14 @@ import { Grip, Trash } from "lucide-react";
 import Link from "next/link";
 
 type GameType = {
+  igdb_id: number;
+  image_id: string;
+  name: string;
+  slug: string;
+  first_release_date: number;
+};
+
+type IGDBGameType = {
   id: number;
   cover: {
     id: number;
@@ -69,6 +77,7 @@ type ValidationErrorsState = {
 };
 
 type ListFormProps = {
+  title: string;
   action: (
     initialState: ValidationErrorsState,
     formData: FormData
@@ -76,17 +85,30 @@ type ListFormProps = {
     validationErrors: ValidationErrorsType;
   }>;
   gameList?: GameListType;
+  gameListGames?: GameType[];
 };
 
-export default function ListForm({ action, gameList }: ListFormProps) {
+export default function ListForm({
+  title,
+  action,
+  gameList,
+  gameListGames,
+}: ListFormProps) {
   const [state, formAction, pending] = useActionState(action, initialState);
 
-  const [games, setGames] = useState<GameType[]>([]);
+  const [games, setGames] = useState<GameType[]>(gameListGames || []);
 
-  function onGameSelect(game: GameType) {
+  function onGameSelect(game: IGDBGameType) {
+    const newGame = {
+      igdb_id: game.id,
+      name: game.name,
+      slug: game.slug,
+      image_id: game.cover?.image_id || "",
+      first_release_date: game.first_release_date,
+    };
     setGames((prev: GameType[]) => {
-      if (prev.some((g) => g.id === game.id)) return prev;
-      return [game, ...prev];
+      if (prev.some((g) => g.igdb_id === game.id)) return prev;
+      return [newGame, ...prev];
     });
   }
 
@@ -102,8 +124,9 @@ export default function ListForm({ action, gameList }: ListFormProps) {
 
   return (
     <form action={formAction}>
+      <input type="hidden" name="id" value={gameList?.list_id} />
       <div className="flex items-center justify-between border-b py-2 mb-6">
-        <h1 className="text-3xl font-bold">Create List</h1>
+        <h1 className="text-3xl font-bold">{title}</h1>
         <div className="flex items-center gap-2">
           <Button variant={"outline"} asChild>
             <Link href="/lists">Cancel</Link>
@@ -186,24 +209,23 @@ export default function ListForm({ action, gameList }: ListFormProps) {
             <Grip size={32} className="text-muted-foreground" />
             <Image
               className="w-14 rounded-sm"
-              src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.cover?.image_id}.jpg`}
+              src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.image_id}.jpg`}
               alt={game.name}
               width={90}
               height={128}
             />
             <div className="flex flex-col gap-1">
               <span className="font-bold">{game.name}</span>
-              <div className="text-muted-foreground">
-                <span>Released on </span>
-                <span className="font-semibold">
-                  {formatDate(game.first_release_date)}
-                </span>
-              </div>
+              <span className="text-muted-foreground">
+                Released on {formatDate(game.first_release_date)}
+              </span>
             </div>
             <button
               className="ml-auto text-muted-foreground hover:text-destructive hover:cursor-pointer"
               onClick={() =>
-                setGames((prev) => prev.filter((g) => g.id !== game.id))
+                setGames((prev) =>
+                  prev.filter((g) => g.igdb_id !== game.igdb_id)
+                )
               }
             >
               <Trash size={24} />

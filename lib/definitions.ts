@@ -42,5 +42,6 @@ export type GameListGameType = {
   name: string;
   slug: string;
   image_id: string;
+  first_release_date: number;
   position: number;
 };

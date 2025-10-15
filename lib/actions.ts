@@ -128,6 +128,7 @@ type ValidationErrorsState = {
             id?: { errors: string[] };
             name?: { errors: string[] };
             slug?: { errors: string[] };
+            first_release_date?: { errors: string[] };
             cover?:
               | { errors: string[] }
               | {
@@ -206,10 +207,11 @@ export async function CreateList(
   // Insert games
   const rows = games.map((game, i) => ({
     game_list_id: list_id,
-    igdb_id: game.id,
+    igdb_id: game.igdb_id,
     name: game.name,
     slug: game.slug,
-    image_id: game.cover?.image_id ?? null,
+    image_id: game.image_id ?? null,
+    first_release_date: game.first_release_date,
     position: i,
   }));
 
@@ -222,5 +224,127 @@ export async function CreateList(
     redirect("/error");
   }
 
+  redirect(`/lists/${list_id}`);
+}
+
+export async function EditList(
+  initialState: ValidationErrorsState,
+  formData: FormData
+) {
+  console.log("Create Supabase Client");
+  const supabase = await createClient();
+
+  // Authenticate
+  console.log("Authenticate");
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  console.log("Check Auth");
+  if (authError || !user) {
+    redirect("/error");
+  }
+
+  // Extract and validate
+  console.log("Extract Form Data");
+  const rawData = {
+    id: formData.get("id"),
+    name: formData.get("name"),
+    description: formData.get("description"),
+    is_public: formData.get("is_public"),
+    is_ranked: formData.get("is_ranked"),
+    games: (() => {
+      const json = formData.get("games");
+      try {
+        return json ? JSON.parse(json as string) : [];
+      } catch {
+        return [];
+      }
+    })(),
+  };
+  console.log("Extracted games: ", rawData.games);
+
+  // Ensure we have an ID
+  console.log("Check List Id");
+  const list_id = Number(rawData.id);
+  if (!list_id || Number.isNaN(list_id)) {
+    console.error("Invalid list ID");
+    redirect("/error");
+  }
+
+  console.log("Parse Form Data");
+  const parseResult = CreateListSchema.safeParse(rawData);
+
+  console.log("Validate Form Data");
+  if (!parseResult.success) {
+    console.log("Errors Validating");
+    const treeErrors = z.treeifyError(parseResult.error);
+    console.log(
+      "Errors: ",
+      treeErrors.properties?.games?.items
+        ? treeErrors.properties?.games?.items[0].properties
+        : ""
+    );
+    return { validationErrors: treeErrors };
+  }
+
+  console.log("Get Form Data");
+  const { name, description, is_public, is_ranked, games } = parseResult.data;
+
+  // Update list metadata
+  console.log("Update List Info");
+  const { error: updateError } = await supabase
+    .from("game_lists")
+    .update({
+      name,
+      description,
+      is_public,
+      is_ranked,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", list_id)
+    .eq("user_id", user.id);
+
+  if (updateError) {
+    console.error("Failed to update list:", updateError);
+    redirect("/error");
+  }
+
+  // Clear existing games
+  console.log("Clear Existing Games");
+  const { error: deleteError } = await supabase
+    .from("game_list_games")
+    .delete()
+    .eq("game_list_id", list_id);
+
+  if (deleteError) {
+    console.error("Failed to clear old games:", deleteError);
+    redirect("/error");
+  }
+
+  // Insert updated games
+  console.log("Insert Updated Games");
+  const rows = games.map((game, i) => ({
+    game_list_id: list_id,
+    igdb_id: game.igdb_id,
+    name: game.name,
+    slug: game.slug,
+    image_id: game.image_id ?? null,
+    first_release_date: game.first_release_date,
+    position: i,
+  }));
+
+  if (rows.length > 0) {
+    const { error: insertError } = await supabase
+      .from("game_list_games")
+      .insert(rows);
+
+    if (insertError) {
+      console.error("Failed to insert updated games:", insertError);
+      redirect("/error");
+    }
+  }
+  console.log("Redirect");
   redirect(`/lists/${list_id}`);
 }

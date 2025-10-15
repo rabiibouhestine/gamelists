@@ -1,14 +1,11 @@
 import { z } from "zod";
 
 export const GameSchema = z.object({
-  id: z.number(),
+  igdb_id: z.number(),
   name: z.string(),
   slug: z.string(),
-  cover: z
-    .object({
-      image_id: z.string().nullable().optional(),
-    })
-    .optional(),
+  image_id: z.string().nullable().optional(),
+  first_release_date: z.number(),
 });
 
 const toBoolean = z

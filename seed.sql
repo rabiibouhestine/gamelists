@@ -6,7 +6,7 @@ CREATE TABLE users (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   username TEXT UNIQUE NOT NULL,
   profile_image TEXT,
-  created_at TIMESTAMP DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Game lists
@@ -19,7 +19,8 @@ CREATE TABLE game_lists (
   is_ranked BOOLEAN DEFAULT FALSE,
   is_pinned BOOLEAN DEFAULT FALSE,
   pinned_order INTEGER,
-  created_at TIMESTAMP DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Game list games
@@ -30,6 +31,7 @@ CREATE TABLE game_list_games (
   name TEXT NOT NULL,
   slug TEXT NOT NULL,
   image_id TEXT,
+  first_release_date BIGINT,
   position INTEGER
 );
 
@@ -54,7 +56,8 @@ CREATE TABLE comments (
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
   game_list_id INTEGER REFERENCES game_lists(id) ON DELETE CASCADE,
   content TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Insert the 3 existing auth users into app users table

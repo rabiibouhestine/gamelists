@@ -1,4 +1,4 @@
-import { CreateList } from "@/lib/actions";
+import { EditList } from "@/lib/actions";
 import ListForm from "@/components/ListForm";
 import { fetchGameListAllGames, fetchGameListInfo } from "@/lib/data";
 
@@ -11,5 +11,12 @@ export default async function EditListPage(props: {
   const gameList = await fetchGameListInfo(Number(list_id));
   const gameListGames = await fetchGameListAllGames(Number(list_id));
 
-  return <ListForm action={CreateList} gameList={gameList} />;
+  return (
+    <ListForm
+      title="Edit List"
+      action={EditList}
+      gameList={gameList}
+      gameListGames={gameListGames.games}
+    />
+  );
 }
