@@ -7,6 +7,17 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Pen, Trash } from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { DeleteList } from "@/lib/actions";
 
 export default async function ListPage(props: {
   params: Promise<{ id: string }>;
@@ -57,11 +68,39 @@ export default async function ListPage(props: {
         </div>
         {data.user?.id === gameList.creator_id && (
           <div className="flex items-center gap-2">
-            <Button asChild variant={"outline"}>
-              <Link href="/lists/create">
-                <Trash /> Delete List
-              </Link>
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant={"outline"}>
+                  <Trash /> Delete List
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Are you absolutely sure?</DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your list.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button type="button" variant="outline">
+                      Close
+                    </Button>
+                  </DialogClose>
+                  <form action={DeleteList}>
+                    <input
+                      className="hidden"
+                      name="id"
+                      defaultValue={list_id}
+                    />
+                    <Button type="submit" variant="destructive">
+                      <Trash /> Delete List
+                    </Button>
+                  </form>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
             <Button asChild variant={"outline"}>
               <Link href={`/lists/${list_id}/edit`}>
                 <Pen /> Edit List
