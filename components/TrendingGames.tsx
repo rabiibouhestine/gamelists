@@ -2,14 +2,14 @@ import GameCover from "@/components/GameCover";
 import { fetchTrendingGames } from "@/lib/igdb";
 import { GameCoverSkeleton } from "@/components/GameCover";
 
-import type { GameCoverType } from "@/lib/definitions";
+import type { GameIGDBType } from "@/lib/definitions";
 
 export default async function TrendingGames() {
   const trendingGames = await fetchTrendingGames();
 
   return (
     <div className="grid grid-cols-6 gap-2 mt-6">
-      {trendingGames.map((game: GameCoverType) => (
+      {trendingGames.map((game: GameIGDBType) => (
         <GameCover
           key={game.id}
           cover_id={game.cover?.image_id}

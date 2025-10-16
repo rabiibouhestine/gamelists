@@ -1,6 +1,6 @@
 import GameCover from "@/components/GameCover";
 import { fetchGameListGames, fetchGameListInfo } from "@/lib/data";
-import { GameListGameType } from "@/lib/definitions";
+import { GameType } from "@/lib/definitions";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 import Image from "next/image";
 import Link from "next/link";
@@ -114,9 +114,9 @@ export default async function ListPage(props: {
         )}
       </div>
       <div className="grid grid-cols-6 gap-2 mt-6">
-        {gameListGames.games.map((game: GameListGameType) => (
+        {gameListGames.games.map((game: GameType) => (
           <GameCover
-            key={game.game_id}
+            key={game.slug}
             cover_id={game.image_id}
             alt={game.name}
             slug={game.slug}

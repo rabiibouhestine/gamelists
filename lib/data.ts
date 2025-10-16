@@ -1,5 +1,5 @@
 import sql from "@/lib/db";
-import type { GameListGameType, GameListType } from "@/lib/definitions";
+import type { GameType, GameListType } from "@/lib/definitions";
 
 export async function getPopularGameLists() {
   const lists = await sql<GameListType[]>`
@@ -396,9 +396,8 @@ export async function fetchGameListGames(
   const total = totalResult[0]?.count ?? 0;
 
   // Then, get the paginated games
-  const games = await sql<GameListGameType[]>`
+  const games = await sql<GameType[]>`
     SELECT
-      id AS game_id,
       igdb_id,
       name,
       slug,
@@ -414,9 +413,8 @@ export async function fetchGameListGames(
 }
 
 export async function fetchGameListAllGames(id: number) {
-  const games = await sql<GameListGameType[]>`
+  const games = await sql<GameType[]>`
     SELECT
-      id AS game_id,
       igdb_id::int AS igdb_id,
       name,
       slug,

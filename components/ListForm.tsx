@@ -19,7 +19,7 @@ import {
 
 import type {
   GameListType,
-  IGDBGameType,
+  GameIGDBType,
   GameType,
   ListFormValidationErrorsType,
 } from "@/lib/definitions";
@@ -61,7 +61,7 @@ export default function ListForm({
   const is_public_default = gameList ? gameList.is_public.toString() : "true";
   const is_ranked_default = gameList ? gameList.is_ranked.toString() : "false";
 
-  function onGameSelect(game: IGDBGameType) {
+  function onGameSelect(game: GameIGDBType) {
     const newGame = {
       igdb_id: game.id,
       name: game.name,

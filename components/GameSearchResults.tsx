@@ -3,7 +3,7 @@ import GameCover from "@/components/GameCover";
 import { GameCoverSkeleton } from "@/components/GameCover";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 
-import type { GameCoverType } from "@/lib/definitions";
+import type { GameIGDBType } from "@/lib/definitions";
 
 export default async function GameSearchResults({
   searchParams,
@@ -25,7 +25,7 @@ export default async function GameSearchResults({
   return (
     <>
       <div className="grid grid-cols-6 gap-2 mt-6">
-        {games.map((game: GameCoverType) => (
+        {games.map((game: GameIGDBType) => (
           <GameCover
             key={game.id}
             cover_id={game.cover?.image_id}

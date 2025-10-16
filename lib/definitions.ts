@@ -1,24 +1,3 @@
-export type CoverType = {
-  id: string;
-  image_id: string;
-};
-
-export type GameCoverType = {
-  id: number;
-  name: string;
-  cover: CoverType;
-  slug: string;
-};
-
-export type InvolvedCompany = {
-  id: number;
-  developer?: boolean;
-  company?: {
-    id?: string | number;
-    name?: string;
-  };
-};
-
 export type GameListType = {
   list_id: number;
   title: string;
@@ -38,17 +17,16 @@ export type GameListType = {
   }[];
 };
 
-export type GameListGameType = {
-  game_id: number;
+export type GameType = {
   igdb_id: number;
+  image_id: string;
   name: string;
   slug: string;
-  image_id: string;
   first_release_date: number;
-  position: number;
+  position?: number;
 };
 
-export type IGDBGameType = {
+export type GameIGDBType = {
   id: number;
   cover: {
     id: number;
@@ -59,12 +37,25 @@ export type IGDBGameType = {
   first_release_date: number;
 };
 
-export type GameType = {
-  igdb_id: number;
-  image_id: string;
-  name: string;
-  slug: string;
-  first_release_date: number;
+export type InvolvedCompany = {
+  id: number;
+  developer?: boolean;
+  company?: {
+    id?: string | number;
+    name?: string;
+  };
+};
+
+export type UserInfoType = {
+  id: string;
+  username: string;
+  profile_image: string;
+  created_at: string;
+  nb_likes_made: number;
+  nb_comments_made: number;
+  nb_lists_created: number;
+  nb_following: number;
+  nb_followers: number;
 };
 
 export type ListFormValidationErrorsType = {
@@ -92,16 +83,4 @@ export type ListFormValidationErrorsType = {
     };
     description?: { errors: string[] };
   };
-};
-
-export type UserInfoType = {
-  id: string;
-  username: string;
-  profile_image: string;
-  created_at: string;
-  nb_likes_made: number;
-  nb_comments_made: number;
-  nb_lists_created: number;
-  nb_following: number;
-  nb_followers: number;
 };

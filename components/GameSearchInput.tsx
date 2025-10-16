@@ -6,17 +6,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
-import type { IGDBGameType } from "@/lib/definitions";
+import type { GameIGDBType } from "@/lib/definitions";
 
 type GameSearchInputProps = {
-  onGameSelect?: (game: IGDBGameType) => void;
+  onGameSelect?: (game: GameIGDBType) => void;
 };
 
 export default function GameSearchInput({
   onGameSelect,
 }: GameSearchInputProps) {
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState<IGDBGameType[]>([]);
+  const [searchResults, setSearchResults] = useState<GameIGDBType[]>([]);
   const [loading, setLoading] = useState(false);
 
   const showDropdown = searchResults.length > 0;
@@ -48,7 +48,7 @@ export default function GameSearchInput({
     debouncedSearch(value);
   }
 
-  function handleGameClick(game: IGDBGameType) {
+  function handleGameClick(game: GameIGDBType) {
     setSearch("");
     setSearchResults([]);
     onGameSelect?.(game);
