@@ -47,3 +47,61 @@ export type GameListGameType = {
   first_release_date: number;
   position: number;
 };
+
+export type IGDBGameType = {
+  id: number;
+  cover: {
+    id: number;
+    image_id: string;
+  };
+  name: string;
+  slug: string;
+  first_release_date: number;
+};
+
+export type GameType = {
+  igdb_id: number;
+  image_id: string;
+  name: string;
+  slug: string;
+  first_release_date: number;
+};
+
+export type ListFormValidationErrorsType = {
+  errors: string[];
+  properties?: {
+    name?: { errors: string[] };
+    is_public?: { errors: string[] };
+    is_ranked?: { errors: string[] };
+    games?: {
+      errors: string[];
+      items?: {
+        errors: string[];
+        properties?: {
+          id?: { errors: string[] };
+          name?: { errors: string[] };
+          slug?: { errors: string[] };
+          cover?:
+            | { errors: string[] }
+            | {
+                errors: string[];
+                properties?: { image_id?: { errors: string[] } };
+              };
+        };
+      }[];
+    };
+    description?: { errors: string[] };
+  };
+};
+
+export type UserInfoType = {
+  id: string;
+  username: string;
+  profile_image: string;
+  created_at: string;
+  nb_likes_made: number;
+  nb_comments_made: number;
+  nb_lists_created: number;
+  nb_following: number;
+  nb_followers: number;
+};

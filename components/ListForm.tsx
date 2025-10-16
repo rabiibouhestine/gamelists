@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useActionState } from "react";
+import Link from "next/link";
 import Image from "next/image";
+import { useState, useActionState } from "react";
+import { Grip, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,28 +17,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import type { GameListType } from "@/lib/definitions";
-import { Grip, Trash } from "lucide-react";
-import Link from "next/link";
-
-type GameType = {
-  igdb_id: number;
-  image_id: string;
-  name: string;
-  slug: string;
-  first_release_date: number;
-};
-
-type IGDBGameType = {
-  id: number;
-  cover: {
-    id: number;
-    image_id: string;
-  };
-  name: string;
-  slug: string;
-  first_release_date: number;
-};
+import type {
+  GameListType,
+  IGDBGameType,
+  GameType,
+  ListFormValidationErrorsType,
+} from "@/lib/definitions";
 
 const initialState = {
   validationErrors: {
@@ -45,54 +31,25 @@ const initialState = {
   },
 };
 
-type ValidationErrorsType = {
-  errors: string[];
-  properties?: {
-    name?: { errors: string[] };
-    is_public?: { errors: string[] };
-    is_ranked?: { errors: string[] };
-    games?: {
-      errors: string[];
-      items?: {
-        errors: string[];
-        properties?: {
-          id?: { errors: string[] };
-          name?: { errors: string[] };
-          slug?: { errors: string[] };
-          cover?:
-            | { errors: string[] }
-            | {
-                errors: string[];
-                properties?: { image_id?: { errors: string[] } };
-              };
-        };
-      }[];
-    };
-    description?: { errors: string[] };
-  };
-};
-
-type ValidationErrorsState = {
-  validationErrors: ValidationErrorsType;
-};
-
 type ListFormProps = {
   title: string;
-  action: (
-    initialState: ValidationErrorsState,
-    formData: FormData
-  ) => Promise<{
-    validationErrors: ValidationErrorsType;
-  }>;
   gameList?: GameListType;
   gameListGames?: GameType[];
+  action: (
+    initialState: {
+      validationErrors: ListFormValidationErrorsType;
+    },
+    formData: FormData
+  ) => Promise<{
+    validationErrors: ListFormValidationErrorsType;
+  }>;
 };
 
 export default function ListForm({
   title,
-  action,
   gameList,
   gameListGames,
+  action,
 }: ListFormProps) {
   const [state, formAction, pending] = useActionState(action, initialState);
   const [games, setGames] = useState<GameType[]>(gameListGames || []);

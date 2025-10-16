@@ -1,16 +1,6 @@
 import Image from "next/image";
 
-type UserInfoType = {
-  id: string;
-  username: string;
-  profile_image: string;
-  created_at: string;
-  nb_likes_made: number;
-  nb_comments_made: number;
-  nb_lists_created: number;
-  nb_following: number;
-  nb_followers: number;
-};
+import type { UserInfoType } from "@/lib/definitions";
 
 type UserInfoCardProps = {
   userInfo: UserInfoType;
