@@ -20,6 +20,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import LikeButton from "@/components/LikeButton";
+import CloneListButton from "@/components/CloneListButton";
 
 export default async function ListPage(props: {
   params: Promise<{ id: string }>;
@@ -114,7 +115,12 @@ export default async function ListPage(props: {
             </Button>
           </div>
         ) : (
-          data.user && <LikeButton list_id={gameList.list_id} />
+          data.user && (
+            <div className="flex items-center gap-2">
+              <LikeButton list_id={gameList.list_id} />
+              <CloneListButton list_id={gameList.list_id} />
+            </div>
+          )
         )}
       </div>
       <div className="grid grid-cols-6 gap-2 mt-6">
