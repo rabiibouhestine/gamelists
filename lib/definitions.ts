@@ -58,78 +58,9 @@ export type UserInfoType = {
   nb_followers: number;
 };
 
-export type ListFormValidationErrorsType = {
-  errors: string[];
-  properties?:
-    | {
-        name?:
-          | {
-              errors: string[];
-            }
-          | undefined;
-        is_public?:
-          | {
-              errors: string[];
-            }
-          | undefined;
-        is_ranked?:
-          | {
-              errors: string[];
-            }
-          | undefined;
-        games?:
-          | {
-              errors: string[];
-              items?:
-                | {
-                    errors: string[];
-                    properties?:
-                      | {
-                          igdb_id?:
-                            | {
-                                errors: string[];
-                              }
-                            | undefined;
-                          name?:
-                            | {
-                                errors: string[];
-                              }
-                            | undefined;
-                          slug?:
-                            | {
-                                errors: string[];
-                              }
-                            | undefined;
-                          first_release_date?:
-                            | {
-                                errors: string[];
-                              }
-                            | undefined;
-                          image_id?:
-                            | {
-                                errors: string[];
-                              }
-                            | undefined;
-                        }
-                      | undefined;
-                  }[]
-                | undefined;
-            }
-          | undefined;
-        description?:
-          | {
-              errors: string[];
-            }
-          | undefined;
-      }
-    | undefined;
-};
-
 export type ListFormActionType = (
-  initialState: {
-    validationErrors: ListFormValidationErrorsType;
-  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initialState: any,
   formData: FormData
-) => Promise<{
-  validationErrors: ListFormValidationErrorsType;
-}>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+) => Promise<any>;

@@ -4,12 +4,10 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { ListSchema } from "@/lib/schemas";
-import type { ListFormValidationErrorsType } from "@/lib/definitions";
 
 export async function EditList(
-  initialState: {
-    validationErrors: ListFormValidationErrorsType;
-  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initialState: any,
   formData: FormData
 ) {
   const supabase = await createClient();
