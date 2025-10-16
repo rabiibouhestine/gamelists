@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
-import { signout } from "@/lib/actions";
+import { signout } from "@/lib/actions/signout";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

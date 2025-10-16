@@ -1,4 +1,4 @@
-import { login } from "@/lib/actions";
+import { login } from "@/lib/actions/login";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {

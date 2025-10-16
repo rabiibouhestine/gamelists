@@ -1,6 +1,3 @@
-import { z } from "zod";
-import { CreateListSchema } from "@/lib/schemas";
-
 export type GameListType = {
   list_id: number;
   title: string;
@@ -61,9 +58,72 @@ export type UserInfoType = {
   nb_followers: number;
 };
 
-type ListFormValidationErrorsType = z.ZodFormattedError<
-  z.infer<typeof CreateListSchema>
->;
+export type ListFormValidationErrorsType = {
+  errors: string[];
+  properties?:
+    | {
+        name?:
+          | {
+              errors: string[];
+            }
+          | undefined;
+        is_public?:
+          | {
+              errors: string[];
+            }
+          | undefined;
+        is_ranked?:
+          | {
+              errors: string[];
+            }
+          | undefined;
+        games?:
+          | {
+              errors: string[];
+              items?:
+                | {
+                    errors: string[];
+                    properties?:
+                      | {
+                          igdb_id?:
+                            | {
+                                errors: string[];
+                              }
+                            | undefined;
+                          name?:
+                            | {
+                                errors: string[];
+                              }
+                            | undefined;
+                          slug?:
+                            | {
+                                errors: string[];
+                              }
+                            | undefined;
+                          first_release_date?:
+                            | {
+                                errors: string[];
+                              }
+                            | undefined;
+                          image_id?:
+                            | {
+                                errors: string[];
+                              }
+                            | undefined;
+                        }
+                      | undefined;
+                  }[]
+                | undefined;
+            }
+          | undefined;
+        description?:
+          | {
+              errors: string[];
+            }
+          | undefined;
+      }
+    | undefined;
+};
 
 export type ListFormActionType = (
   initialState: {

@@ -1,4 +1,4 @@
-import { CreateList } from "@/lib/actions";
+import { CreateList } from "@/lib/actions/createList";
 import ListForm from "@/components/ListForm";
 
 export default function CreateListPage() {

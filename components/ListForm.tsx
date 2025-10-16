@@ -26,7 +26,7 @@ import type {
 
 const initialState = {
   validationErrors: {
-    _errors: [],
+    errors: [],
   },
 };
 
@@ -97,7 +97,7 @@ export default function ListForm({
             <Label className="mb-2" htmlFor="name">
               Name
               <span aria-live="polite" className="text-destructive">
-                {state?.validationErrors.name?.errors}
+                {state?.validationErrors?.properties?.name?.errors}
               </span>
             </Label>
             <Input
@@ -160,7 +160,7 @@ export default function ListForm({
         aria-live="polite"
         className="text-destructive mt-3 text-sm leading-none font-medium"
       >
-        {state?.validationErrors.games?._errors}
+        {state?.validationErrors.properties?.games?.errors}
       </p>
       <div className="mt-4 flex flex-col gap-2">
         {games.map((game) => (

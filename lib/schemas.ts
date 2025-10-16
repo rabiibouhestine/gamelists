@@ -12,7 +12,7 @@ const toBoolean = z
   .union([z.string(), z.boolean()])
   .transform((val) => (typeof val === "string" ? val === "true" : val));
 
-export const CreateListSchema = z.object({
+export const ListSchema = z.object({
   name: z.string().min(1, "Name is required!"),
   description: z.string().optional(),
   is_public: toBoolean,

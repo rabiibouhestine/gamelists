@@ -1,4 +1,4 @@
-import { EditList } from "@/lib/actions";
+import { EditList } from "@/lib/actions/editList";
 import ListForm from "@/components/ListForm";
 import { fetchGameListAllGames, fetchGameListInfo } from "@/lib/data";
 

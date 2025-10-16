@@ -1,12 +1,13 @@
-import GameCover from "@/components/GameCover";
-import { fetchGameListGames, fetchGameListInfo } from "@/lib/data";
-import { GameType } from "@/lib/definitions";
-import Pagination from "@/components/searchParamsInputs/Pagination";
 import Image from "next/image";
 import Link from "next/link";
+import { fetchGameListGames, fetchGameListInfo } from "@/lib/data";
+import { GameType } from "@/lib/definitions";
+import { DeleteList } from "@/lib/actions/deleteList";
 import { createClient } from "@/utils/supabase/server";
-import { Button } from "@/components/ui/button";
 import { Heart, MessageCircle, Pen, Trash } from "lucide-react";
+import GameCover from "@/components/GameCover";
+import Pagination from "@/components/searchParamsInputs/Pagination";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -17,7 +18,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { DeleteList } from "@/lib/actions";
 
 export default async function ListPage(props: {
   params: Promise<{ id: string }>;
