@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { CreateListSchema } from "@/lib/schemas";
+
 export type GameListType = {
   list_id: number;
   title: string;
@@ -58,29 +61,15 @@ export type UserInfoType = {
   nb_followers: number;
 };
 
-export type ListFormValidationErrorsType = {
-  errors: string[];
-  properties?: {
-    name?: { errors: string[] };
-    is_public?: { errors: string[] };
-    is_ranked?: { errors: string[] };
-    games?: {
-      errors: string[];
-      items?: {
-        errors: string[];
-        properties?: {
-          id?: { errors: string[] };
-          name?: { errors: string[] };
-          slug?: { errors: string[] };
-          cover?:
-            | { errors: string[] }
-            | {
-                errors: string[];
-                properties?: { image_id?: { errors: string[] } };
-              };
-        };
-      }[];
-    };
-    description?: { errors: string[] };
-  };
-};
+type ListFormValidationErrorsType = z.ZodFormattedError<
+  z.infer<typeof CreateListSchema>
+>;
+
+export type ListFormActionType = (
+  initialState: {
+    validationErrors: ListFormValidationErrorsType;
+  },
+  formData: FormData
+) => Promise<{
+  validationErrors: ListFormValidationErrorsType;
+}>;

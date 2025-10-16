@@ -21,13 +21,12 @@ import type {
   GameListType,
   GameIGDBType,
   GameType,
-  ListFormValidationErrorsType,
+  ListFormActionType,
 } from "@/lib/definitions";
 
 const initialState = {
   validationErrors: {
-    errors: [],
-    properties: undefined,
+    _errors: [],
   },
 };
 
@@ -35,14 +34,7 @@ type ListFormProps = {
   title: string;
   gameList?: GameListType;
   gameListGames?: GameType[];
-  action: (
-    initialState: {
-      validationErrors: ListFormValidationErrorsType;
-    },
-    formData: FormData
-  ) => Promise<{
-    validationErrors: ListFormValidationErrorsType;
-  }>;
+  action: ListFormActionType;
 };
 
 export default function ListForm({
@@ -105,7 +97,7 @@ export default function ListForm({
             <Label className="mb-2" htmlFor="name">
               Name
               <span aria-live="polite" className="text-destructive">
-                {state?.validationErrors.properties?.name?.errors}
+                {state?.validationErrors.name?.errors}
               </span>
             </Label>
             <Input
@@ -168,7 +160,7 @@ export default function ListForm({
         aria-live="polite"
         className="text-destructive mt-3 text-sm leading-none font-medium"
       >
-        {state?.validationErrors.properties?.games?.errors}
+        {state?.validationErrors.games?._errors}
       </p>
       <div className="mt-4 flex flex-col gap-2">
         {games.map((game) => (

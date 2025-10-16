@@ -19,5 +19,3 @@ export const CreateListSchema = z.object({
   is_ranked: toBoolean,
   games: z.array(GameSchema).min(1, "A list should have at least one game!"),
 });
-
-export type CreateListInput = z.infer<typeof CreateListSchema>;
