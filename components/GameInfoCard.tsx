@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { fetchGameInfo } from "@/lib/igdb";
+import { fetchGameInfo } from "@/lib/igdb/fetchGameInfo";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import type { InvolvedCompany } from "@/lib/definitions";

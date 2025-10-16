@@ -1,5 +1,5 @@
 import GameCover from "@/components/GameCover";
-import { fetchTrendingGames } from "@/lib/igdb";
+import { fetchTrendingGames } from "@/lib/igdb/fetchTrendingGames";
 import { GameCoverSkeleton } from "@/components/GameCover";
 
 import type { GameIGDBType } from "@/lib/definitions";

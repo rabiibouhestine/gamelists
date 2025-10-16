@@ -2,7 +2,7 @@ import GameSearchResults from "@/components/GameSearchResults";
 import SearchInput from "@/components/searchParamsInputs/SearchInput";
 import { GameSearchResultsSkeleton } from "@/components/GameSearchResults";
 import SelectInput from "@/components/searchParamsInputs/SelectInput";
-import { gameGenres, platform_families } from "@/lib/igdb";
+import { genres, platform_families } from "@/lib/igdb/filters";
 import { Suspense } from "react";
 
 export default async function GamesPage(props: {
@@ -20,7 +20,7 @@ export default async function GamesPage(props: {
       <div className="flex gap-2 justify-between items-center border-b py-3">
         <SearchInput placeholder="Search Game" />
         <div className="flex gap-2">
-          <SelectInput className="w-60" param="genre" options={gameGenres} />
+          <SelectInput className="w-60" param="genre" options={genres} />
           <SelectInput
             className="w-40"
             param="platform"
