@@ -19,6 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import LikeButton from "@/components/LikeButton";
 
 export default async function ListPage(props: {
   params: Promise<{ id: string }>;
@@ -71,7 +72,7 @@ export default async function ListPage(props: {
             {gameList.nb_comments} <MessageCircle size={18} />
           </span>
         </div>
-        {data.user?.id === gameList.creator_id && (
+        {data.user?.id === gameList.creator_id ? (
           <div className="flex items-center gap-2">
             <Dialog>
               <DialogTrigger asChild>
@@ -112,6 +113,8 @@ export default async function ListPage(props: {
               </Link>
             </Button>
           </div>
+        ) : (
+          data.user && <LikeButton list_id={gameList.list_id} />
         )}
       </div>
       <div className="grid grid-cols-6 gap-2 mt-6">

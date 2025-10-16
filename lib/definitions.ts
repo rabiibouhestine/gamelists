@@ -10,6 +10,7 @@ export type GameListType = {
   total_games_count: number;
   is_public: boolean;
   is_ranked: boolean;
+  is_liked?: boolean;
   games: {
     id: number;
     name: string;
