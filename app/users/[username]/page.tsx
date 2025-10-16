@@ -2,8 +2,9 @@ import GameListCard from "@/components/GameListCard";
 import UserInfoCard from "@/components/UserInfoCard";
 import SelectInput from "@/components/searchParamsInputs/SelectInput";
 import Pagination from "@/components/searchParamsInputs/Pagination";
-import { sortOptions, orderOptions } from "@/lib/data";
-import { getUsernameLists, fetchUserInfo } from "@/lib/data";
+import { sortOptions, orderOptions } from "@/lib/data/filters";
+import { getUserInfo } from "@/lib/data/getUserInfo";
+import { getGameListsByUsername } from "@/lib/data/getGameListsByUsername";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
@@ -27,9 +28,9 @@ export default async function UserPage(props: {
   const sortColumn = searchParams?.sort;
   const orderDirection = searchParams?.order;
 
-  const userInfo = await fetchUserInfo(username);
+  const userInfo = await getUserInfo(username);
 
-  const gameLists = await getUsernameLists({
+  const gameLists = await getGameListsByUsername({
     page: Number(page),
     limit: limit,
     sortColumn: sortColumn,

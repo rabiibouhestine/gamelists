@@ -3,8 +3,8 @@ import GameInfoCard from "@/components/GameInfoCard";
 import { GameInfoCardSkeleton } from "@/components/GameInfoCard";
 import { Suspense } from "react";
 import SelectInput from "@/components/searchParamsInputs/SelectInput";
-import { sortOptions, orderOptions } from "@/lib/data";
-import { getGameSlugLists } from "@/lib/data";
+import { sortOptions, orderOptions } from "@/lib/data/filters";
+import { getGameListsBySlug } from "@/lib/data/getGameListsBySlug";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 
 export default async function GamePage(props: {
@@ -25,7 +25,7 @@ export default async function GamePage(props: {
   const sortColumn = searchParams?.sort;
   const orderDirection = searchParams?.order;
 
-  const gameLists = await getGameSlugLists({
+  const gameLists = await getGameListsBySlug({
     page: Number(page),
     limit: limit,
     sortColumn: sortColumn,

@@ -1,6 +1,7 @@
 import { EditList } from "@/lib/actions/editList";
 import ListForm from "@/components/ListForm";
-import { fetchGameListAllGames, fetchGameListInfo } from "@/lib/data";
+import { getGameListAllGames } from "@/lib/data/getGameListAllGames";
+import { getGameListInfo } from "@/lib/data/getGameListInfo";
 
 export default async function EditListPage(props: {
   params: Promise<{ id: string }>;
@@ -8,8 +9,8 @@ export default async function EditListPage(props: {
   const params = await props.params;
   const list_id = params.id;
 
-  const gameList = await fetchGameListInfo(Number(list_id));
-  const gameListGames = await fetchGameListAllGames(Number(list_id));
+  const gameList = await getGameListInfo(Number(list_id));
+  const gameListGames = await getGameListAllGames(Number(list_id));
 
   return (
     <ListForm

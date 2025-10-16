@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { fetchGameListGames, fetchGameListInfo } from "@/lib/data";
+import { getGameListGames } from "@/lib/data/getGameListGames";
+import { getGameListInfo } from "@/lib/data/getGameListInfo";
 import { GameType } from "@/lib/definitions";
 import { DeleteList } from "@/lib/actions/deleteList";
 import { createClient } from "@/utils/supabase/server";
@@ -31,8 +32,8 @@ export default async function ListPage(props: {
   const params = await props.params;
   const list_id = params.id;
 
-  const gameList = await fetchGameListInfo(Number(list_id));
-  const gameListGames = await fetchGameListGames(
+  const gameList = await getGameListInfo(Number(list_id));
+  const gameListGames = await getGameListGames(
     Number(list_id),
     Number(page),
     limit

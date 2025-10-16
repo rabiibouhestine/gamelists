@@ -3,7 +3,7 @@ import GameListCard from "@/components/GameListCard";
 import TrendingGames from "@/components/TrendingGames";
 import { TrendingGamesSkeleton } from "@/components/TrendingGames";
 import { Suspense } from "react";
-import { getPopularGameLists } from "@/lib/data";
+import { getPopularGameLists } from "@/lib/data/getPopularGameLists";
 
 export default async function HomePage() {
   const gameLists = await getPopularGameLists();
