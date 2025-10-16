@@ -44,6 +44,19 @@ export default async function ListPage(props: {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
 
+  let is_liked = false;
+  if (data.user) {
+    const { data: existingLike } = await supabase
+      .from("likes")
+      .select("*")
+      .eq("user_id", data.user.id)
+      .eq("game_list_id", list_id)
+      .maybeSingle();
+    if (existingLike) {
+      is_liked = true;
+    }
+  }
+
   return (
     <>
       <h1 className="text-3xl font-bold ">{gameList.title}</h1>
@@ -117,7 +130,7 @@ export default async function ListPage(props: {
         ) : (
           data.user && (
             <div className="flex items-center gap-2">
-              <LikeButton list_id={gameList.list_id} />
+              <LikeButton list_id={gameList.list_id} is_liked={is_liked} />
               <CloneListButton list_id={gameList.list_id} />
             </div>
           )
