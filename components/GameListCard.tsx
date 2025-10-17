@@ -38,7 +38,7 @@ export default function GameListCard({ gamelist }: GameListProps) {
       </div>
       <Link
         href={`/lists/${gamelist.list_id}`}
-        className="w-full bg-card rounded-md mt-3 overflow-hidden grid grid-cols-22 hover:ring hover:ring-accent-foreground"
+        className="w-full bg-card rounded-md mt-3 overflow-hidden grid grid-cols-25 hover:ring hover:ring-accent-foreground"
       >
         {gamelist.games.map((game, index) => (
           <Image

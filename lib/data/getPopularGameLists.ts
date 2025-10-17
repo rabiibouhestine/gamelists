@@ -39,7 +39,7 @@ export async function getPopularGameLists() {
                ROW_NUMBER() OVER (PARTITION BY game_list_id ORDER BY position) AS rn
         FROM game_list_games
       ) glg_sub
-      WHERE rn <= 7
+      WHERE rn <= 8
     ) glg ON glg.game_list_id = gl.id
     LEFT JOIN (
       SELECT game_list_id, COUNT(*) AS total_count

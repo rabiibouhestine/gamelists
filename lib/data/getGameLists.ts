@@ -60,7 +60,7 @@ export async function getGameLists({
               ROW_NUMBER() OVER (PARTITION BY game_list_id ORDER BY position) AS rn
         FROM game_list_games
       ) glg_sub
-      WHERE rn <= 7
+      WHERE rn <= 8
     )
     SELECT
       gl.id AS list_id,
