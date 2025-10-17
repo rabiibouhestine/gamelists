@@ -87,12 +87,8 @@ export default async function Header() {
           </DropdownMenu>
         ) : (
           <>
-            <Button asChild variant={"outline"}>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild variant={"outline"}>
-              <Link href="/signup">Sign Up</Link>
-            </Button>
+            <Link href="/signup">Signup</Link>
+            <Link href="/login">Login</Link>
           </>
         )}
       </nav>
