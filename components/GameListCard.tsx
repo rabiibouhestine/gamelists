@@ -47,7 +47,7 @@ export default function GameListCard({ gamelist }: GameListProps) {
             alt={game.name}
             width={246}
             height={352}
-            className="h-full object-cover rounded-md shadow-[2px_0_7px_#000] col-span-4 row-start-1"
+            className="max-h-50 h-full object-cover rounded-md shadow-[2px_0_7px_#000] col-span-4 row-start-1"
             style={{ zIndex: 8 - index, gridColumnStart: index * 3 + 1 }}
           />
         ))}
