@@ -38,7 +38,7 @@ export default function GameListCard({ gamelist }: GameListProps) {
       </div>
       <Link
         href={`/lists/${gamelist.list_id}`}
-        className="w-full bg-card rounded-md mt-3 overflow-hidden grid grid-cols-25 hover:ring hover:ring-accent-foreground"
+        className="w-full bg-card rounded-sm sm:rounded-md mt-3 overflow-hidden grid grid-cols-25 hover:ring hover:ring-accent-foreground"
       >
         {gamelist.games.map((game, index) => (
           <Image
@@ -47,7 +47,7 @@ export default function GameListCard({ gamelist }: GameListProps) {
             alt={game.name}
             width={246}
             height={352}
-            className="max-h-50 h-full object-cover rounded-md shadow-[2px_0_7px_#000] col-span-4 row-start-1"
+            className="max-h-50 h-full object-cover rounded-sm sm:rounded-md shadow-[2px_0_7px_#000] col-span-4 row-start-1"
             style={{ zIndex: 8 - index, gridColumnStart: index * 3 + 1 }}
           />
         ))}
