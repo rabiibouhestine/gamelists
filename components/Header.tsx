@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 
 export default async function Header() {
   const supabase = await createClient();
@@ -55,16 +55,6 @@ export default async function Header() {
                           <User />
                         </DropdownMenuShortcut>
                         <span>Profile</span>
-                      </div>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href={`/users/${username}/settings`}>
-                      <div className="flex items-center justify-between w-full">
-                        <DropdownMenuShortcut>
-                          <Settings />
-                        </DropdownMenuShortcut>
-                        <span>Settings</span>
                       </div>
                     </Link>
                   </DropdownMenuItem>
