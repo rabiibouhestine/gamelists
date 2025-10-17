@@ -31,11 +31,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Progress>
-          <Header />
-          <div className="max-w-5xl mx-auto p-6 min-h-screen mb-20">
-            {children}
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1 max-w-5xl mx-auto pt-24 px-6 mb-20">
+              {children}
+            </main>
+            <Footer />
           </div>
-          <Footer />
         </Progress>
       </body>
     </html>

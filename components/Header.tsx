@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { signout } from "@/lib/actions/signout";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,67 +30,69 @@ export default async function Header() {
   }
 
   return (
-    <header className="flex justify-between max-w-5xl mx-auto p-6">
-      <Link href="/">GameLists</Link>
-      <nav className="flex items-center gap-3">
-        <Link href="/games">Games</Link>
-        <Link href="/lists">Lists</Link>
-        {data.user ? (
-          <DropdownMenu dir="rtl">
-            <DropdownMenuTrigger asChild>
-              <Avatar className="hover:cursor-pointer hover:ring-2 hover:ring-accent-foreground">
-                <AvatarImage src={profile_image} />
-                <AvatarFallback>
-                  {username.charAt(0).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-40" align="start">
-              <DropdownMenuGroup>
+    <header className="fixed top-0 w-full bg-card border-b z-99">
+      <div className="flex justify-between max-w-5xl mx-auto px-6 py-4">
+        <Link href="/">GameLists</Link>
+        <nav className="flex items-center gap-3">
+          <Link href="/games">Games</Link>
+          <Link href="/lists">Lists</Link>
+          {data.user ? (
+            <DropdownMenu dir="rtl">
+              <DropdownMenuTrigger asChild>
+                <Avatar className="hover:cursor-pointer hover:ring-2 hover:ring-accent-foreground">
+                  <AvatarImage src={profile_image} />
+                  <AvatarFallback>
+                    {username.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-40 z-999" align="start">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild>
+                    <Link href={`/users/${username}`}>
+                      <div className="flex items-center justify-between w-full">
+                        <DropdownMenuShortcut>
+                          <User />
+                        </DropdownMenuShortcut>
+                        <span>Profile</span>
+                      </div>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href={`/users/${username}/settings`}>
+                      <div className="flex items-center justify-between w-full">
+                        <DropdownMenuShortcut>
+                          <Settings />
+                        </DropdownMenuShortcut>
+                        <span>Settings</span>
+                      </div>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href={`/users/${username}`}>
-                    <div className="flex items-center justify-between w-full">
+                  <form>
+                    <button
+                      formAction={signout}
+                      className="flex items-center justify-between w-full"
+                    >
                       <DropdownMenuShortcut>
-                        <User />
+                        <LogOut />
                       </DropdownMenuShortcut>
-                      <span>Profile</span>
-                    </div>
-                  </Link>
+                      <span>Sign out</span>
+                    </button>
+                  </form>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href={`/users/${username}/settings`}>
-                    <div className="flex items-center justify-between w-full">
-                      <DropdownMenuShortcut>
-                        <Settings />
-                      </DropdownMenuShortcut>
-                      <span>Settings</span>
-                    </div>
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <form>
-                  <button
-                    formAction={signout}
-                    className="flex items-center justify-between w-full"
-                  >
-                    <DropdownMenuShortcut>
-                      <LogOut />
-                    </DropdownMenuShortcut>
-                    <span>Sign out</span>
-                  </button>
-                </form>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <>
-            <Link href="/signup">Signup</Link>
-            <Link href="/login">Login</Link>
-          </>
-        )}
-      </nav>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Link href="/signup">Signup</Link>
+              <Link href="/login">Login</Link>
+            </>
+          )}
+        </nav>
+      </div>
     </header>
   );
 }

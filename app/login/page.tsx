@@ -14,8 +14,8 @@ import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   return (
-    <div className="flex items-center justify-center">
-      <Card className="w-full max-w-md">
+    <div className="flex items-center mt-20">
+      <Card className="w-md">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
