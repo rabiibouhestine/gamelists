@@ -41,9 +41,28 @@ export default async function UserPage(props: {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
 
+  const showFollowBtn = !!data.user && data.user.id !== userInfo.id;
+
+  let is_following = false;
+  if (data.user) {
+    const { data: existingFollow } = await supabase
+      .from("follows")
+      .select("*")
+      .eq("follower_id", data.user.id)
+      .eq("followed_id", userInfo.id)
+      .maybeSingle();
+    if (existingFollow) {
+      is_following = true;
+    }
+  }
+
   return (
     <>
-      <UserInfoCard userInfo={userInfo} />
+      <UserInfoCard
+        userInfo={userInfo}
+        showFollowBtn={showFollowBtn}
+        is_following={is_following}
+      />
       <div className="flex gap-2 justify-between items-center border-b py-3 mt-6">
         <h2 className="text-3xl font-semibold">Lists</h2>
         <div className="flex gap-2">

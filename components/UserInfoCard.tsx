@@ -1,12 +1,19 @@
 import Image from "next/image";
 
 import type { UserInfoType } from "@/lib/definitions";
+import FollowButton from "@/components/FollowButton";
 
 type UserInfoCardProps = {
   userInfo: UserInfoType;
+  showFollowBtn: boolean;
+  is_following: boolean;
 };
 
-export default function UserInfoCard({ userInfo }: UserInfoCardProps) {
+export default function UserInfoCard({
+  userInfo,
+  showFollowBtn,
+  is_following,
+}: UserInfoCardProps) {
   const created_at = new Date(userInfo.created_at).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -23,11 +30,16 @@ export default function UserInfoCard({ userInfo }: UserInfoCardProps) {
           height={80}
           className="rounded-full w-20 h-20"
         />
-        <div>
-          <h1 className="text-3xl font-bold">{userInfo.username}</h1>
-          <span className="text-muted-foreground">
-            Member since {created_at}
-          </span>
+        <div className="flex flex-col gap-2">
+          <div>
+            <h1 className="text-3xl font-bold">{userInfo.username}</h1>
+            <span className="text-muted-foreground">
+              Member since {created_at}
+            </span>
+          </div>
+          {showFollowBtn && (
+            <FollowButton user_id={userInfo.id} is_following={is_following} />
+          )}
         </div>
       </div>
       <div className="flex items-center divide-x-2">
