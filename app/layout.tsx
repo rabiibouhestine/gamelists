@@ -33,7 +33,7 @@ export default function RootLayout({
         <Progress>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1 max-w-5xl mx-auto pt-24 px-6 mb-20">
+            <main className="flex-1 max-w-5xl w-full mx-auto pt-24 px-6 mb-20">
               {children}
             </main>
             <Footer />
