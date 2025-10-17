@@ -131,7 +131,10 @@ export default async function ListPage(props: {
           data.user && (
             <div className="flex items-center gap-2">
               <LikeButton list_id={gameList.list_id} is_liked={is_liked} />
-              <CloneListButton list_id={gameList.list_id} />
+              <CloneListButton
+                list_id={gameList.list_id}
+                user_id={data.user.id}
+              />
             </div>
           )
         )}

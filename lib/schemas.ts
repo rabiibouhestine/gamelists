@@ -19,3 +19,8 @@ export const ListSchema = z.object({
   is_ranked: toBoolean,
   games: z.array(GameSchema).min(1, "A list should have at least one game!"),
 });
+
+export const CloneSchema = z.object({
+  list_id: z.coerce.number(),
+  user_id: z.uuid(),
+});
