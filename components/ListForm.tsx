@@ -32,6 +32,7 @@ const initialState = {
 
 type ListFormProps = {
   title: string;
+  cancelLink: string;
   gameList?: GameListType;
   gameListGames?: GameType[];
   action: ListFormActionType;
@@ -39,6 +40,7 @@ type ListFormProps = {
 
 export default function ListForm({
   title,
+  cancelLink,
   gameList,
   gameListGames,
   action,
@@ -84,7 +86,7 @@ export default function ListForm({
         <h1 className="text-3xl font-bold">{title}</h1>
         <div className="flex items-center gap-2">
           <Button variant={"outline"} asChild>
-            <Link href="/lists">Cancel</Link>
+            <Link href={cancelLink}>Cancel</Link>
           </Button>
           <Button type="submit" disabled={pending}>
             Save

@@ -15,6 +15,7 @@ export default async function EditListPage(props: {
   return (
     <ListForm
       title="Edit List"
+      cancelLink={`/lists/${list_id}`}
       action={EditList}
       gameList={gameList}
       gameListGames={gameListGames.games}
