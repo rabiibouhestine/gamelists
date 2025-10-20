@@ -2,15 +2,18 @@ import Image from "next/image";
 
 import type { UserInfoType } from "@/lib/definitions";
 import FollowButton from "@/components/FollowButton";
+import UsernameForm from "@/components/UsernameForm";
 
 type UserInfoCardProps = {
   userInfo: UserInfoType;
+  showEditBtns: boolean;
   showFollowBtn: boolean;
   is_following: boolean;
 };
 
 export default function UserInfoCard({
   userInfo,
+  showEditBtns,
   showFollowBtn,
   is_following,
 }: UserInfoCardProps) {
@@ -32,7 +35,10 @@ export default function UserInfoCard({
         />
         <div className="flex flex-col gap-2">
           <div>
-            <h1 className="text-3xl font-bold">{userInfo.username}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl font-bold">{userInfo.username}</h1>
+              {showEditBtns && <UsernameForm username={userInfo.username} />}
+            </div>
             <span className="text-muted-foreground">
               Member since {created_at}
             </span>

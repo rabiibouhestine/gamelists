@@ -42,6 +42,7 @@ export default async function UserPage(props: {
   const { data } = await supabase.auth.getUser();
 
   const showFollowBtn = !!data.user && data.user.id !== userInfo.id;
+  const showEditBtns = !!data.user && data.user.id === userInfo.id;
 
   let is_following = false;
   if (data.user) {
@@ -60,6 +61,7 @@ export default async function UserPage(props: {
     <>
       <UserInfoCard
         userInfo={userInfo}
+        showEditBtns={showEditBtns}
         showFollowBtn={showFollowBtn}
         is_following={is_following}
       />
