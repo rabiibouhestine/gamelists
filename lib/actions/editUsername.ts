@@ -22,7 +22,7 @@ export async function EditUsername(
     redirect("/error");
   }
 
-  // Extract id
+  // Extract username
   const rawData = {
     username: formData.get("username"),
   };
@@ -48,7 +48,10 @@ export async function EditUsername(
       validationErrors: {
         properties: {
           username: {
-            errors: [updateError.details],
+            errors:
+              updateError.code === "23505"
+                ? [`The username ${parseResult.data.username} already exists.`]
+                : [updateError.details],
           },
         },
       },
