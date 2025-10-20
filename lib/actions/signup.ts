@@ -1,9 +1,10 @@
 "use server";
 
+import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import sql from "@/lib/db";
+import { AuthSchema } from "@/lib/schemas";
 
 function generateUsername() {
   const adjectives = [
@@ -50,31 +51,61 @@ function generateUsername() {
   return `${adj}${noun}${suffix}`;
 }
 
-export async function signup(formData: FormData) {
+export async function signup(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initialState: any,
+  formData: FormData
+) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
+  const rawData = {
+    email: formData.get("email"),
+    password: formData.get("password"),
   };
 
-  const { data: authData, error: authError } = await supabase.auth.signUp(data);
-
-  if (authError) {
-    redirect("/error");
+  // Validate fields
+  const parseResult = AuthSchema.safeParse(rawData);
+  if (!parseResult.success) {
+    const treeErrors = z.treeifyError(parseResult.error);
+    return { validationErrors: treeErrors };
   }
 
-  // add user profile defaults
+  // Signup
+  const { data: authData, error: authError } = await supabase.auth.signUp(
+    parseResult.data
+  );
+  if (authError) {
+    console.error("Failed to register user:", authError);
+    return {
+      validationErrors: {
+        errors:
+          authError.status === 422
+            ? "A user with this email already exists"
+            : "Failed to register user",
+        properties: null,
+      },
+    };
+  }
+
+  // Add user profile defaults
   const userId = authData.user?.id;
-  if (!userId) throw new Error("User ID not available");
   const username = generateUsername();
-  await sql`
-    INSERT INTO users (id, username, profile_image)
-    VALUES (${userId}, ${username}, 'https://i.pravatar.cc/150')
-  `;
+
+  const { error: insertError } = await supabase.from("users").insert({
+    id: userId,
+    username,
+  });
+
+  if (insertError) {
+    console.error("Failed to generate user profile:", insertError);
+    return {
+      validationErrors: {
+        errors: "Failed to generate user profile",
+        properties: null,
+      },
+    };
+  }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect(`/users/${username}`);
 }

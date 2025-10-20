@@ -44,3 +44,11 @@ export const AvatarSchema = z
     "Only JPEG, PNG, or WEBP images are allowed"
   )
   .refine((file) => file.size <= 1024 * 1024, "File size must be under 1MB");
+
+export const AuthSchema = z.object({
+  email: z.email("Please enter a valid email address"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .max(100, "Password must be less than 100 characters"),
+});
