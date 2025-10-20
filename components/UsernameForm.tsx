@@ -62,7 +62,14 @@ export default function UsernameForm({ username }: UsernameFormProps) {
               />
             </div>
             <p className="text-sm text-destructive">
-              {state?.validationErrors?.properties?.username?.errors}
+              {state?.validationErrors?.properties?.username?.errors?.map(
+                (err, i) => (
+                  <span key={i}>
+                    {err}
+                    <br />
+                  </span>
+                )
+              )}
             </p>
           </div>
           <DialogFooter>

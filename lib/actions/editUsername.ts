@@ -48,7 +48,7 @@ export async function EditUsername(
       validationErrors: {
         properties: {
           username: {
-            errors: updateError.details,
+            errors: [updateError.details],
           },
         },
       },
