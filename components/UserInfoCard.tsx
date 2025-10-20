@@ -1,7 +1,7 @@
 import type { UserInfoType } from "@/lib/definitions";
 import FollowButton from "@/components/FollowButton";
-import UsernameForm from "@/components/UsernameForm";
-import AvatarForm from "@/components/AvatarForm";
+import UsernameForm from "@/components/forms/UsernameForm";
+import AvatarForm from "@/components/forms/AvatarForm";
 
 type UserInfoCardProps = {
   userInfo: UserInfoType;

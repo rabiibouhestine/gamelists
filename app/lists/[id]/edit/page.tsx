@@ -1,5 +1,5 @@
 import { EditList } from "@/lib/actions/editList";
-import ListForm from "@/components/ListForm";
+import ListForm from "@/components/forms/ListForm";
 import { getGameListGames } from "@/lib/data/getGameListGames";
 import { getGameListInfo } from "@/lib/data/getGameListInfo";
 
