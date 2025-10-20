@@ -69,7 +69,7 @@ export default async function ListPage(props: {
               alt={gameList.creator_username}
               width={20}
               height={20}
-              className="rounded-full w-4 h-4"
+              className="rounded-full w-4 h-4 object-cover"
             />
             <Link
               href={`/users/${gameList.creator_username}`}
