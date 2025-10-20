@@ -1,8 +1,7 @@
-import Image from "next/image";
-
 import type { UserInfoType } from "@/lib/definitions";
 import FollowButton from "@/components/FollowButton";
 import UsernameForm from "@/components/UsernameForm";
+import AvatarForm from "@/components/AvatarForm";
 
 type UserInfoCardProps = {
   userInfo: UserInfoType;
@@ -26,12 +25,9 @@ export default function UserInfoCard({
   return (
     <div className="bg-card border rounded-md p-6 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <Image
-          src={userInfo.profile_image}
-          alt={userInfo.username}
-          width={80}
-          height={80}
-          className="rounded-full w-20 h-20"
+        <AvatarForm
+          profile_image={userInfo.profile_image}
+          username={userInfo.username}
         />
         <div className="flex flex-col gap-2">
           <div>

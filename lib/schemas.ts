@@ -36,3 +36,11 @@ export const UsernameSchema = z.object({
       "Username can only contain letters, numbers, and underscores"
     ),
 });
+
+export const AvatarSchema = z
+  .instanceof(File)
+  .refine(
+    (file) => ["image/jpeg", "image/png", "image/webp"].includes(file.type),
+    "Only JPEG, PNG, or WEBP images are allowed"
+  )
+  .refine((file) => file.size <= 1024 * 1024, "File size must be under 1MB");

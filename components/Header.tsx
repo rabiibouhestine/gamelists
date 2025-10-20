@@ -40,7 +40,7 @@ export default async function Header() {
             <DropdownMenu dir="rtl">
               <DropdownMenuTrigger asChild>
                 <Avatar className="hover:cursor-pointer hover:ring-2 hover:ring-accent-foreground">
-                  <AvatarImage src={profile_image} />
+                  <AvatarImage src={profile_image} className="object-cover" />
                   <AvatarFallback>
                     {username.charAt(0).toUpperCase()}
                   </AvatarFallback>
