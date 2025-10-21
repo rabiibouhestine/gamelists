@@ -47,7 +47,7 @@ export default function ListFormGame({
     >
       <Grip
         size={32}
-        className="text-muted-foreground focus:outline-none hover:cursor-grab"
+        className="text-muted-foreground focus:outline-none hover:cursor-grab touch-none"
         {...attributes}
         {...listeners}
       />
