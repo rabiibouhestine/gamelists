@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useActionState } from "react";
-import { Grip, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,6 +21,7 @@ import type {
   GameType,
   ListFormActionType,
 } from "@/lib/definitions";
+import ListFormGame from "@/components/forms/ListFormGame";
 
 const initialState = {
   validationErrors: {
@@ -67,16 +66,6 @@ export default function ListForm({
       if (prev.some((g) => g.igdb_id === game.id)) return prev;
       return [newGame, ...prev];
     });
-  }
-
-  function formatDate(date: number) {
-    const dateObj = new Date(date * 1000);
-    const formattedDateObj = dateObj.toLocaleDateString("en-US", {
-      month: "short",
-      day: "2-digit",
-      year: "numeric",
-    });
-    return formattedDateObj;
   }
 
   return (
@@ -166,35 +155,7 @@ export default function ListForm({
       </p>
       <div className="mt-4 flex flex-col gap-2">
         {games.map((game) => (
-          <div
-            key={game.slug}
-            className="flex items-center gap-4 px-4 py-2 rounded-md bg-card border"
-          >
-            <Grip size={32} className="text-muted-foreground" />
-            <Image
-              className="w-14 rounded-sm"
-              src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.image_id}.jpg`}
-              alt={game.name}
-              width={90}
-              height={128}
-            />
-            <div className="flex flex-col gap-1">
-              <span className="font-bold">{game.name}</span>
-              <span className="text-muted-foreground">
-                Released on {formatDate(game.first_release_date)}
-              </span>
-            </div>
-            <button
-              className="ml-auto text-muted-foreground hover:text-destructive hover:cursor-pointer"
-              onClick={() =>
-                setGames((prev) =>
-                  prev.filter((g) => g.igdb_id !== game.igdb_id)
-                )
-              }
-            >
-              <Trash size={24} />
-            </button>
-          </div>
+          <ListFormGame key={game.slug} game={game} setGames={setGames} />
         ))}
       </div>
     </form>
