@@ -10,12 +10,16 @@ type ListFormGameProps = {
   id: number;
   game: GameType;
   setGames: Dispatch<SetStateAction<GameType[]>>;
+  isRanked: string;
+  rank: number;
 };
 
 export default function ListFormGame({
   id,
   game,
   setGames,
+  isRanked,
+  rank,
 }: ListFormGameProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: id });
@@ -47,6 +51,11 @@ export default function ListFormGame({
         {...attributes}
         {...listeners}
       />
+      {isRanked === "true" && (
+        <span className="rounded-full h-10 w-10 flex items-center justify-center font-bold bg-muted">
+          {rank}
+        </span>
+      )}
       <Image
         className="w-14 rounded-sm"
         src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.image_id}.jpg`}

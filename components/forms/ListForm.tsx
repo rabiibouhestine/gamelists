@@ -62,6 +62,9 @@ export default function ListForm({
   const [state, formAction, pending] = useActionState(action, initialState);
   const [games, setGames] = useState<GameType[]>(gameListGames || []);
   const [name, setName] = useState<string>(gameList?.title || "");
+  const [isRanked, setIsRanked] = useState<string>(
+    gameList ? gameList.is_ranked.toString() : "false"
+  );
   const [description, setDescription] = useState<string>(
     gameList?.description || ""
   );
@@ -73,7 +76,6 @@ export default function ListForm({
   );
 
   const is_public_default = gameList ? gameList.is_public.toString() : "true";
-  const is_ranked_default = gameList ? gameList.is_ranked.toString() : "false";
 
   function onGameSelect(game: GameIGDBType) {
     const newGame = {
@@ -159,7 +161,13 @@ export default function ListForm({
             <Label className="mb-2" htmlFor="is_ranked">
               Type
             </Label>
-            <Select defaultValue={is_ranked_default} name="is_ranked">
+            <Select
+              value={isRanked}
+              name="is_ranked"
+              onValueChange={(value) => {
+                setIsRanked(value);
+              }}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
@@ -200,12 +208,14 @@ export default function ListForm({
           onDragEnd={handleDragEnd}
         >
           <SortableContext items={games} strategy={verticalListSortingStrategy}>
-            {games.map((game) => (
+            {games.map((game, index) => (
               <ListFormGame
                 key={game.slug}
                 id={game.id}
                 game={game}
                 setGames={setGames}
+                isRanked={isRanked}
+                rank={index + 1}
               />
             ))}
           </SortableContext>

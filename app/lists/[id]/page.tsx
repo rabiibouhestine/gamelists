@@ -140,13 +140,17 @@ export default async function ListPage(props: {
         )}
       </div>
       <div className="grid grid-cols-6 gap-2 mt-6">
-        {gameListGames.games.map((game: GameType) => (
-          <GameCover
-            key={game.slug}
-            cover_id={game.image_id}
-            alt={game.name}
-            slug={game.slug}
-          />
+        {gameListGames.games.map((game: GameType, index: number) => (
+          <div className="flex flex-col items-center" key={game.slug}>
+            <GameCover
+              cover_id={game.image_id}
+              alt={game.name}
+              slug={game.slug}
+            />
+            {gameList.is_ranked && (
+              <span className="text-center font-bold mt-2">{index + 1}</span>
+            )}
+          </div>
         ))}
       </div>
       <Pagination
