@@ -19,6 +19,7 @@ export type GameListType = {
 };
 
 export type GameType = {
+  id: number;
   igdb_id: number;
   image_id: string;
   name: string;

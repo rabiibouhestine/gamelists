@@ -1,15 +1,30 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { Grip, Trash } from "lucide-react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 import type { GameType } from "@/lib/definitions";
 
 type ListFormGameProps = {
+  id: number;
   game: GameType;
   setGames: Dispatch<SetStateAction<GameType[]>>;
 };
 
-export default function ListFormGame({ game, setGames }: ListFormGameProps) {
+export default function ListFormGame({
+  id,
+  game,
+  setGames,
+}: ListFormGameProps) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   function formatDate(date: number) {
     const dateObj = new Date(date * 1000);
     const formattedDateObj = dateObj.toLocaleDateString("en-US", {
@@ -22,10 +37,16 @@ export default function ListFormGame({ game, setGames }: ListFormGameProps) {
 
   return (
     <div
-      key={game.slug}
+      ref={setNodeRef}
+      style={style}
       className="flex items-center gap-4 px-4 py-2 rounded-md bg-card border"
     >
-      <Grip size={32} className="text-muted-foreground" />
+      <Grip
+        size={32}
+        className="text-muted-foreground focus:outline-none hover:cursor-grab"
+        {...attributes}
+        {...listeners}
+      />
       <Image
         className="w-14 rounded-sm"
         src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.image_id}.jpg`}

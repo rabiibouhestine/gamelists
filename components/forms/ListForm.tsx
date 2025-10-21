@@ -14,6 +14,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 import type {
   GameListType,
@@ -50,12 +65,19 @@ export default function ListForm({
   const [description, setDescription] = useState<string>(
     gameList?.description || ""
   );
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const is_public_default = gameList ? gameList.is_public.toString() : "true";
   const is_ranked_default = gameList ? gameList.is_ranked.toString() : "false";
 
   function onGameSelect(game: GameIGDBType) {
     const newGame = {
+      id: game.id,
       igdb_id: game.id,
       name: game.name,
       slug: game.slug,
@@ -66,6 +88,24 @@ export default function ListForm({
       if (prev.some((g) => g.igdb_id === game.id)) return prev;
       return [newGame, ...prev];
     });
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    if (!over) return;
+    if (active.id === over.id) return;
+
+    if (active.id !== over.id) {
+      setGames((games) => {
+        const oldIndex = games.findIndex((game) => game.id === active.id);
+        const newIndex = games.findIndex((game) => game.id === over.id);
+
+        if (oldIndex === -1 || newIndex === -1) return games;
+
+        return arrayMove(games, oldIndex, newIndex);
+      });
+    }
   }
 
   return (
@@ -154,9 +194,22 @@ export default function ListForm({
         {state?.validationErrors.properties?.games?.errors}
       </p>
       <div className="mt-4 flex flex-col gap-2">
-        {games.map((game) => (
-          <ListFormGame key={game.slug} game={game} setGames={setGames} />
-        ))}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={games} strategy={verticalListSortingStrategy}>
+            {games.map((game) => (
+              <ListFormGame
+                key={game.slug}
+                id={game.id}
+                game={game}
+                setGames={setGames}
+              />
+            ))}
+          </SortableContext>
+        </DndContext>
       </div>
     </form>
   );

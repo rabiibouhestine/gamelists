@@ -43,6 +43,7 @@ export async function getGameListGames(
     // Get all games
     games = await sql<GameType[]>`
       SELECT
+        igdb_id::int AS id,
         igdb_id::int AS igdb_id,
         name,
         slug,
