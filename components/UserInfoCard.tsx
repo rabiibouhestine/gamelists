@@ -23,14 +23,14 @@ export default function UserInfoCard({
   });
 
   return (
-    <div className="bg-card border rounded-md p-6 flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <div className="bg-card border rounded-md p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-4">
         <AvatarForm
           profile_image={userInfo.profile_image}
           username={userInfo.username}
         />
-        <div className="flex flex-col gap-2">
-          <div>
+        <div className="flex flex-col items-center md:items-start gap-2">
+          <div className="flex flex-col items-center">
             <div className="flex items-center gap-2">
               <h1 className="text-3xl font-bold">{userInfo.username}</h1>
               {showEditBtns && <UsernameForm username={userInfo.username} />}
@@ -44,7 +44,7 @@ export default function UserInfoCard({
           )}
         </div>
       </div>
-      <div className="flex items-center divide-x-2">
+      <div className="flex flex-wrap items-center justify-center divide-x-2">
         <div className="flex flex-col items-center py-1 px-4">
           <span className="text-2xl font-bold">{userInfo.nb_likes_made}</span>
           <span className="text-muted-foreground text-sm">Likes</span>

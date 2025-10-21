@@ -51,23 +51,25 @@ export default function ListFormGame({
         {...attributes}
         {...listeners}
       />
-      {isRanked === "true" && (
-        <span className="rounded-full h-10 w-10 flex items-center justify-center font-bold bg-muted">
-          {rank}
-        </span>
-      )}
-      <Image
-        className="w-14 rounded-sm"
-        src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.image_id}.jpg`}
-        alt={game.name}
-        width={90}
-        height={128}
-      />
-      <div className="flex flex-col gap-1">
-        <span className="font-bold">{game.name}</span>
-        <span className="text-muted-foreground">
-          Released on {formatDate(game.first_release_date)}
-        </span>
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
+        {isRanked === "true" && (
+          <span className="rounded-full h-10 w-10 flex items-center justify-center font-bold bg-muted">
+            {rank}
+          </span>
+        )}
+        <Image
+          className="w-14 rounded-sm"
+          src={`https://images.igdb.com/igdb/image/upload/t_cover_small/${game.image_id}.jpg`}
+          alt={game.name}
+          width={90}
+          height={128}
+        />
+        <div className="flex flex-col gap-1">
+          <span className="font-bold">{game.name}</span>
+          <span className="text-muted-foreground">
+            Released on {formatDate(game.first_release_date)}
+          </span>
+        </div>
       </div>
       <button
         className="ml-auto text-muted-foreground hover:text-destructive hover:cursor-pointer"

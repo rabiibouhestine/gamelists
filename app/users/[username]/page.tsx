@@ -65,13 +65,21 @@ export default async function UserPage(props: {
         showFollowBtn={showFollowBtn}
         is_following={is_following}
       />
-      <div className="flex gap-2 justify-between items-center border-b py-3 mt-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b py-3 mt-6">
         <h2 className="text-3xl font-semibold">Lists</h2>
-        <div className="flex gap-2">
-          <SelectInput param="sort" options={sortOptions} />
-          <SelectInput param="order" options={orderOptions} />
+        <div className="flex flex-wrap gap-2">
+          <SelectInput
+            param="sort"
+            options={sortOptions}
+            className="flex-1 min-w-60"
+          />
+          <SelectInput
+            param="order"
+            options={orderOptions}
+            className="flex-1 min-w-40"
+          />
           {data.user?.id === userInfo.id && (
-            <Button asChild>
+            <Button asChild className="flex-1 min-w-40">
               <Link href="/lists/create">
                 <Plus /> New List
               </Link>
