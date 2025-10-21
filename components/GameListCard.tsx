@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { GameListType } from "@/lib/definitions";
 import { Heart, MessageCircle } from "lucide-react";
+
 type GameListProps = {
   gamelist: GameListType;
 };
@@ -21,7 +22,7 @@ export default function GameListCard({ gamelist }: GameListProps) {
     {
       breakpoint: "hidden md:block", // desktop+
       gridCols: "grid-cols-25",
-      slice: gamelist.games.length, // show all
+      slice: gamelist.games.length,
     },
   ];
 
