@@ -10,7 +10,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <h1 className="text-6xl font-bold mt-20 mb-24">
+      <h1 className="text-4xl md:text-6xl font-bold mt-20 mb-24">
         Track games you’ve played.
         <br />
         Save those you want to try.

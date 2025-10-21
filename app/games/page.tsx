@@ -17,16 +17,18 @@ export default async function GamesPage(props: {
   return (
     <>
       <h1 className="text-3xl font-bold mb-4">Browse Games</h1>
-      <div className="flex gap-2 justify-between items-center border-b py-3">
-        <SearchInput placeholder="Search Game" />
-        <div className="flex gap-2">
-          <SelectInput className="w-60" param="genre" options={genres} />
-          <SelectInput
-            className="w-40"
-            param="platform"
-            options={platform_families}
-          />
-        </div>
+      <div className="flex flex-wrap gap-2 items-center border-b py-3">
+        <SearchInput placeholder="Search Game" className="flex-3 min-w-60" />
+        <SelectInput
+          className="flex-1 min-w-60"
+          param="genre"
+          options={genres}
+        />
+        <SelectInput
+          className="flex-1 min-w-40"
+          param="platform"
+          options={platform_families}
+        />
       </div>
       <Suspense fallback={<GameSearchResultsSkeleton />}>
         <GameSearchResults searchParams={searchParams} />

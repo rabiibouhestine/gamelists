@@ -18,14 +18,14 @@ export default async function GameInfoCard({ slug }: { slug: string }) {
   });
 
   return (
-    <div className="bg-card border rounded-md p-6 flex gap-6">
+    <div className="bg-card border rounded-md p-6 flex flex-col md:flex-row gap-6">
       <div className="flex flex-col gap-3 min-w-50">
         <Image
           src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover?.image_id}.jpg`}
           alt={gameInfo.name}
           width={246}
           height={352}
-          className="border rounded-md"
+          className="border rounded-md w-full"
         />
         <Button asChild variant={"outline"}>
           <Link href={gameInfo.url} target="_blank">
@@ -33,9 +33,9 @@ export default async function GameInfoCard({ slug }: { slug: string }) {
           </Link>
         </Button>
       </div>
-      <div>
+      <div className="flex-1">
         <h1 className="text-3xl font-bold">{gameInfo.name}</h1>
-        <div>
+        <div className="flex flex-wrap gap-2">
           <span className="text-muted-foreground">Released on </span>
           <span className="font-semibold">{formatted_release_date} </span>
           <span className="text-muted-foreground">by </span>

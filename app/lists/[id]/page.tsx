@@ -61,7 +61,7 @@ export default async function ListPage(props: {
     <>
       <h1 className="text-3xl font-bold ">{gameList.title}</h1>
       <p>{gameList.description}</p>
-      <div className="flex gap-2 justify-between items-center border-b py-3 mt-3">
+      <div className="flex flex-wrap gap-2 justify-between items-center border-b py-3 mt-3">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
             <Image
@@ -139,7 +139,7 @@ export default async function ListPage(props: {
           )
         )}
       </div>
-      <div className="grid grid-cols-6 gap-2 mt-6">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2 mt-6">
         {gameListGames.games.map((game: GameType, index: number) => (
           <div className="flex flex-col items-center" key={game.slug}>
             <GameCover

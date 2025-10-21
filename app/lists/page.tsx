@@ -35,12 +35,20 @@ export default async function ListsPage(props: {
   return (
     <>
       <h1 className="text-3xl font-bold mb-4">Browse Lists</h1>
-      <div className="flex gap-2 justify-between items-center border-b py-3">
-        <SearchInput placeholder="Search List" />
-        <SelectInput param="sort" options={sortOptions} />
-        <SelectInput param="order" options={orderOptions} />
+      <div className="flex flex-wrap gap-2 items-center border-b py-3">
+        <SearchInput placeholder="Search List" className="flex-4 min-w-60" />
+        <SelectInput
+          param="sort"
+          options={sortOptions}
+          className="flex-2 min-w-60"
+        />
+        <SelectInput
+          param="order"
+          options={orderOptions}
+          className="flex-1 min-w-40"
+        />
         {data.user && (
-          <Button asChild>
+          <Button asChild className="flex-1">
             <Link href="/lists/create">
               <Plus /> New List
             </Link>

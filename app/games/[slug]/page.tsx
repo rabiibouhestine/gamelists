@@ -38,11 +38,21 @@ export default async function GamePage(props: {
       <Suspense fallback={<GameInfoCardSkeleton />}>
         <GameInfoCard slug={slug} />
       </Suspense>
-      <div className="flex gap-2 justify-between items-center border-b py-3 mt-6">
-        <h2 className="text-3xl font-semibold">Related Lists</h2>
-        <div className="flex gap-2">
-          <SelectInput param="sort" options={sortOptions} />
-          <SelectInput param="order" options={orderOptions} />
+      <div className="flex flex-wrap gap-2 items-center border-b py-3 mt-6">
+        <h2 className="flex-3 min-w-60 text-3xl font-semibold">
+          Related Lists
+        </h2>
+        <div className="flex-1 min-w-80 flex flex-wrap gap-2">
+          <SelectInput
+            param="sort"
+            options={sortOptions}
+            className="flex-1 min-w-30"
+          />
+          <SelectInput
+            param="order"
+            options={orderOptions}
+            className="flex-1 min-w-30"
+          />
         </div>
       </div>
       <div className="flex flex-col gap-6">

@@ -6,7 +6,15 @@ import { useSearchParams, usePathname } from "next/navigation";
 import { useRouter } from "@bprogress/next/app";
 import { useState, useEffect } from "react";
 
-export default function SearchInput({ placeholder }: { placeholder: string }) {
+type SearchInputProps = {
+  placeholder: string;
+  className?: string;
+};
+
+export default function SearchInput({
+  placeholder,
+  className,
+}: SearchInputProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -41,7 +49,7 @@ export default function SearchInput({ placeholder }: { placeholder: string }) {
   };
 
   return (
-    <div className="relative w-full">
+    <div className={`relative ${className}`}>
       <Input
         type="text"
         placeholder={placeholder}
