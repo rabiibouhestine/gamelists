@@ -16,12 +16,12 @@ export default function GameCover({ cover_id, alt, slug }: GameCoverProps) {
         alt={alt}
         width={246}
         height={352}
-        className="h-50 rounded-md"
+        className="rounded-md aspect-[246/352]"
       />
     </Link>
   );
 }
 
 export function GameCoverSkeleton() {
-  return <Skeleton className="h-50 rounded-md" />;
+  return <Skeleton className="aspect-[246/352] rounded-md" />;
 }
