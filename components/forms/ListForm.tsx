@@ -113,19 +113,19 @@ export default function ListForm({
   return (
     <form action={formAction}>
       <input type="hidden" name="id" value={gameList?.list_id} />
-      <div className="flex items-center justify-between border-b py-2 mb-6">
-        <h1 className="text-3xl font-bold">{title}</h1>
-        <div className="flex items-center gap-2">
-          <Button variant={"outline"} asChild>
+      <div className="flex flex-wrap gap-3 items-center border-b py-2 mb-6">
+        <h1 className="flex-2 min-w-60 text-3xl font-bold">{title}</h1>
+        <div className="flex-1 min-w-60 flex items-center gap-2">
+          <Button variant={"outline"} asChild className="flex-1">
             <Link href={cancelLink}>Cancel</Link>
           </Button>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} className="flex-1">
             Save
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-6 mb-6">
-        <div className="flex flex-col gap-4 col-span-6">
+      <div className="flex flex-wrap gap-6 mb-6">
+        <div className="flex-1 min-w-60 flex flex-col gap-4 col-span-6">
           <div>
             <Label className="mb-2" htmlFor="name">
               Name
@@ -178,7 +178,7 @@ export default function ListForm({
             </Select>
           </div>
         </div>
-        <div className="col-span-6">
+        <div className="flex-1 min-w-60">
           <Label className="mb-2" htmlFor="description">
             Description
           </Label>
