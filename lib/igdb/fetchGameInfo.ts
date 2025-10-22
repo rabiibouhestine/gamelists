@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 const clientId = process.env.IGDB_CLIENT_ID;
 const accessToken = process.env.IGDB_ACCESS_TOKEN;
 
@@ -21,10 +23,16 @@ export async function fetchGameInfo(slug: string) {
 
   if (!gameResponse.ok) {
     const errorText = await gameResponse.text();
-    throw new Error(`Failed to fetch game info: ${errorText}`);
+    console.log("error fetching game info from igdb: ", errorText);
+    redirect("/error");
   }
 
   const gameData = await gameResponse.json();
 
-  return gameData[0];
+  if (gameData.length) {
+    return gameData[0];
+  } else {
+    console.log("wrong game slug while fetching game info from igdb");
+    redirect("/error");
+  }
 }

@@ -1,4 +1,5 @@
 import sql from "@/lib/db";
+import { redirect } from "next/navigation";
 
 export async function getUserInfo(username: string) {
   const userInfo = await sql<
@@ -53,5 +54,12 @@ export async function getUserInfo(username: string) {
     WHERE u.username = ${username};
   `;
 
-  return userInfo[0];
+  const user = userInfo[0];
+
+  if (!user) {
+    // No user found with this username
+    redirect("/error");
+  } else {
+    return userInfo[0];
+  }
 }
