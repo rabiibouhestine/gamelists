@@ -7,12 +7,14 @@ export async function getGameListsByUsername({
   sortColumn = "created_at",
   orderDirection = "DESC",
   username,
+  publicOnly = true,
 }: {
   page?: number;
   limit?: number;
   sortColumn?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";
   orderDirection?: "ASC" | "DESC";
   username?: string;
+  publicOnly?: boolean;
 } = {}) {
   const validPage = page || 1;
   const validLimit = limit || 10;
@@ -28,9 +30,14 @@ export async function getGameListsByUsername({
   const direction = orderDirection === "ASC" ? "ASC" : "DESC";
 
   // WHERE clause: filter by username if provided
-  const whereClause = username
-    ? sql`gl.is_public = TRUE AND u.username = ${username}`
-    : sql`gl.is_public = TRUE`;
+  const whereClause =
+    username && publicOnly
+      ? sql`gl.is_public = TRUE AND u.username = ${username}`
+      : username && !publicOnly
+      ? sql`u.username = ${username}`
+      : publicOnly
+      ? sql`gl.is_public = TRUE`
+      : sql`TRUE`;
 
   // Count total results
   const [{ count: total }] = await sql`

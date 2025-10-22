@@ -26,13 +26,12 @@ export default async function ListPage(props: {
   params: Promise<{ id: string }>;
   searchParams?: Promise<{ page?: string }>;
 }) {
-  const limit = 36;
+  const params = await props.params;
+  const list_id = params.id;
 
   const searchParams = await props.searchParams;
   const page = searchParams?.page;
-
-  const params = await props.params;
-  const list_id = params.id;
+  const limit = 36;
 
   const gameList = await getGameListInfo(Number(list_id));
   const gameListGames = await getGameListGames(

@@ -30,16 +30,17 @@ export default async function UserPage(props: {
 
   const userInfo = await getUserInfo(username);
 
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
+
   const gameLists = await getGameListsByUsername({
     page: Number(page),
     limit: limit,
     sortColumn: sortColumn,
     orderDirection: orderDirection,
     username: username,
+    publicOnly: !data.user,
   });
-
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
 
   const showFollowBtn = !!data.user && data.user.id !== userInfo.id;
   const showEditBtns = !!data.user && data.user.id === userInfo.id;
