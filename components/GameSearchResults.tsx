@@ -24,7 +24,7 @@ export default async function GameSearchResults({
 
   return (
     <>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2 mt-6">
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 mt-6">
         {games.map((game: GameIGDBType) => (
           <GameCover
             key={game.id}
@@ -41,7 +41,7 @@ export default async function GameSearchResults({
 
 export function GameSearchResultsSkeleton() {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2 mt-6">
+    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 mt-6">
       {Array.from({ length: 36 }).map((_, index) => (
         <GameCoverSkeleton key={index} />
       ))}
