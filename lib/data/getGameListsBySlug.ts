@@ -29,12 +29,12 @@ export async function getGameListsBySlug({
 
   // WHERE clause: filter by game slug if provided
   const whereClause = gameSlug
-    ? sql`gl.id IN (
+    ? sql`gl.is_public = TRUE AND gl.id IN (
         SELECT game_list_id
         FROM game_list_games
         WHERE slug = ${gameSlug}
       )`
-    : sql`TRUE`;
+    : sql`gl.is_public = TRUE`;
 
   // Count total results
   const [{ count: total }] = await sql`

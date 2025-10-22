@@ -46,6 +46,7 @@ export async function getPopularGameLists() {
       FROM game_list_games
       GROUP BY game_list_id
     ) total_games ON total_games.game_list_id = gl.id
+    WHERE gl.is_public = TRUE
     GROUP BY gl.id, u.id, likes_count.count, comments_count.count, total_games.total_count
     ORDER BY nb_likes DESC, gl.created_at DESC
     LIMIT 5;

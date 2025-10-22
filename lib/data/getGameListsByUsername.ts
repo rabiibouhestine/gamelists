@@ -28,7 +28,9 @@ export async function getGameListsByUsername({
   const direction = orderDirection === "ASC" ? "ASC" : "DESC";
 
   // WHERE clause: filter by username if provided
-  const whereClause = username ? sql`u.username = ${username}` : sql`TRUE`;
+  const whereClause = username
+    ? sql`gl.is_public = TRUE AND u.username = ${username}`
+    : sql`gl.is_public = TRUE`;
 
   // Count total results
   const [{ count: total }] = await sql`

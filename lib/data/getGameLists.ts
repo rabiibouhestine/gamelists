@@ -26,8 +26,8 @@ export async function getGameLists({
   const direction = orderDirection === "ASC" ? "ASC" : "DESC";
 
   const whereClause = searchTerm
-    ? sql`gl.name ILIKE ${"%" + searchTerm + "%"}`
-    : sql`TRUE`;
+    ? sql`gl.is_public = TRUE AND gl.name ILIKE ${"%" + searchTerm + "%"}`
+    : sql`gl.is_public = TRUE`;
 
   // Count total number of results
   const [{ count: total }] = await sql`
