@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import LikeButton from "@/components/LikeButton";
 import CloneListButton from "@/components/CloneListButton";
+import { redirect } from "next/navigation";
 
 export default async function ListPage(props: {
   params: Promise<{ id: string }>;
@@ -33,15 +34,22 @@ export default async function ListPage(props: {
   const page = searchParams?.page;
   const limit = 36;
 
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
   const gameList = await getGameListInfo(Number(list_id));
+
+  if (
+    !gameList.is_public &&
+    (!data.user || data.user.id !== gameList.creator_id)
+  ) {
+    redirect("/lists");
+  }
+
   const gameListGames = await getGameListGames(
     Number(list_id),
     Number(page),
     limit
   );
-
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
 
   let is_liked = false;
   if (data.user) {
