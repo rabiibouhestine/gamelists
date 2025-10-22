@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const clientId = process.env.IGDB_CLIENT_ID;
 const accessToken = process.env.IGDB_ACCESS_TOKEN;
@@ -33,6 +33,6 @@ export async function fetchGameInfo(slug: string) {
     return gameData[0];
   } else {
     console.log("wrong game slug while fetching game info from igdb");
-    redirect("/error");
+    notFound();
   }
 }

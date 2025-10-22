@@ -1,10 +1,9 @@
 import sql from "@/lib/db";
 import type { GameListType } from "@/lib/definitions";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export async function getGameListInfo(id: number) {
-  try {
-    const gamelist = await sql<GameListType[]>`
+  const gamelist = await sql<GameListType[]>`
     SELECT
       gl.id AS list_id,
       gl.name AS title,
@@ -37,16 +36,12 @@ export async function getGameListInfo(id: number) {
     WHERE gl.id = ${id};
   `;
 
-    const list = gamelist[0];
+  const list = gamelist[0];
 
-    if (!list) {
-      // No game list found with this id
-      redirect("/error");
-    }
-
-    return list;
-  } catch (error) {
-    console.error("Failed to fetch game list:", error);
-    redirect("/error");
+  if (!list) {
+    // No game list found with this id
+    notFound();
   }
+
+  return list;
 }
