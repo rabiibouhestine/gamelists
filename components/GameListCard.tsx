@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { GameListType } from "@/lib/definitions";
 import { Heart, MessageCircle } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { GameListType } from "@/lib/definitions";
 
 type GameListProps = {
   gamelist: GameListType;
@@ -33,13 +34,15 @@ export default function GameListCard({ gamelist }: GameListProps) {
       </Link>
       <div className="mt-1 flex items-center gap-3 text-sm text-muted-foreground font-light">
         <div className="flex items-center gap-1">
-          <Image
-            src={gamelist.creator_profile_img}
-            alt={gamelist.creator_username}
-            width={20}
-            height={20}
-            className="rounded-full w-4 h-4 object-cover"
-          />
+          <Avatar className="w-4 h-4">
+            <AvatarImage
+              src={gamelist.creator_profile_img}
+              className="object-cover"
+            />
+            <AvatarFallback>
+              {gamelist.creator_username.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
           <Link
             href={`/users/${gamelist.creator_username}`}
             className="font-bold hover:underline"

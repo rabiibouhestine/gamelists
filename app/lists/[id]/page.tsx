@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { getGameListGames } from "@/lib/data/getGameListGames";
 import { getGameListInfo } from "@/lib/data/getGameListInfo";
@@ -6,6 +5,7 @@ import { GameType } from "@/lib/definitions";
 import { DeleteList } from "@/lib/actions/deleteList";
 import { createClient } from "@/utils/supabase/server";
 import { Heart, MessageCircle, Pen, Trash } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import GameCover from "@/components/GameCover";
 import Pagination from "@/components/searchParamsInputs/Pagination";
 import { Button } from "@/components/ui/button";
@@ -71,13 +71,15 @@ export default async function ListPage(props: {
       <div className="flex flex-wrap gap-2 justify-between items-center border-b py-3 mt-3">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
-            <Image
-              src={gameList.creator_profile_img}
-              alt={gameList.creator_username}
-              width={20}
-              height={20}
-              className="rounded-full w-4 h-4 object-cover"
-            />
+            <Avatar className="w-4 h-4">
+              <AvatarImage
+                src={gameList.creator_profile_img}
+                className="object-cover"
+              />
+              <AvatarFallback>
+                {gameList.creator_username.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
             <Link
               href={`/users/${gameList.creator_username}`}
               className="font-bold"
