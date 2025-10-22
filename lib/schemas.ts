@@ -52,3 +52,13 @@ export const AuthSchema = z.object({
     .min(8, "Password must be at least 8 characters long")
     .max(100, "Password must be less than 100 characters"),
 });
+
+export const DeleteAccountSchema = z.object({
+  user_id: z.string(),
+  confirmation: z
+    .string()
+    .refine(
+      (str) => str === "delete account",
+      "please type 'delete account' below"
+    ),
+});

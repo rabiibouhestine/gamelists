@@ -2,6 +2,8 @@ import type { UserInfoType } from "@/lib/definitions";
 import FollowButton from "@/components/FollowButton";
 import UsernameForm from "@/components/forms/UsernameForm";
 import AvatarForm from "@/components/forms/AvatarForm";
+import DeleteAccountButton from "@/components/DeleteAccountButton";
+import { DeleteAccount } from "@/lib/actions/deleteAccount";
 
 type UserInfoCardProps = {
   userInfo: UserInfoType;
@@ -41,6 +43,9 @@ export default function UserInfoCard({
           </div>
           {showFollowBtn && (
             <FollowButton user_id={userInfo.id} is_following={is_following} />
+          )}
+          {showEditBtns && (
+            <DeleteAccountButton user_id={userInfo.id} action={DeleteAccount} />
           )}
         </div>
       </div>
