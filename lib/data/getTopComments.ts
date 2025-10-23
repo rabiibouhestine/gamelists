@@ -1,17 +1,8 @@
 import sql from "@/lib/db";
+import { CommentType } from "@/lib/definitions";
 
 export async function getTopComments(list_id: number) {
-  const comments = await sql<
-    {
-      id: number;
-      content: string;
-      updated_at: string;
-      user_id: string;
-      username: string;
-      profile_image: string;
-      nb_likes: number;
-    }[]
-  >`
+  const comments = await sql<CommentType[]>`
     SELECT
       c.id AS id,
       c.content,

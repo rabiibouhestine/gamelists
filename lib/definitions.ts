@@ -70,9 +70,11 @@ export type ListFormActionType = (
 export type CommentType = {
   id: number;
   content: string;
+  created_at: string;
   updated_at: string;
   user_id: string;
   username: string;
   profile_image: string;
   nb_likes: number;
+  is_liked: boolean;
 };
