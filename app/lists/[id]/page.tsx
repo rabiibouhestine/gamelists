@@ -22,6 +22,7 @@ import {
 import LikeButton from "@/components/LikeButton";
 import CloneListButton from "@/components/CloneListButton";
 import { redirect } from "next/navigation";
+import TopComments from "@/components/TopComments";
 
 export default async function ListPage(props: {
   params: Promise<{ id: string }>;
@@ -167,6 +168,7 @@ export default async function ListPage(props: {
         total={gameListGames.total}
         resultsCount={gameListGames.games.length}
       />
+      <TopComments list_id={gameList.list_id} />
     </>
   );
 }

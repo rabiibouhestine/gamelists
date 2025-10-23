@@ -60,6 +60,13 @@ CREATE TABLE comments (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Comments Likes
+CREATE TABLE comments_likes (
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  comment_id INTEGER REFERENCES comments(id) ON DELETE CASCADE,
+  PRIMARY KEY (user_id, comment_id)
+);
+
 -- Insert the 3 existing auth users into app users table
 INSERT INTO users (id, username, profile_image) VALUES
 ('0ddfbf6d-58e7-465f-8e78-3e44f72a2f41', 'PixelPioneer', 'https://i.pravatar.cc/150?img=1'),
