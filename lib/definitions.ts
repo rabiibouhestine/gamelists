@@ -66,3 +66,13 @@ export type ListFormActionType = (
   formData: FormData
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Promise<any>;
+
+export type CommentType = {
+  id: number;
+  content: string;
+  updated_at: string;
+  user_id: string;
+  username: string;
+  profile_image: string;
+  nb_likes: number;
+};
