@@ -4,10 +4,16 @@ import CommentCard from "@/components/CommentCard";
 
 type TopCommentsProps = {
   list_id: number;
+  current_user_id?: string;
+  showCommentLikeButton: boolean;
 };
 
-export default async function TopComments({ list_id }: TopCommentsProps) {
-  const comments = await getTopComments(list_id);
+export default async function TopComments({
+  list_id,
+  current_user_id,
+  showCommentLikeButton,
+}: TopCommentsProps) {
+  const comments = await getTopComments(list_id, current_user_id);
 
   return (
     <>
@@ -17,7 +23,11 @@ export default async function TopComments({ list_id }: TopCommentsProps) {
       </div>
       <div className="flex flex-col gap-4">
         {comments.map((comment) => (
-          <CommentCard key={comment.id} comment={comment} />
+          <CommentCard
+            key={comment.id}
+            comment={comment}
+            showCommentLikeButton={showCommentLikeButton}
+          />
         ))}
       </div>
     </>

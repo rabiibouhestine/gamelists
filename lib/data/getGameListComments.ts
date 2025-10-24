@@ -5,7 +5,7 @@ export async function getGameListComments(
   game_list_id: number,
   page?: number,
   limit?: number,
-  current_user_id?: string // optional — to check if user liked each comment
+  current_user_id?: string
 ) {
   const isPaginated = page !== undefined && limit !== undefined;
   let total = 0;
@@ -34,19 +34,18 @@ export async function getGameListComments(
         c.user_id,
         u.username,
         u.profile_image,
-        COUNT(cl.comment_id)::int AS like_count,
+        COUNT(cl.comment_id)::int AS nb_likes,
         ${
           current_user_id
-            ? sql`BOOL_OR(cl2.user_id = ${current_user_id}) AS is_liked`
+            ? sql`BOOL_OR(cl.user_id = ${current_user_id}) AS is_liked`
             : sql`false AS is_liked`
         }
       FROM comments c
       JOIN users u ON u.id = c.user_id
       LEFT JOIN comments_likes cl ON cl.comment_id = c.id
-      LEFT JOIN comments_likes cl2 ON cl2.comment_id = c.id
       WHERE c.game_list_id = ${game_list_id}
       GROUP BY c.id, u.id
-      ORDER BY c.created_at DESC
+      ORDER BY nb_likes DESC, c.updated_at DESC
       LIMIT ${validLimit} OFFSET ${offset};
     `;
   } else {
@@ -60,19 +59,18 @@ export async function getGameListComments(
         c.user_id,
         u.username,
         u.profile_image,
-        COUNT(cl.comment_id)::int AS like_count,
+        COUNT(cl.comment_id)::int AS nb_likes,
         ${
           current_user_id
-            ? sql`BOOL_OR(cl2.user_id = ${current_user_id}) AS is_liked`
+            ? sql`BOOL_OR(cl.user_id = ${current_user_id}) AS is_liked`
             : sql`false AS is_liked`
         }
       FROM comments c
       JOIN users u ON u.id = c.user_id
       LEFT JOIN comments_likes cl ON cl.comment_id = c.id
-      LEFT JOIN comments_likes cl2 ON cl2.comment_id = c.id
       WHERE c.game_list_id = ${game_list_id}
       GROUP BY c.id, u.id
-      ORDER BY c.created_at DESC;
+      ORDER BY nb_likes DESC, c.updated_at DESC
     `;
   }
 

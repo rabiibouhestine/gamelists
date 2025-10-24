@@ -53,7 +53,9 @@ export default async function ListPage(props: {
   );
 
   let is_liked = false;
+  let showCommentLikeButton = false;
   if (data.user) {
+    showCommentLikeButton = true;
     const { data: existingLike } = await supabase
       .from("likes")
       .select("*")
@@ -168,7 +170,11 @@ export default async function ListPage(props: {
         total={gameListGames.total}
         resultsCount={gameListGames.games.length}
       />
-      <TopComments list_id={gameList.list_id} />
+      <TopComments
+        list_id={gameList.list_id}
+        current_user_id={data.user?.id}
+        showCommentLikeButton={showCommentLikeButton}
+      />
     </>
   );
 }

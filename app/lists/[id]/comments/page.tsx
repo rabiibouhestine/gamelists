@@ -18,7 +18,7 @@ export default async function CommentsPage(props: {
 
   const searchParams = await props.searchParams;
   const page = searchParams?.page;
-  const limit = 24;
+  const limit = 12;
 
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
@@ -31,10 +31,12 @@ export default async function CommentsPage(props: {
     redirect("/lists");
   }
 
+  const showCommentLikeButton = data.user ? true : false;
   const gameListComments = await getGameListComments(
     Number(list_id),
     Number(page),
-    limit
+    limit,
+    data.user?.id
   );
 
   return (
@@ -52,7 +54,11 @@ export default async function CommentsPage(props: {
       </div>
       <div className="flex flex-col gap-4 mt-6">
         {gameListComments.comments.map((comment: CommentType) => (
-          <CommentCard key={comment.id} comment={comment} />
+          <CommentCard
+            key={comment.id}
+            comment={comment}
+            showCommentLikeButton={showCommentLikeButton}
+          />
         ))}
       </div>
       <Pagination

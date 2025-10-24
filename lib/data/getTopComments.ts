@@ -1,7 +1,10 @@
 import sql from "@/lib/db";
 import { CommentType } from "@/lib/definitions";
 
-export async function getTopComments(list_id: number) {
+export async function getTopComments(
+  list_id: number,
+  current_user_id?: string
+) {
   const comments = await sql<CommentType[]>`
     SELECT
       c.id AS id,
@@ -10,7 +13,17 @@ export async function getTopComments(list_id: number) {
       u.id AS user_id,
       u.username,
       u.profile_image,
-      COUNT(cl.user_id) AS nb_likes
+      COUNT(cl.user_id) AS nb_likes,
+      ${
+        current_user_id
+          ? sql`EXISTS (
+            SELECT 1 
+            FROM comments_likes 
+            WHERE comment_id = c.id 
+            AND user_id = ${current_user_id}::UUID
+          )`
+          : sql`FALSE`
+      } AS is_liked
     FROM comments c
     JOIN users u ON c.user_id = u.id
     LEFT JOIN comments_likes cl ON c.id = cl.comment_id
