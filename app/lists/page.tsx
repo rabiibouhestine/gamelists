@@ -18,10 +18,11 @@ export default async function ListsPage(props: {
   }>;
 }) {
   const searchParams = await props.searchParams;
-  const currentPage = Number(searchParams?.page) || 1;
-  const searchTerm = searchParams?.search || "";
-  const sort = searchParams?.sort || "created_at";
-  const order = searchParams?.order || "DESC";
+  const currentPage = Number(searchParams?.page ?? 1);
+  const searchTerm = searchParams?.search ?? "";
+  const sort = searchParams?.sort ?? "created_at";
+  const order = searchParams?.order ?? "DESC";
+
   const gameLists = await getGameLists({
     page: currentPage,
     searchTerm: searchTerm,
