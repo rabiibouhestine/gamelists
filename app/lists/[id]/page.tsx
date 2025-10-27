@@ -4,7 +4,7 @@ import { getGameListInfo } from "@/lib/data/getGameListInfo";
 import { GameType } from "@/lib/definitions";
 import { DeleteList } from "@/lib/actions/deleteList";
 import { createClient } from "@/utils/supabase/server";
-import { Heart, MessageCircle, Pen, Trash } from "lucide-react";
+import { Heart, Pen, Trash } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import GameCover from "@/components/GameCover";
 import Pagination from "@/components/searchParamsInputs/Pagination";
@@ -22,7 +22,6 @@ import {
 import LikeButton from "@/components/LikeButton";
 import CloneListButton from "@/components/CloneListButton";
 import { redirect } from "next/navigation";
-import TopComments from "@/components/TopComments";
 
 export default async function ListPage(props: {
   params: Promise<{ id: string }>;
@@ -53,9 +52,7 @@ export default async function ListPage(props: {
   );
 
   let is_liked = false;
-  let showCommentLikeButton = false;
   if (data.user) {
-    showCommentLikeButton = true;
     const { data: existingLike } = await supabase
       .from("likes")
       .select("*")
@@ -93,9 +90,6 @@ export default async function ListPage(props: {
           <span>{gameList.total_games_count} Games</span>
           <span className="flex items-center gap-1">
             {gameList.nb_likes} <Heart size={18} />
-          </span>
-          <span className="flex items-center gap-1">
-            {gameList.nb_comments} <MessageCircle size={18} />
           </span>
         </div>
         {data.user?.id === gameList.creator_id ? (
@@ -169,11 +163,6 @@ export default async function ListPage(props: {
         limit={limit}
         total={gameListGames.total}
         resultsCount={gameListGames.games.length}
-      />
-      <TopComments
-        list_id={gameList.list_id}
-        current_user_id={data.user?.id}
-        showCommentLikeButton={showCommentLikeButton}
       />
     </>
   );

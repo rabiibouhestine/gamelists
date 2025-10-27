@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, MessageCircle } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { GameListType } from "@/lib/definitions";
 
@@ -53,9 +53,6 @@ export default function GameListCard({ gamelist }: GameListProps) {
         <span>{gamelist.total_games_count} Games</span>
         <span className="flex items-center gap-1">
           {gamelist.nb_likes} <Heart size={18} />
-        </span>
-        <span className="flex items-center gap-1">
-          {gamelist.nb_comments} <MessageCircle size={18} />
         </span>
       </div>
       {responsiveConfigs.map(({ breakpoint, gridCols, slice }, i) => (

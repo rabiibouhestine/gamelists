@@ -56,12 +56,6 @@ export default function UserInfoCard({
         </div>
         <div className="flex flex-col items-center py-1 px-4">
           <span className="text-2xl font-bold">
-            {userInfo.nb_comments_made}
-          </span>
-          <span className="text-muted-foreground text-sm">Comments</span>
-        </div>
-        <div className="flex flex-col items-center py-1 px-4">
-          <span className="text-2xl font-bold">
             {userInfo.nb_lists_created}
           </span>
           <span className="text-muted-foreground text-sm">Lists</span>

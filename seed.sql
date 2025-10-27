@@ -50,23 +50,6 @@ CREATE TABLE likes (
   PRIMARY KEY (user_id, game_list_id)
 );
 
--- Comments
-CREATE TABLE comments (
-  id SERIAL PRIMARY KEY,
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  game_list_id INTEGER REFERENCES game_lists(id) ON DELETE CASCADE,
-  content TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Comments Likes
-CREATE TABLE comments_likes (
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  comment_id INTEGER REFERENCES comments(id) ON DELETE CASCADE,
-  PRIMARY KEY (user_id, comment_id)
-);
-
 -- Insert the 3 existing auth users into app users table
 INSERT INTO users (id, username, profile_image) VALUES
 ('0ddfbf6d-58e7-465f-8e78-3e44f72a2f41', 'PixelPioneer', 'https://i.pravatar.cc/150?img=1'),
@@ -209,16 +192,6 @@ DECLARE
     'Small studios, big impact — indie highlights.',
     'Games that look great and feel even better.'
   ];
-  comment_templates TEXT[] := ARRAY[
-    'Love this list — adding a few to my backlog!',
-    'Great picks, especially the hidden gems.',
-    'Nice curation, I disagree with one pick but overall solid.',
-    'This gave me ideas for my next purchase.',
-    'Perfect for a cozy weekend of gaming.',
-    'Some of these surprised me, will try them out.',
-    'Great selection — bookmarked.',
-    'You can''t go wrong with these titles!'
-  ];
 
   u RECORD;
   i INT;
@@ -238,7 +211,6 @@ DECLARE
   num_likes INT;
   max_users INT;
   l RECORD;
-  num_comments INT;
   c_user UUID;  -- changed from INT
   c TEXT;
   days_ago INT;
@@ -293,18 +265,6 @@ BEGIN
     FOR f IN SELECT id FROM users ORDER BY random() LIMIT num_likes LOOP
       INSERT INTO likes (user_id, game_list_id) VALUES (f.id, l.id)
       ON CONFLICT DO NOTHING;
-    END LOOP;
-  END LOOP;
-
-  -- Comments: each list gets between 2 and 12 comments
-  FOR l IN SELECT id FROM game_lists LOOP
-    num_comments := (floor(random()*11)::int + 2);
-    FOR i IN 1..num_comments LOOP
-      SELECT id INTO c_user FROM users ORDER BY random() LIMIT 1;
-      c := comment_templates[(floor(random()*array_length(comment_templates,1)) + 1)::int];
-      days_ago := (floor(random()*365))::int;
-      INSERT INTO comments (user_id, game_list_id, content, created_at)
-      VALUES (c_user, l.id, c, NOW() - (days_ago * INTERVAL '1 day'));
     END LOOP;
   END LOOP;
 
