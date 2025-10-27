@@ -13,7 +13,7 @@ import { createClient } from "@/utils/supabase/server";
 export default async function UserPage(props: {
   params: Promise<{ username: string }>;
   searchParams?: Promise<{
-    sort?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";
+    sort?: "created_at" | "nb_likes" | "total_games_count";
     order?: "ASC" | "DESC";
     page?: string;
   }>;

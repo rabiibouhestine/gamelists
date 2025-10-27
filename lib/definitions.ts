@@ -6,7 +6,6 @@ export type GameListType = {
   creator_username: string;
   creator_profile_img: string;
   nb_likes: number;
-  nb_comments: number;
   total_games_count: number;
   is_public: boolean;
   is_ranked: boolean;
@@ -54,7 +53,6 @@ export type UserInfoType = {
   profile_image: string;
   created_at: string;
   nb_likes_made: number;
-  nb_comments_made: number;
   nb_lists_created: number;
   nb_following: number;
   nb_followers: number;

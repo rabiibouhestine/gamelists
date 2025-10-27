@@ -8,10 +8,6 @@ export const sortOptions = [
     label: "Sort by Likes",
   },
   {
-    value: "nb_comments",
-    label: "Sort by Comments",
-  },
-  {
     value: "total_games_count",
     label: "Sort by Games",
   },

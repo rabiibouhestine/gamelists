@@ -12,7 +12,7 @@ import { Plus } from "lucide-react";
 export default async function ListsPage(props: {
   searchParams?: Promise<{
     search?: string;
-    sort?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";
+    sort?: "created_at" | "nb_likes" | "total_games_count";
     order?: "ASC" | "DESC";
     page?: string;
   }>;

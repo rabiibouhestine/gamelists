@@ -11,7 +11,7 @@ export async function getGameListsByUsername({
 }: {
   page?: number;
   limit?: number;
-  sortColumn?: "created_at" | "nb_likes" | "nb_comments" | "total_games_count";
+  sortColumn?: "created_at" | "nb_likes" | "total_games_count";
   orderDirection?: "ASC" | "DESC";
   username?: string;
   publicOnly?: boolean;
@@ -23,7 +23,6 @@ export async function getGameListsByUsername({
   const validSortColumns = {
     created_at: "gl.created_at",
     nb_likes: "COALESCE(lc.count, 0)",
-    nb_comments: "COALESCE(cc.count, 0)",
     total_games_count: "COALESCE(tg.total_count, 0)",
   };
   const sortExpr = validSortColumns[sortColumn] ?? "gl.created_at";
@@ -54,11 +53,6 @@ export async function getGameListsByUsername({
       FROM likes
       GROUP BY game_list_id
     ),
-    comments_count AS (
-      SELECT game_list_id, COUNT(*) AS count
-      FROM comments
-      GROUP BY game_list_id
-    ),
     total_games AS (
       SELECT game_list_id, COUNT(*) AS total_count
       FROM game_list_games
@@ -81,7 +75,6 @@ export async function getGameListsByUsername({
       u.username AS creator_username,
       u.profile_image AS creator_profile_img,
       COALESCE(lc.count, 0) AS nb_likes,
-      COALESCE(cc.count, 0) AS nb_comments,
       COALESCE(tg.total_count, 0) AS total_games_count,
       json_agg(
         json_build_object(
@@ -93,11 +86,10 @@ export async function getGameListsByUsername({
     FROM game_lists gl
     JOIN users u ON gl.user_id = u.id
     LEFT JOIN likes_count lc ON lc.game_list_id = gl.id
-    LEFT JOIN comments_count cc ON cc.game_list_id = gl.id
     LEFT JOIN total_games tg ON tg.game_list_id = gl.id
     LEFT JOIN games_preview gp ON gp.game_list_id = gl.id
     WHERE ${whereClause}
-    GROUP BY gl.id, u.id, lc.count, cc.count, tg.total_count
+    GROUP BY gl.id, u.id, lc.count, tg.total_count
     ORDER BY ${sql.unsafe(`${sortExpr} ${direction}`)}
     LIMIT ${limit} OFFSET ${offset};
   `;

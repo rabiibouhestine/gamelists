@@ -1,5 +1,5 @@
 -- Drop existing tables
-DROP TABLE IF EXISTS comments, likes, follows, game_list_games, game_lists, users CASCADE;
+DROP TABLE IF EXISTS likes, follows, game_list_games, game_lists, users CASCADE;
 
 -- Users table (optional app metadata, links to auth.users)
 CREATE TABLE users (

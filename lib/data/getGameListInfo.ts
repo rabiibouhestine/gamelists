@@ -14,7 +14,6 @@ export async function getGameListInfo(id: number) {
       u.username AS creator_username,
       u.profile_image AS creator_profile_img,
       COALESCE(likes_count.count, 0) AS nb_likes,
-      COALESCE(comments_count.count, 0) AS nb_comments,
       COALESCE(total_games.total_count, 0) AS total_games_count
     FROM game_lists gl
     JOIN users u ON gl.user_id = u.id
@@ -23,11 +22,6 @@ export async function getGameListInfo(id: number) {
       FROM likes
       GROUP BY game_list_id
     ) AS likes_count ON likes_count.game_list_id = gl.id
-    LEFT JOIN (
-      SELECT game_list_id, COUNT(*) AS count
-      FROM comments
-      GROUP BY game_list_id
-    ) AS comments_count ON comments_count.game_list_id = gl.id
     LEFT JOIN (
       SELECT game_list_id, COUNT(*) AS total_count
       FROM game_list_games
